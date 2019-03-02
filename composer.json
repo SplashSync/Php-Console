@@ -29,6 +29,7 @@
 
     "require": {
         "php":                              "^7.2",
+        "splash/phpcore":                   "dev-master",        
         "symfony/console":                  "~3.4|~4.0"
     },
     
