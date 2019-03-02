@@ -2,7 +2,7 @@
     "name":                 "splash/console",
     "description":          "Console Application for All Php Applications",
 
-    "type":                 "package, console, splash, php, toolbox",    
+    "type":                 "package",    
     "minimum-stability":    "dev",
     "prefer-stable":        true,
     "license":              "MIT",
