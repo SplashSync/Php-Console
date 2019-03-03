@@ -1,0 +1,63 @@
+<?php
+
+/*
+ *  This file is part of SplashSync Project.
+ *
+ *  Copyright (C) 2015-2018 Splash Sync  <www.splashsync.com>
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
+
+define('SPLASH_CONSOLE_PATH', realpath(__DIR__ . '/..'));
+
+//====================================================================//
+// List of AutoLoad Possible Locations
+$autoloadLocations = array(
+    getcwd() . '/vendor/autoload.php',
+    getcwd() . '/../../autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+);
+
+//====================================================================//
+// Load Vendor Classes
+$loaded = false;
+foreach ($autoloadLocations as $autoload) {
+    if (is_file($autoload)) {
+        require_once($autoload);
+        $loaded = true;
+    }
+}
+
+//====================================================================//
+// Ensure Autoload is Done
+if (!$loaded) {
+    fwrite(
+        STDERR,
+        'You must set up the project dependencies, run the following commands:' . PHP_EOL .
+        'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+    exit(1);
+}
+
+//====================================================================//
+// Start Console App
+use Splash\Console\Locator\CommandLocator;
+use Symfony\Component\Console\Application;
+
+//====================================================================//
+// Load Console App Commands
+$app = new Application();
+foreach (CommandLocator::commands() as $commandClass) {
+    $app->add(new $commandClass());
+}
+
+//====================================================================//
+// Start Console App
+$app->run();
