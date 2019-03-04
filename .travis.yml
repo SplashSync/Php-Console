@@ -3,31 +3,18 @@
 # Define Test Matrix
 matrix:
     include:      
-#        # Symfony 3.4 Branch
-#        - php: 7.1
-#        - php: 7.2
-#        # Symfony 4.0 Branch       
-#        - php: 7.2
-#          env: SF_VERSION="4.0.*"      
-        # Symfony 4.2 Branch       
+        - php: 7.1
         - php: 7.2
-          env: SF_VERSION="4.2.*"  
+        - php: 7.3
         
     allow_failures:
-        - env: SF_VERSION="4.2.*"       
+        - php: 7.3
+        
     fast_finish: true
 
 ################################################################################
 # Prepare Test Environement
 before_install:
-    - echo "Configuring The Bundles"
-    - cp tests/config/parameters.yml.dist tests/config/parameters.yml
-    - echo "Configuring Folders"
-    - mkdir bin
-    - cp tests/console bin/console
-    - mkdir public
-    - cp tests/public/* public
-    - cp tests/public/.htaccess public/.htaccess
 
 ################################################################################
 # GENERIC CONFIGURATION
