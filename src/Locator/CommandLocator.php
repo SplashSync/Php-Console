@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2018 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2019 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -26,18 +26,18 @@ class CommandLocator
      * @var array
      */
     const FILTERS = array('..', '.', 'index.php', 'index.html');
-    
+
     /**
      * Available Commands List
      *
      * @var array
      */
     private static $commands;
-    
+
     /**
      * Build & return list of Available Commands
      *
-     * @return     array
+     * @return array
      */
     public static function commands()
     {
@@ -51,7 +51,7 @@ class CommandLocator
         static::$commands = array();
         //====================================================================//
         // Scan Local Objects Folder
-        
+
         $scan = scandir(dirname(__DIR__)."/Command", 1);
         if (false !== $scan) {
             //====================================================================//
@@ -62,8 +62,8 @@ class CommandLocator
             foreach ($files as $filename) {
                 //====================================================================//
                 // Extract Class Base Name
-                $commandName = substr($filename, 0, strpos($filename, "Command.php"));
-                $className = "Splash\\Console\\Command\\" . $commandName . 'Command';
+                $commandName = substr($filename, 0, (int) strpos($filename, "Command.php"));
+                $className = "Splash\\Console\\Command\\".$commandName.'Command';
                 //====================================================================//
                 // Verify ClassName is a Valid
                 if (class_exists($className, true)) {
@@ -71,7 +71,7 @@ class CommandLocator
                 }
             }
         }
-        
+
         return static::$commands;
     }
 }

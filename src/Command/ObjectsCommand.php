@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2018 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2019 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,14 +16,11 @@
 namespace Splash\Console\Command;
 
 use Splash\Client\Splash;
-
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Splash\Console\Helper\Table;
 use Splash\Console\Helper\Graphics;
+use Splash\Console\Helper\Table;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * List Available Objects on Splash Client
@@ -46,20 +43,22 @@ class ObjectsCommand extends Command
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //====================================================================//
-        // Splash Screen           
+        // Splash Screen
         Graphics::renderSplashScreen($output);
         Graphics::renderTitle($output, "Listed of Available Objects");
-        
+
         $table = new Table($output);
 
         //====================================================================//
         // Prepare Table Header
         $table->setHeaders(array("Type", "Name", "Import", "Export", "Description"));
-        
+
         //====================================================================//
         // Walk on Objects Types
         foreach (Splash::objects() as $objectType) {
@@ -76,62 +75,64 @@ class ObjectsCommand extends Command
                 $desc["description"],
             ));
         }
-        
+
         //====================================================================//
         // Render Data Table
         $table->render();
-        
+
         //====================================================================//
         // Render Splash Logs
         $output->writeln(Splash::log()->getConsoleLog());
-        Splash::log()->getConsoleLog();        
+        Splash::log()->getConsoleLog();
     }
-    
+
     /**
      * Get Import Configuration
-     * 
+     *
      * @param array $desc
+     *
      * @return string
      */
     private static function getImportCfg(array $desc) : string
     {
         $result = "";
         //====================================================================//
-        // Import Create ? 
+        // Import Create ?
         $result .= $desc["enable_pull_created"] ? "<info>C</>" : "<error>C</>";
         $result .= "|";
         //====================================================================//
-        // Import Update ? 
+        // Import Update ?
         $result .= $desc["enable_pull_updated"] ? "<info>U</>" : "<error>U</>";
         $result .= "|";
         //====================================================================//
-        // Import Delete ? 
+        // Import Delete ?
         $result .= $desc["enable_pull_deleted"] ? "<info>D</>" : "<error>D</>";
-            
+
         return $result;
-    }    
-    
+    }
+
     /**
      * Get Export Configuration
-     * 
+     *
      * @param array $desc
+     *
      * @return string
      */
     private static function getExportCfg(array $desc) : string
     {
         $result = "";
         //====================================================================//
-        // Export Create ? 
+        // Export Create ?
         $result .= ($desc["allow_push_created"] && $desc["enable_push_created"]) ? "<info>C</>" : "<error>C</>";
         $result .= "|";
         //====================================================================//
-        // Export Update ? 
+        // Export Update ?
         $result .= ($desc["allow_push_updated"] && $desc["enable_push_updated"])? "<info>U</>" : "<error>U</>";
         $result .= "|";
         //====================================================================//
-        // Export Delete ? 
+        // Export Delete ?
         $result .= ($desc["allow_push_deleted"] && $desc["enable_push_deleted"]) ? "<info>D</>" : "<error>D</>";
-            
+
         return $result;
-    }        
+    }
 }
