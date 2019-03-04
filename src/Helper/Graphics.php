@@ -27,27 +27,84 @@ class Graphics
 {
     const   SPLIT = "   ----------------------------------------------------------------";
 
-    const   SPLASH1 = "    ______     ______   __         ______     ______     __  __    ";
-    const   SPLASH2 = "   /\\  ___\\   /\\  == \\ /\\ \\       /\\  __ \\   /\\  ___\\   /\\ \\_\\ \\   ";
-    const   SPLASH3 = "   \\ \\___  \\  \\ \\  _-/ \\ \\ \\____  \\ \\  __ \\  \\ \\___  \\  \\ \\  __ \\  ";
-    const   SPLASH4 = "    \\/\\_____\\  \\ \\_\\    \\ \\_____\\  \\ \\_\\ \\_\\  \\/\\_____\\  \\ \\_\\ \\_\\ ";
-    const   SPLASH5 = "     \\/_____/   \\/_/     \\/_____/   \\/_/\\/_/   \\/_____/   \\/_/\\/_/ ";
-    const   SPLASH6 = "                                                                ";
-
     /**
      * Display SPLASH SCREEN
      */
     public static function renderSplashScreen(OutputInterface $output)
     {
-        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
-        $output->write(Logger::getConsoleLine("", self::SPLASH1, Logger::CMD_COLOR_WAR));
-        $output->write(Logger::getConsoleLine("", self::SPLASH2, Logger::CMD_COLOR_WAR));
-        $output->write(Logger::getConsoleLine("", self::SPLASH3, Logger::CMD_COLOR_WAR));
-        $output->write(Logger::getConsoleLine("", self::SPLASH4, Logger::CMD_COLOR_WAR));
-        $output->write(Logger::getConsoleLine("", self::SPLASH5, Logger::CMD_COLOR_WAR));
-        $output->write(Logger::getConsoleLine("", self::SPLASH6, Logger::CMD_COLOR_WAR));
-        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
-        $output->writeln("");
+        $logo = array(
+            "    ______     ______   __         ______     ______     __  __    ",
+            "   /\\  ___\\   /\\  == \\ /\\ \\       /\\  __ \\   /\\  ___\\   /\\ \\_\\ \\   ",
+            "   \\ \\___  \\  \\ \\  _-/ \\ \\ \\____  \\ \\  __ \\  \\ \\___  \\  \\ \\  __ \\  ",
+            "    \\/\\_____\\  \\ \\_\\    \\ \\_____\\  \\ \\_\\ \\_\\  \\/\\_____\\  \\ \\_\\ \\_\\ ",
+            "     \\/_____/   \\/_/     \\/_____/   \\/_/\\/_/   \\/_____/   \\/_/\\/_/ ",
+            "                                                                "
+        );
+
+        if ($output->isVerbose()) {
+            $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
+            foreach ($logo as $line) {
+                $output->write(Logger::getConsoleLine("", $line, Logger::CMD_COLOR_WAR));
+            }
+        }
     }
 
+    /**
+     * Display Action title
+     */
+    public static function renderTitle(OutputInterface $output, string $text)
+    {
+        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
+        $output->write(Logger::getConsoleLine("", "   ".$text, Logger::CMD_COLOR_DEB));
+        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
+        $output->write(PHP_EOL);
+    }
+
+    /**
+     * Display Action title
+     */
+    public static function renderResult(OutputInterface $output, bool $result, string $text)
+    {
+        $result
+            ? self::renderOkResult($output, $text)
+            : self::renderKoResult($output, $text);
+    }
+
+    /**
+     * Display Action Success Result
+     */
+    private static function renderOkResult(OutputInterface $output, string $text)
+    {
+        $logo = array(
+            "       \\ \\ / / ",
+            "        \\ V /  Passed: ".$text,
+            "         \\_/   ",
+        );
+
+        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
+        foreach ($logo as $line) {
+            $output->write(Logger::getConsoleLine("", $line, Logger::CMD_COLOR_MSG));
+        }
+        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
+        $output->write(PHP_EOL);
+    }
+
+    /**
+     * Display Action Fail Result
+     */
+    private static function renderKoResult(OutputInterface $output, string $text)
+    {
+        $logo = array(
+            "       \\ \\/ / ",
+            "        >  <  Fail: ".$text,
+            "       /_/\\_\\ ",
+        );
+
+        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_ERR));
+        foreach ($logo as $line) {
+            $output->write(Logger::getConsoleLine("", $line, Logger::CMD_COLOR_ERR));
+        }
+        $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_ERR));
+        $output->write(PHP_EOL);
+    }
 }

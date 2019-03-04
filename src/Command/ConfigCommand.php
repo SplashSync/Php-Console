@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2018 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2019 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,52 +16,54 @@
 namespace Splash\Console\Command;
 
 use Splash\Client\Splash;
-use Splash\Server\SplashServer;
-
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Splash\Console\Helper\Table;
-
 use Splash\Console\Helper\Graphics;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class selftestCommand extends Command
+/**
+ * Show Module's Configuration
+ */
+class ConfigCommand extends Command
 {
-    
+    /**
+     * Configure Symfony Command
+     */
     protected function configure()
     {
         $this
-            ->setName('selftest')
-            ->setDescription('Splash: Execute Module Self-Test')
+            ->setName('config')
+            ->setDescription('Splash : Show Your Splash Module Configuration')
         ;
     }
 
+    /**
+     * Execute Symfony Command
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //====================================================================//
-        // Splash Screen        
+        // Splash Screen
         Graphics::renderSplashScreen($output);
-        $output->writeln("Results of Local Module Self-Tests");
+        Graphics::renderTitle($output, "Your Splash Module Configuration");
         //====================================================================//
-        // Notice internal routines we are in server request mode        
+        // Notice internal routines we are in server request mode
         define("SPLASH_SERVER_MODE", true);
         //====================================================================//
-        // Verify PHP Version
-        Splash::validate()->isValidPHPVersion();
+        // Show Module Configuration
+        $config = Splash::configuration()->getArrayCopy();
+        print_r($config); 
         //====================================================================//
-        // Verify PHP Extensions
-        Splash::validate()->isValidPHPExtensions();
-        //====================================================================//
-        // Verify SOAP Method
-        Splash::validate()->isValidSOAPMethod();
-        //====================================================================//
-        // Execute Splash Self-Tests
-        Splash::selfTest();            
+        // Validate Module Configuration
+        $validate = Splash::validate()->isValidLocalParameterArray($config);
         //====================================================================//
         // Render Splash Logs
         $output->writeln(Splash::log()->getConsoleLog());
-        Splash::log()->getConsoleLog();        
-    } 
+        //====================================================================//
+        // Render Result Icon
+        Graphics::renderResult($output, $validate, "Splash Module Configuration Validation");
+    }
 }

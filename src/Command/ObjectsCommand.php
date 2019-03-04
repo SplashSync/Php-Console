@@ -25,10 +25,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Splash\Console\Helper\Table;
 use Splash\Console\Helper\Graphics;
 
-
-class objectsCommand extends Command
+/**
+ * List Available Objects on Splash Client
+ */
+class ObjectsCommand extends Command
 {
-    
+    /**
+     * Configure Symfony Command
+     */
     protected function configure()
     {
         $this
@@ -37,11 +41,18 @@ class objectsCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $Input, OutputInterface $output)
+    /**
+     * Execute Symfony Command
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
+        //====================================================================//
+        // Splash Screen           
         Graphics::renderSplashScreen($output);
-        
-        $output->writeln("Here are Listed all Available Objects");
+        Graphics::renderTitle($output, "Listed of Available Objects");
         
         $table = new Table($output);
 
