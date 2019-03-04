@@ -39,7 +39,7 @@ script:
     - if [[ ${TRAVIS_PHP_VERSION:0:3} > "7.0" ]]; then php ./vendor/bin/grumphp run --testsuite=phpstan; fi   
     # Show Basic Command Results   
     - php bin/splash
-    - php bin/splash config
+#    - php bin/splash config
     # Show Outdated Packages   
     - composer outdated
     
