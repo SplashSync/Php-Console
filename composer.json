@@ -1,6 +1,6 @@
 {
     "name":                 "splash/console",
-    "description":          "Console Application for All Php Applications",
+    "description":          "Console Application for All Splash Php Applications",
 
     "type":                 "package",    
     "minimum-stability":    "dev",
