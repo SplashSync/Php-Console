@@ -13,10 +13,6 @@ matrix:
     fast_finish: true
 
 ################################################################################
-# Prepare Test Environement
-before_install:
-
-################################################################################
 # GENERIC CONFIGURATION
 ################################################################################
 
@@ -24,10 +20,6 @@ before_install:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:   
-#    # Setup MailChimp Connector
-    - sed -i -e 's/ThisIsSecretApiKey/'$SIB_API_KEY'/g' tests/config/splash.yml >/dev/null 2>&1
-    - sed -i -e 's/ThisIsSecretApiList/'$SIB_API_LIST'/g' tests/config/splash.yml >/dev/null 2>&1
-
     # Setup Travis
     - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/configure.sh  | bash
     # Configure For Phpstan vs PHP Versions
