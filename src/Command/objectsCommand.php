@@ -15,13 +15,16 @@
 
 namespace Splash\Console\Command;
 
+use Splash\Client\Splash;
+
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableCell;
+use Splash\Console\Helper\Table;
+use Splash\Console\Helper\Graphics;
+
 
 class objectsCommand extends Command
 {
@@ -30,22 +33,94 @@ class objectsCommand extends Command
     {
         $this
             ->setName('objects')
-            ->setDescription('Splash: List Available Objects')
+            ->setDescription('Splash: List Available Objects Types')
         ;
     }
 
-    protected function execute(InputInterface $Input, OutputInterface $Output)
+    protected function execute(InputInterface $Input, OutputInterface $output)
     {
-        $Output->writeln("Hello World :-)");
+        Graphics::renderSplashScreen($output);
         
-        $table = new Table($Output);
-        $table
-                ->addRow(array("col 1", "col 2", "col 3"))
-                ->addRow(array("col 1", "col 2", "col 3", new TableCell('<error>This value spans 3 columns</error>.')))
-                ->addRow(array("col 1", "col 2", "col 3", new TableCell('<question>This value spans 3 columns</question>.')))
-                ->addRow(array("col 1", "col 2", "col 3"))
-                ->setStyle('box')
-->setStyle('borderless')                
-                ->render();
+        $output->writeln("Here are Listed all Available Objects");
+        
+        $table = new Table($output);
+
+        //====================================================================//
+        // Prepare Table Header
+        $table->setHeaders(array("Type", "Name", "Import", "Export", "Description"));
+        
+        //====================================================================//
+        // Walk on Objects Types
+        foreach (Splash::objects() as $objectType) {
+            //====================================================================//
+            // Read Object Description
+            $desc = Splash::object($objectType)->description();
+            //====================================================================//
+            // Add Object Row
+            $table->addRow(array(
+                $desc["type"],
+                $desc["name"],
+                self::getImportCfg($desc),
+                self::getExportCfg($desc),
+                $desc["description"],
+            ));
+        }
+        
+        //====================================================================//
+        // Render Data Table
+        $table->render();
+        
+        //====================================================================//
+        // Render Splash Logs
+        $output->writeln(Splash::log()->getConsoleLog());
+        Splash::log()->getConsoleLog();        
     }
+    
+    /**
+     * Get Import Configuration
+     * 
+     * @param array $desc
+     * @return string
+     */
+    private static function getImportCfg(array $desc) : string
+    {
+        $result = "";
+        //====================================================================//
+        // Import Create ? 
+        $result .= $desc["enable_pull_created"] ? "<info>C</>" : "<error>C</>";
+        $result .= "|";
+        //====================================================================//
+        // Import Update ? 
+        $result .= $desc["enable_pull_updated"] ? "<info>U</>" : "<error>U</>";
+        $result .= "|";
+        //====================================================================//
+        // Import Delete ? 
+        $result .= $desc["enable_pull_deleted"] ? "<info>D</>" : "<error>D</>";
+            
+        return $result;
+    }    
+    
+    /**
+     * Get Export Configuration
+     * 
+     * @param array $desc
+     * @return string
+     */
+    private static function getExportCfg(array $desc) : string
+    {
+        $result = "";
+        //====================================================================//
+        // Export Create ? 
+        $result .= ($desc["allow_push_created"] && $desc["enable_push_created"]) ? "<info>C</>" : "<error>C</>";
+        $result .= "|";
+        //====================================================================//
+        // Export Update ? 
+        $result .= ($desc["allow_push_updated"] && $desc["enable_push_updated"])? "<info>U</>" : "<error>U</>";
+        $result .= "|";
+        //====================================================================//
+        // Export Delete ? 
+        $result .= ($desc["allow_push_deleted"] && $desc["enable_push_deleted"]) ? "<info>D</>" : "<error>D</>";
+            
+        return $result;
+    }        
 }
