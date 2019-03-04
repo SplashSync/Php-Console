@@ -51,6 +51,9 @@ class Graphics
 
     /**
      * Display Action title
+     *
+     * @param OutputInterface $output
+     * @param string          $text
      */
     public static function renderTitle(OutputInterface $output, string $text)
     {
@@ -62,6 +65,10 @@ class Graphics
 
     /**
      * Display Action title
+     *
+     * @param OutputInterface $output
+     * @param bool            $result
+     * @param string          $text
      */
     public static function renderResult(OutputInterface $output, bool $result, string $text)
     {
@@ -72,6 +79,9 @@ class Graphics
 
     /**
      * Display Action Success Result
+     *
+     * @param OutputInterface $output
+     * @param string          $text
      */
     private static function renderOkResult(OutputInterface $output, string $text)
     {
@@ -91,6 +101,9 @@ class Graphics
 
     /**
      * Display Action Fail Result
+     *
+     * @param OutputInterface $output
+     * @param string          $text
      */
     private static function renderKoResult(OutputInterface $output, string $text)
     {
