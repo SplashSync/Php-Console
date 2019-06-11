@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * List Available Objects on Splash Client
  */
-class ObjectsCommand extends Command
+class ObjectsTypesCommand extends Command
 {
     /**
      * Configure Symfony Command
@@ -33,7 +33,7 @@ class ObjectsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('objects')
+            ->setName('objects:types')
             ->setDescription('Splash: List Available Objects Types')
         ;
     }

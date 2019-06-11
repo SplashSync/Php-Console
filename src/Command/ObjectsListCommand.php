@@ -15,16 +15,15 @@
 
 namespace Splash\Console\Command;
 
-use Splash\Client\Splash;
-use Splash\Console\Helper\Graphics;
-use Symfony\Component\Console\Command\Command;
+use Splash\Console\Helper\Table;
+use Splash\Console\Models\AbstractListingCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Test Connect to Splash Server
+ * List Available Objects on Splash Client
  */
-class ConnectCommand extends Command
+class ObjectsListCommand extends AbstractListingCommand
 {
     /**
      * Configure Symfony Command
@@ -32,9 +31,11 @@ class ConnectCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('connect')
-            ->setDescription('Splash: Perform Connect Test to Splash Server')
+            ->setName('objects:list')
+            ->setDescription('Splash: List Data for a Given Object Type')
         ;
+
+        parent::configure();
     }
 
     /**
@@ -42,30 +43,25 @@ class ConnectCommand extends Command
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //====================================================================//
-        // Splash Screen
-        Graphics::renderSplashScreen($output);
-        Graphics::renderTitle($output, "Test Ping of Splash Server");
+        // Init & Splash Screen
+        $this->init($input, $output);
+        $this->renderTitle("Read Objects List");
+
         //====================================================================//
-        // Notice internal routines we are in server request mode
-        define("SPLASH_SERVER_MODE", true);
+        // Read Objects Listed & Readable Fields
+        $fields = $this->getFields(true, true, false);
+
         //====================================================================//
-        // Execute Splash Self-Tests
-        $selfTests = Splash::selfTest();
-        //====================================================================//
-        // Execute Splash Server Connect
-        $ping = $selfTests ? Splash::connect() : false;
+        // Read & Render Objects List
+        $table = new Table($output);
+        $table->renderObjectsList($fields, $this->getObjects());
+
         //====================================================================//
         // Render Splash Logs
-        $output->writeln(Splash::log()->getConsoleLog());
-        Splash::log()->getConsoleLog();
-        //====================================================================//
-        // Render Result Icon
-        Graphics::renderResult($output, $ping, "Connect to Splash Server");
+        $this->renderLogs();
     }
 }

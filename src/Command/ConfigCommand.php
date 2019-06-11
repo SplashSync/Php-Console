@@ -33,7 +33,7 @@ class ConfigCommand extends Command
     {
         $this
             ->setName('config')
-            ->setDescription('Splash : Show Your Splash Module Configuration')
+            ->setDescription('Splash: Show Your Splash Module Configuration')
         ;
     }
 

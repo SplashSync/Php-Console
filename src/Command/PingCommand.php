@@ -17,6 +17,7 @@ namespace Splash\Console\Command;
 
 use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
+use Splash\Console\Models\AbstractCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,8 +25,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Test Ping of Splash Server
  */
-class PingCommand extends Command
+class PingCommand extends AbstractCommand
 {
+    /**
+     * @var string
+     */
+    protected $title = "Test Ping of Splash Server";
+
     /**
      * Configure Symfony Command
      */
@@ -33,7 +39,7 @@ class PingCommand extends Command
     {
         $this
             ->setName('ping')
-            ->setDescription('Splash : Perform Ping Test to Splash Server')
+            ->setDescription('Splash: Perform Ping Test to Splash Server')
         ;
     }
 
@@ -47,10 +53,10 @@ class PingCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->init($input, $output);
         //====================================================================//
         // Splash Screen
-        Graphics::renderSplashScreen($output);
-        Graphics::renderTitle($output, "Test Ping of Splash Server");
+        $this->renderTitle();
         //====================================================================//
         // Notice internal routines we are in server request mode
         define("SPLASH_SERVER_MODE", true);
@@ -62,8 +68,7 @@ class PingCommand extends Command
         $ping = $selfTests ? Splash::ping() : false;
         //====================================================================//
         // Render Splash Logs
-        $output->writeln(Splash::log()->getConsoleLog());
-        Splash::log()->getConsoleLog();
+        $this->renderLogs();
         //====================================================================//
         // Render Result Icon
         Graphics::renderResult($output, $ping, "Ping of Splash Server");
