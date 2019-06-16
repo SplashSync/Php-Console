@@ -32,9 +32,9 @@ use ZipArchive;
 
 /**
  * GrumPhp Task: Splash Module Builder
- * 
+ *
  * Generate Installable Zip file for Splash Module
- * 
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ModuleBuilder extends AbstractExternalTask
