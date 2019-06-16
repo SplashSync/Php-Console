@@ -205,7 +205,7 @@ class ModuleBuilder extends AbstractExternalTask
             "--no-interaction" => true,
         );
         $input = new ArrayInput(
-            array_replace_recursive($baseOptions, $this->config["composer_options"])
+            (array) array_replace_recursive($baseOptions, $this->config["composer_options"])
         );
 
         //====================================================================//
@@ -277,7 +277,7 @@ class ModuleBuilder extends AbstractExternalTask
         // Add the files
         foreach ($finder as $file) {
             $zip->addFile(
-                $file->getRealPath(),
+                (string) $file->getRealPath(),
                 $this->config["build_folder"].$file->getRelativePathname()
             );
         }
