@@ -98,28 +98,28 @@ class ModuleBuilder extends AbstractExternalTask
 
         //====================================================================//
         // Init Module Build Directory
-        $init = $this->initDirectory($context);
+        $init = $this->initDirectory();
         if (null !== $init) {
             return TaskResult::createFailed($this, $context, $init);
         }
 
         //====================================================================//
         // Copy Module Contents to Build Directory
-        $copy = $this->copyContents($context);
+        $copy = $this->copyContents();
         if (null !== $copy) {
             return TaskResult::createFailed($this, $context, $copy);
         }
 
         //====================================================================//
         // Execute Composer
-        $composer = $this->runComposer($context);
+        $composer = $this->runComposer();
         if (null !== $composer) {
             return TaskResult::createFailed($this, $context, $composer);
         }
 
         //====================================================================//
         // Build Module Archive
-        $build = $this->buildModule($context);
+        $build = $this->buildModule();
         if (null !== $build) {
             return TaskResult::createFailed($this, $context, $build);
         }
