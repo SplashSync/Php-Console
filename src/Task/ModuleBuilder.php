@@ -250,16 +250,6 @@ class ModuleBuilder extends AbstractExternalTask
     }
 
     /**
-     * Get Build Directory Path
-     *
-     * @return string
-     */
-    private function getBuildDirectory(): string
-    {
-        return $this->grumPHP->getGitDir()."/build/";
-    }
-
-    /**
      * Get Build File Path
      *
      * @return string
