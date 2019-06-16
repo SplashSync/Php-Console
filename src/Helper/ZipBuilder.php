@@ -1,31 +1,37 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *  This file is part of SplashSync Project.
+ *
+ *  Copyright (C) 2015-2019 Splash Sync  <www.splashsync.com>
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
  */
 
 namespace Splash\Console\Helper;
 
+use Splash\Core\SplashCore as Splash;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use ZipArchive;
-use Splash\Core\SplashCore as Splash;
 
 /**
  * Splash Module Zip Builder
  */
-class ZipBuilder {
-    
+class ZipBuilder
+{
     /**
-     * Build Module Archive 
+     * Build Module Archive
      *
      * @param string $targetFile
-     * @param array $sources
-     * 
+     * @param array  $sources
+     *
      * @return bool
      */
     public static function build(string $targetFile, array $sources): bool
@@ -48,9 +54,9 @@ class ZipBuilder {
         // Create the archive
         $zip = new ZipArchive();
         if (true !== $zip->open($targetFile, ZIPARCHIVE::CREATE)) {
-            return Splash::log()->errTrace("Unable to Create Zip Archive: " . $targetFile);
+            return Splash::log()->errTrace("Unable to Create Zip Archive: ".$targetFile);
         }
-        
+
         //====================================================================//
         // Add the files
         $filesCount = 0;
@@ -62,19 +68,19 @@ class ZipBuilder {
         if ($filesCount <= 0) {
             return Splash::log()->errTrace("No Files found for Zip Archive.");
         }
-        
+
         //====================================================================//
         // Close the zip -- done!
         $zip->close();
 
         return true;
     }
-    
+
     /**
-     * Ensure Target Directory Exist or Create it 
+     * Ensure Target Directory Exist or Create it
      *
      * @param string $targetFile
-     * 
+     *
      * @return bool
      */
     private static function ensureDirectoryExists(string $targetFile): bool
@@ -97,7 +103,7 @@ class ZipBuilder {
         // Verify Module Final Build Directory Exists
         if (!$filesystem->exists(dirname($targetFile))) {
             return Splash::log()->errTrace(
-                "Unable to Create Final Module Build Directory: " . dirname($targetFile)
+                "Unable to Create Final Module Build Directory: ".dirname($targetFile)
             );
         }
 
@@ -106,16 +112,17 @@ class ZipBuilder {
         if (!$filesystem->exists($targetFile)) {
             $filesystem->remove($targetFile);
         }
-        
+
         return true;
     }
-    
+
     /**
-     * Add Full Directory to Zip Archive 
+     * Add Full Directory to Zip Archive
      *
-     * @param string $targetFile
-     * @param array $sources
-     * 
+     * @param ZipArchive $zip
+     * @param string     $srcDirectory
+     * @param string     $innerDirectory
+     *
      * @return int
      */
     private static function addDir(ZipArchive $zip, string $srcDirectory, string $innerDirectory = ""): int
@@ -139,5 +146,5 @@ class ZipBuilder {
         }
 
         return $finder->count();
-    }    
+    }
 }

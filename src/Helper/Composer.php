@@ -28,14 +28,17 @@ class Composer
     /**
      * Execute Module Composer Update
      *
-     * @return null|string
+     * @param string $workingDir
+     * @param array  $options
+     *
+     * @return bool
      */
-    public static function update(string $WorkingDir, array $options = array()): bool
+    public static function update(string $workingDir, array $options = array()): bool
     {
         //====================================================================//
         // Prepare Command Input Array
         $input = new ArrayInput(
-            self::buildUpdateOptions($WorkingDir, $options)
+            self::buildUpdateOptions($workingDir, $options)
         );
 
         //====================================================================//
@@ -50,24 +53,27 @@ class Composer
 
         return true;
     }
-    
+
     /**
      * Build Options Array for Composer
      *
+     * @param string $workingDir
+     * @param array  $options
+     *
      * @return array
      */
-    private static function buildUpdateOptions(string $WorkingDir, array $options = array()): array
+    private static function buildUpdateOptions(string $workingDir, array $options = array()): array
     {
         //====================================================================//
         // Prepare Base Composer Options
         $baseOptions = array(
             'command' => 'update',
-            "--working-dir" => $WorkingDir,
+            "--working-dir" => $workingDir,
             "--quiet" => true,
             "--no-interaction" => true,
         );
         //====================================================================//
         // Merge with User Options
         return (array) array_replace_recursive($baseOptions, $options);
-    }    
+    }
 }

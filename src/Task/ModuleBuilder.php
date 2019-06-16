@@ -15,27 +15,23 @@
 
 namespace Splash\Console\Task;
 
-use Composer\Console\Application as ComposerApp;
-use Exception;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
-use Symfony\Component\Console\Input\ArrayInput;
+use Splash\Console\Helper\Composer;
+use Splash\Console\Helper\ZipBuilder;
+use Splash\Core\SplashCore as Splash;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use ZipArchive;
 
 /**
  * GrumPhp Task: Splash Module Builder
  *
  * Generate Installable Zip file for Splash Module
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ModuleBuilder extends AbstractExternalTask
 {
@@ -97,31 +93,33 @@ class ModuleBuilder extends AbstractExternalTask
         $this->config = $this->getConfiguration();
 
         //====================================================================//
+        // Load Splash as Empty Local Class (To Work without System Config)
+        Splash::setLocalClass(new \Splash\Templates\Local\Local());
+        Splash::translator()->load('local');
+        Splash::log()->cleanLog();
+
+        //====================================================================//
         // Init Module Build Directory
-        $init = $this->initDirectory();
-        if (null !== $init) {
-            return TaskResult::createFailed($this, $context, $init);
+        if (!$this->initDirectory()) {
+            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
 
         //====================================================================//
         // Copy Module Contents to Build Directory
-        $copy = $this->copyContents();
-        if (null !== $copy) {
-            return TaskResult::createFailed($this, $context, $copy);
+        if (!$this->copyContents()) {
+            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
 
         //====================================================================//
         // Execute Composer
-        $composer = $this->runComposer();
-        if (null !== $composer) {
-            return TaskResult::createFailed($this, $context, $composer);
+        if (!$this->runComposer()) {
+            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
 
         //====================================================================//
         // Build Module Archive
-        $build = $this->buildModule();
-        if (null !== $build) {
-            return TaskResult::createFailed($this, $context, $build);
+        if (!$this->buildModule()) {
+            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
 
         return TaskResult::createPassed($this, $context);
@@ -130,9 +128,9 @@ class ModuleBuilder extends AbstractExternalTask
     /**
      * Init Temp Build Directory
      *
-     * @return null|string
+     * @return bool
      */
-    private function initDirectory(): ?string
+    private function initDirectory(): bool
     {
         $filesystem = new Filesystem();
         //====================================================================//
@@ -141,18 +139,20 @@ class ModuleBuilder extends AbstractExternalTask
             $filesystem->remove($this->getTempDirectory());
             $filesystem->mkdir($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
-            return "An error occurred while creating your directory at ".$exception->getPath();
+            return Splash::log()->errTrace(
+                "An error occurred while creating your directory at ".$exception->getPath()
+            );
         }
 
-        return null;
+        return true;
     }
 
     /**
      * Copy Module Contents to Temp Build Directory
      *
-     * @return null|string
+     * @return bool
      */
-    private function copyContents(): ?string
+    private function copyContents(): bool
     {
         $filesystem = new Filesystem();
 
@@ -161,7 +161,9 @@ class ModuleBuilder extends AbstractExternalTask
         try {
             $filesystem->mirror($this->getModuleDirectory(), $this->getModuleTempDirectory());
         } catch (IOExceptionInterface $exception) {
-            return "An error occurred while module contents copy at ".$exception->getPath();
+            return Splash::log()->errTrace(
+                "An error occurred while module contents copy at ".$exception->getPath()
+            );
         }
 
         //====================================================================//
@@ -169,123 +171,52 @@ class ModuleBuilder extends AbstractExternalTask
         if (!empty($this->config["composer_file"])) {
             $composerPath = $this->grumPHP->getGitDir()."/".$this->config["composer_file"];
             if (!$filesystem->exists($composerPath)) {
-                return "Unable to find composer.json at ".$composerPath;
+                return Splash::log()->errTrace(
+                    "Unable to find composer.json at ".$composerPath
+                );
             }
             //====================================================================//
             // Copy Module Contents
             try {
                 $filesystem->copy($composerPath, $this->getTempDirectory()."/composer.json");
             } catch (IOExceptionInterface $exception) {
-                return "An error occurred while copy composer.json contents to ".$exception->getPath();
+                return Splash::log()->errTrace(
+                    "An error occurred while copy composer.json contents to ".$exception->getPath()
+                );
             }
         }
 
-        return null;
+        return true;
     }
 
     /**
      * Execute Module Composer
      *
-     * @return null|string
+     * @return bool
      */
-    private function runComposer(): ?string
+    private function runComposer(): bool
     {
         //====================================================================//
         // Check if Composer JSON is Required
         if (empty($this->config["composer_file"])) {
-            return null;
+            return true;
         }
 
         //====================================================================//
-        // Prepare Composer Input Options
-        $baseOptions = array(
-            'command' => 'install',
-            "--working-dir" => $this->getTempDirectory(),
-            "--quiet" => true,
-            "--no-interaction" => true,
-        );
-        $input = new ArrayInput(
-            (array) array_replace_recursive($baseOptions, $this->config["composer_options"])
-        );
-
-        //====================================================================//
-        // Execute Composer Build
-        try {
-            $composer = new ComposerApp();
-            $composer->setAutoExit(false);
-            $composer->run($input);
-        } catch (Exception $exception) {
-            return "Composer Update Failled ".$exception->getMessage();
-        }
-
-        return null;
+        // Execute Composer Update
+        return Composer::update($this->getTempDirectory(), $this->config["composer_options"]);
     }
 
     /**
      * Build Module Archive to Build Directory
      *
-     * @return null|string
+     * @return bool
      */
-    private function buildModule(): ?string
+    private function buildModule(): bool
     {
-        $filesystem = new Filesystem();
-
-        //====================================================================//
-        // Ensure Module Final Build Directory Exists
-        if (!$filesystem->exists($this->getBuildDirectory())) {
-            try {
-                $filesystem->mkdir($this->getBuildDirectory());
-            } catch (IOExceptionInterface $exception) {
-                return "An error occurred while creating your directory at ".$exception->getPath();
-            }
-        }
-
-        //====================================================================//
-        // Verify Module Final Build Directory Exists
-        if (!$filesystem->exists($this->getBuildDirectory())) {
-            return "Final Module Build Dir doesn't Exists!";
-        }
-
-        //====================================================================//
-        // Verify Module Final Build Directory Exists
-        if (!$filesystem->exists($this->getBuildPath())) {
-            $filesystem->remove($this->getBuildPath());
-        }
-
-        //====================================================================//
-        // Verify Zip Extention is Loaded
-        if (!extension_loaded("zip")) {
-            return 'PHP : Zip PHP Extension is required to use Splash PHP Module.';
-        }
-
-        //====================================================================//
-        // List Files to Add on Zip
-        $finder = new Finder();
-        $finder->files()->in($this->getModuleTempDirectory());
-        // check if there are any search results
-        if (!$finder->hasResults()) {
-            return "No files found to generate Final Module!";
-        }
-
-        //====================================================================//
-        // Create the archive
-        $zip = new ZipArchive();
-        if (true !== $zip->open($this->getBuildPath(), ZIPARCHIVE::CREATE)) {
-            return "Unable to Create Final Module zip Archive";
-        }
-        //====================================================================//
-        // Add the files
-        foreach ($finder as $file) {
-            $zip->addFile(
-                (string) $file->getRealPath(),
-                $this->config["build_folder"].$file->getRelativePathname()
-            );
-        }
-        //====================================================================//
-        // Close the zip -- done!
-        $zip->close();
-
-        return null;
+        return ZipBuilder::build($this->getBuildPath(), array(
+            $this->config["build_folder"] => $this->getModuleTempDirectory()
+        ));
     }
 
     /**
