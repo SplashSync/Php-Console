@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2018 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2019 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,14 +13,14 @@
  *  file that was distributed with this source code.
  */
 
-define('SPLASH_CONSOLE_PATH', realpath(__DIR__ . '/..'));
+define('SPLASH_CONSOLE_PATH', realpath(__DIR__.'/..'));
 
 //====================================================================//
 // Ensure PHP Versions
-if (PHP_VERSION_ID > 70100) {
+if (PHP_VERSION_ID < 70100) {
     fwrite(
         STDERR,
-        'This Command Line Tool require PHP VERSION >= 7.1.' . PHP_EOL
+        'This Command Line Tool require PHP VERSION >= 7.1.'.PHP_EOL
     );
     exit(1);
 }
@@ -28,10 +28,10 @@ if (PHP_VERSION_ID > 70100) {
 //====================================================================//
 // List of AutoLoad Possible Locations
 $autoloadLocations = array(
-    getcwd() . '/vendor/autoload.php',
-    getcwd() . '/../../autoload.php',
-    __DIR__ . '/../vendor/autoload.php',
-    __DIR__ . '/../../../autoload.php',
+    getcwd().'/vendor/autoload.php',
+    getcwd().'/../../autoload.php',
+    __DIR__.'/../vendor/autoload.php',
+    __DIR__.'/../../../autoload.php',
 );
 
 //====================================================================//
@@ -49,9 +49,9 @@ foreach ($autoloadLocations as $autoload) {
 if (!$loaded) {
     fwrite(
         STDERR,
-        'You must set up the project dependencies, run the following commands:' . PHP_EOL .
-        'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
-        'php composer.phar install' . PHP_EOL
+        'You must set up the project dependencies, run the following commands:'.PHP_EOL.
+        'curl -s http://getcomposer.org/installer | php'.PHP_EOL.
+        'php composer.phar install'.PHP_EOL
     );
     exit(1);
 }

@@ -27,6 +27,12 @@ class Loader implements ExtensionInterface
      */
     public function load(ContainerBuilder $container)
     {
+        //====================================================================//
+        // Ensure PHP Versions
+        if (PHP_VERSION_ID < 70100) {
+            return;
+        }
+
         $container->register('task.build', ModuleBuilder::class)
             ->addArgument(new Reference('config'))
             ->addArgument(new Reference('process_builder'))
