@@ -44,7 +44,7 @@ class Loader implements ExtensionInterface
      * @param string           $className
      * @param string           $taskName
      */
-    private function addTask(ContainerBuilder $container, string $className, string $taskName)
+    private function addTask(ContainerBuilder $container, $className, $taskName)
     {
         $container->register('task.build', $className)
             ->addArgument(new Reference('config'))
