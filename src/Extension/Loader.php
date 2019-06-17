@@ -17,7 +17,6 @@ namespace Splash\Console\Extension;
 
 use GrumPHP\Extension\ExtensionInterface;
 use Splash\Console\Task\ModuleBuilder;
-use Splash\Console\Task\NullTask;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -28,14 +27,6 @@ class Loader implements ExtensionInterface
      */
     public function load(ContainerBuilder $container)
     {
-        //====================================================================//
-        // Ensure PHP Versions
-        if (PHP_VERSION_ID < 70100) {
-            $this->addTask($container, NullTask::class, 'build');
-
-            return;
-        }
-
         $this->addTask($container, ModuleBuilder::class, 'build');
     }
 
