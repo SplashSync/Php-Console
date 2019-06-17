@@ -31,19 +31,25 @@ class Loader implements ExtensionInterface
         //====================================================================//
         // Ensure PHP Versions
         if (PHP_VERSION_ID < 70100) {
-            $container->register('task.build', NullTask::class)
-                ->addArgument(new Reference('config'))
-                ->addArgument(new Reference('process_builder'))
-                ->addArgument(new Reference('formatter.raw_process'))
-                ->addTag('grumphp.task', array('config' => 'build'));
+            $this->addTask($container, NullTask::class, 'build');
 
             return;
         }
 
-        $container->register('task.build', ModuleBuilder::class)
+        $this->addTask($container, ModuleBuilder::class, 'build');
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param string           $className
+     * @param string           $taskName
+     */
+    private function addTask(ContainerBuilder $container, string $className, string $taskName)
+    {
+        $container->register('task.build', $className)
             ->addArgument(new Reference('config'))
             ->addArgument(new Reference('process_builder'))
             ->addArgument(new Reference('formatter.raw_process'))
-            ->addTag('grumphp.task', array('config' => 'build'));
+            ->addTag('grumphp.task', array('config' => $taskName));
     }
 }
