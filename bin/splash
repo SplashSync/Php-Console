@@ -16,6 +16,16 @@
 define('SPLASH_CONSOLE_PATH', realpath(__DIR__ . '/..'));
 
 //====================================================================//
+// Ensure PHP Versions
+if (PHP_VERSION_ID > 70100) {
+    fwrite(
+        STDERR,
+        'This Command Line Tool require PHP VERSION >= 7.1.' . PHP_EOL
+    );
+    exit(1);
+}
+
+//====================================================================//
 // List of AutoLoad Possible Locations
 $autoloadLocations = array(
     getcwd() . '/vendor/autoload.php',
