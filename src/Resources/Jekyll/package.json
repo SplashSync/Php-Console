@@ -1,0 +1,9 @@
+{
+    "dependencies": {
+        "flag-icon-css": "^3.3.0",
+        "jquery": "^3.4.1"
+    },
+    "directories": {
+        "dist": "assets/vendor/"
+    }
+}

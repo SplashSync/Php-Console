@@ -7,17 +7,64 @@
   <body class="body-orange">
     <div class="page-wrapper">
 
-      {%- include header.html -%}
+      {%- include header.liquid -%}
 
       <div class="doc-wrapper">
         <div class="container">
-          {{ content }}
+
+
+MENU
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}/">Home</a>
+
+      {% assign pages_list = site.pages %}
+      {% assign written = "" | split: '' %}
+      {% for node in pages_list %}
+        {% if written contains node.title %}
+          {% continue %}
+        {% endif %}
+        {% if node.title != null %}
+          {% if node.layout == "page" %}
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{site.baseurl}}{{ node.url }}">{{ node.title }}</a>
+          {% endif %}
+
+          {% if node.layout == "default" %}
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{site.baseurl}}{{ node.url }}">{{ node.title }}</a>
+          {% endif %}
+
+          {% assign written = written | push: node.title %}
+        {% endif %}
+      {% endfor %}
+      <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
+
+
+    </nav>
+
+{% for page in site.pages %}
+  {% if page.lang != "" %}
+    <div class="item">
+      <h3>Title: {{page.title}}</h3>
+      <p>Desc: {{page.description}}</p>  
+      <p>Lang:  {{page.lang}}</p>  
+      <p>Permalink {{page.permalink}}</p>  
+      <p>Collection {{page.name}}</p>  
+    </div>
+{% endif %}
+{% endfor %}
+
+      {{ content }}
+
+
         </div>
       </div>
 
       {%- include footer.html -%}
 
     </div>
+
+
+
   </body>
 
 </html>

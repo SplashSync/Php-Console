@@ -1,5 +1,9 @@
 ---
 layout: default
+lang: fr
+permalink: test/
+title: FR Test PAge
+
 ---
 
 

@@ -42,6 +42,13 @@ $twitter: #55acee;
 $google: #dd4b39;
 $github: #444;
 
+//*************************** Country Flags Icons ****************************/
+// Configuration
+$flag-icon-css-path: '../vendor/flag-icon-css/flags' !default;
+$flag-icon-rect-path: '/4x3' !default;
+$flag-icon-square-path: '/1x1' !default;
+@import '../assets/vendor/flag-icon-css/sass/_flag-icon-base.scss';
+@import '../assets/vendor/flag-icon-css/sass/_flag-icon-list.scss';
 
 //*************************** Theme Styles ****************************/
 // Import theme styles
