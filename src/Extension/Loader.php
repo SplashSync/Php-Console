@@ -16,8 +16,8 @@
 namespace Splash\Console\Extension;
 
 use GrumPHP\Extension\ExtensionInterface;
-use Splash\Console\Task\ModuleBuilder;
 use Splash\Console\Task\DocumentationBuilder;
+use Splash\Console\Task\ModuleBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
