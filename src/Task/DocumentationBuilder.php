@@ -21,19 +21,18 @@ use GrumPHP\Task\AbstractExternalTask;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
-use Splash\Console\Helper\Composer;
-use Splash\Console\Helper\ZipBuilder;
+use Splash\Console\Helper\ShellRunner;
 use Splash\Core\SplashCore as Splash;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * GrumPhp Task: Splash Module Builder
+ * GrumPhp Task: Jekyll Documentation Builder
  *
- * Generate Installable Zip file for Splash Module
+ * Generate Static Documentation Website for Github Pages
  */
-class ModuleBuilder extends AbstractExternalTask
+class DocumentationBuilder extends AbstractExternalTask
 {
     /**
      * @var array
@@ -45,7 +44,7 @@ class ModuleBuilder extends AbstractExternalTask
      */
     public function getName(): string
     {
-        return 'build-module';
+        return 'build-docs';
     }
 
     /**
@@ -57,22 +56,31 @@ class ModuleBuilder extends AbstractExternalTask
         $resolver->setDefaults(
             array(
                 'enabled' => true,
-                'source_folder' => "/",
-                'target_folder' => '/splash-console',
-                'build_folder' => '',
-                'build_file' => 'my-module.x.y.z',
-                'composer_file' => "composer.json",
-                'composer_options' => array("--no-dev" => true),
+                // Path of Jekyll Base Site (Relative to Splash Console)
+                'source_folder' => "/Resources/jekyll",
+                // Path of Final Docs (Relative to Current Module)
+                'target_folder' => '/docs',
+                // Path of Modules Documentations Contents (Relative to Current Module)
+                'local_folder' => '/src/Resources/docs',
+                // Genric Contents Path (Relative to Splash Console)
+                'generic_folder' => "/Resources/contents",
+                // Genric Contents To Add
+                'generic_contents' => array("module", "splash"),
+
+                //                'build_folder' => '',
+                //                'build_file' => 'my-module.x.y.z',
+                //                'composer_file' => "composer.json",
+                //                'composer_options' => array("--no-dev" => true),
             )
         );
 
         $resolver->addAllowedTypes('enabled', array('bool'));
         $resolver->addAllowedTypes('source_folder', array('string'));
         $resolver->addAllowedTypes('target_folder', array('string'));
-        $resolver->addAllowedTypes('build_folder', array('string'));
-        $resolver->addAllowedTypes('build_file', array('string'));
-        $resolver->addAllowedTypes('composer_file', array('string'));
-        $resolver->addAllowedTypes('composer_options', array('array'));
+//        $resolver->addAllowedTypes('build_folder', array('string'));
+//        $resolver->addAllowedTypes('build_file', array('string'));
+//        $resolver->addAllowedTypes('composer_file', array('string'));
+        $resolver->addAllowedTypes('generic_contents', array('array'));
 
         return $resolver;
     }
@@ -93,13 +101,13 @@ class ModuleBuilder extends AbstractExternalTask
         //====================================================================//
         // Load Task Configuration
         $this->config = $this->getConfiguration();
-        
+
         //====================================================================//
         // Build Disabled => Skip this Task
         if (!$this->config["enabled"]) {
             return TaskResult::createPassed($this, $context);
         }
-        
+
         //====================================================================//
         // Load Splash as Empty Local Class (To Work without System Config)
         Splash::setLocalClass(new \Splash\Templates\Local\Local());
@@ -113,22 +121,22 @@ class ModuleBuilder extends AbstractExternalTask
         }
 
         //====================================================================//
-        // Copy Module Contents to Build Directory
+        // Copy Documentation Site Contents to Build Directory
         if (!$this->copyContents()) {
             return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
 
         //====================================================================//
-        // Execute Composer
-        if (!$this->runComposer()) {
+        // Execute Yarn
+        if (!$this->runYarn()) {
             return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
-
-        //====================================================================//
-        // Build Module Archive
-        if (!$this->buildModule()) {
-            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
-        }
+//
+//        //====================================================================//
+//        // Build Module Archive
+//        if (!$this->buildModule()) {
+//            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
+//        }
 
         return TaskResult::createPassed($this, $context);
     }
@@ -144,8 +152,8 @@ class ModuleBuilder extends AbstractExternalTask
         //====================================================================//
         // Init Module Build Directory
         try {
-            $filesystem->remove($this->getTempDirectory());
-            $filesystem->mkdir($this->getTempDirectory());
+            $filesystem->remove($this->getDocsDirectory());
+            $filesystem->mkdir($this->getDocsDirectory());
         } catch (IOExceptionInterface $exception) {
             return Splash::log()->errTrace(
                 "An error occurred while creating your directory at ".$exception->getPath()
@@ -156,7 +164,7 @@ class ModuleBuilder extends AbstractExternalTask
     }
 
     /**
-     * Copy Module Contents to Temp Build Directory
+     * Copy Documentation Contents to Docs Directory
      *
      * @return bool
      */
@@ -165,105 +173,112 @@ class ModuleBuilder extends AbstractExternalTask
         $filesystem = new Filesystem();
 
         //====================================================================//
-        // Copy Module Contents
+        // Copy Jekyll Base Contents
         try {
-            $filesystem->mirror($this->getModuleDirectory(), $this->getModuleTempDirectory());
+            $filesystem->mirror($this->getJekyllSrcDirectory(), $this->getDocsDirectory());
         } catch (IOExceptionInterface $exception) {
             return Splash::log()->errTrace(
-                "An error occurred while module contents copy at ".$exception->getPath()
+                "An error occurred while Jekyll Base copy at ".$exception->getPath()
             );
         }
 
         //====================================================================//
-        // Copy Module Composer JSON to Build Directory
-        if (!empty($this->config["composer_file"])) {
-            $composerPath = $this->grumPHP->getGitDir()."/".$this->config["composer_file"];
-            if (!$filesystem->exists($composerPath)) {
+        // Copy Generic Contents
+        foreach ($this->config["generic_contents"] as $code) {
+            $contentDir = $this->getGenericContentDirectory($code);
+            if (!is_dir($contentDir)) {
                 return Splash::log()->errTrace(
-                    "Unable to find composer.json at ".$composerPath
+                    "Unable to find Generic Contents copy at ".$contentDir
                 );
             }
-            //====================================================================//
-            // Copy Module Contents
+
             try {
-                $filesystem->copy($composerPath, $this->getTempDirectory()."/composer.json");
+                $filesystem->mirror($contentDir, $this->getDocsDirectory());
             } catch (IOExceptionInterface $exception) {
                 return Splash::log()->errTrace(
-                    "An error occurred while copy composer.json contents to ".$exception->getPath()
+                    "An error occurred while Generic Contents copy at ".$exception->getPath()
                 );
             }
+        }
+
+        //====================================================================//
+        // Copy Local Contents
+        try {
+            $filesystem->mirror($this->getLocalContentsDirectory(), $this->getDocsDirectory());
+        } catch (IOExceptionInterface $exception) {
+            return Splash::log()->errTrace(
+                "An error occurred while Local Contents copy at ".$exception->getPath()
+            );
         }
 
         return true;
     }
 
     /**
-     * Execute Module Composer
+     * Execute Yarn Install
      *
      * @return bool
      */
-    private function runComposer(): bool
+    private function runYarn(): bool
     {
         //====================================================================//
-        // Check if Composer JSON is Required
-        if (empty($this->config["composer_file"])) {
-            return true;
+        // Check if Yarn is Installed
+        if (!ShellRunner::run("yarn --version")) {
+            return Splash::log()->errTrace("Yarn is Not Installed!! But sorry it's required...");
+        }
+        //====================================================================//
+        // Execute Yarn install
+        $comamnd = "yarn --cwd ".$this->getDocsDirectory();
+        $comamnd .= " install";
+        $comamnd .= " --silent --non-interactive";
+        $comamnd .= ' --modules-folder="'.$this->getDocsDirectory().'/assets/vendor" ';
+
+        if (!ShellRunner::run($comamnd)) {
+            return Splash::log()->errTrace("Yarn install failled!");
         }
 
-        //====================================================================//
-        // Execute Composer Update
-        return Composer::update($this->getTempDirectory(), $this->config["composer_options"]);
+        return true;
     }
 
     /**
-     * Build Module Archive to Build Directory
-     *
-     * @return bool
-     */
-    private function buildModule(): bool
-    {
-        return ZipBuilder::build($this->getBuildPath(), array(
-            $this->config["build_folder"] => $this->getModuleTempDirectory()
-        ));
-    }
-
-    /**
-     * Get Temp Build Directory Path
+     * Get Documentations Sources Directory Path
      *
      * @return string
      */
-    private function getTempDirectory(): string
+    private function getDocsDirectory(): string
     {
-        return sys_get_temp_dir().$this->config["target_folder"];
+        return $this->grumPHP->getGitDir().$this->config["target_folder"];
     }
 
     /**
-     * Get Module Directory Path
+     * Get Jekyll Sources Directory Path
      *
      * @return string
      */
-    private function getModuleDirectory(): string
+    private function getJekyllSrcDirectory(): string
     {
-        return $this->grumPHP->getGitDir().$this->config["source_folder"];
+        return dirname(__DIR__).$this->config["source_folder"];
     }
 
     /**
-     * Get Module Temp Directory Path
+     * Get Generic Contents Directory Path
+     *
+     * @param string $contentsDir
      *
      * @return string
      */
-    private function getModuleTempDirectory(): string
+    private function getGenericContentDirectory(string $contentsDir): string
     {
-        return sys_get_temp_dir().$this->config["target_folder"].$this->config["source_folder"];
+        return dirname(__DIR__).$this->config["generic_folder"]."/".$contentsDir;
     }
 
     /**
-     * Get Build File Path
+     * Get Local Sources Directory Path
      *
      * @return string
      */
-    private function getBuildPath(): string
+    private function getLocalContentsDirectory(): string
     {
-        return $this->grumPHP->getGitDir()."/build/".$this->config["build_file"].".zip";
+        return $this->grumPHP->getGitDir().$this->config["local_folder"];
     }
 }
