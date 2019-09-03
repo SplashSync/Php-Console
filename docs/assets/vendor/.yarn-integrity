@@ -1,0 +1,36 @@
+{
+  "systemParams": "linux-x64-57",
+  "modulesFolders": [
+    "assets/vendor"
+  ],
+  "flags": [],
+  "linkedModules": [],
+  "topLevelPatterns": [
+    "@fortawesome/fontawesome-free@^5.10.2",
+    "bootstrap@^4.3.1",
+    "ekko-lightbox@^5.3.0",
+    "flag-icon-css@^3.3.0",
+    "jquery-scrollTo@^0.2.2",
+    "jquery@^3.4.1",
+    "popper.js@^1.14.7",
+    "prismjs@^1.17.1"
+  ],
+  "lockfileEntries": {
+    "@fortawesome/fontawesome-free@^5.10.2": "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.10.2.tgz#27e02da1e34b50c9869179d364fb46627b521130",
+    "bootstrap@^4.3.1": "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.3.1.tgz#280ca8f610504d99d7b6b4bfc4b68cec601704ac",
+    "clipboard@^2.0.0": "https://registry.yarnpkg.com/clipboard/-/clipboard-2.0.4.tgz#836dafd66cf0fea5d71ce5d5b0bf6e958009112d",
+    "delegate@^3.1.2": "https://registry.yarnpkg.com/delegate/-/delegate-3.2.0.tgz#b66b71c3158522e8ab5744f720d8ca0c2af59166",
+    "ekko-lightbox@^5.3.0": "https://registry.yarnpkg.com/ekko-lightbox/-/ekko-lightbox-5.3.0.tgz#fbfcd9df93a8d1cdbf8770adc8c05aaac4d24f56",
+    "flag-icon-css@^3.3.0": "https://registry.yarnpkg.com/flag-icon-css/-/flag-icon-css-3.3.0.tgz#7772461e4480d3d86da5962f02120a2825688433",
+    "good-listener@^1.2.2": "https://registry.yarnpkg.com/good-listener/-/good-listener-1.2.2.tgz#d53b30cdf9313dffb7dc9a0d477096aa6d145c50",
+    "jquery-scrollTo@^0.2.2": "https://registry.yarnpkg.com/jquery-scrollTo/-/jquery-scrollTo-0.2.2.tgz#40b1be86fab5c51d39155bfeefda42105a7f607b",
+    "jquery@>=2.2.0": "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2",
+    "jquery@^3.4.1": "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2",
+    "popper.js@^1.14.7": "https://registry.yarnpkg.com/popper.js/-/popper.js-1.15.0.tgz#5560b99bbad7647e9faa475c6b8056621f5a4ff2",
+    "prismjs@^1.17.1": "https://registry.yarnpkg.com/prismjs/-/prismjs-1.17.1.tgz#e669fcbd4cdd873c35102881c33b14d0d68519be",
+    "select@^1.1.2": "https://registry.yarnpkg.com/select/-/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d",
+    "tiny-emitter@^2.0.0": "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
+  },
+  "files": [],
+  "artifacts": {}
+}

@@ -20,46 +20,4 @@
 <!--End Main Footer-->
 
  
-<!-- Main Javascript -->          
-<script type="text/javascript" src="{{ "assets/plugins/jquery-3.3.1.min.js" | relative_url }}"></script>
-<script type="text/javascript" src="{{ "assets/plugins/bootstrap/js/bootstrap.min.js" | relative_url }}"></script>
-<script type="text/javascript" src="{{ "assets/plugins/prism/prism.js" | relative_url }}"></script>    
-<script type="text/javascript" src="{{ "assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js" | relative_url }}"></script>      
-<script type="text/javascript" src="{{ "assets/plugins/stickyfill/dist/stickyfill.min.js" | relative_url }}"></script>                                                             
-<script type="text/javascript" src="{{ "assets/js/main.js" | relative_url }}"></script>
-<!-- End Main Javascript -->          
-
-<!-- 
-<footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
-
-  <div class="wrapper">
-
-    <div class="footer-col-wrapper">
-      <div class="footer-col one-half">
-      <h2 class="footer-heading">{{ site.title | escape }}</h2>
-        <ul class="contact-list">
-          <li class="p-name">
-            {%- if site.author -%}
-              {{ site.author | escape }}
-            {%- endif -%}
-            </li>
-            {%- if site.email -%}
-            <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-            {%- endif -%}
-        </ul>
-      </div>
-
-      <div class="footer-col one-half">
-        <p>{{- site.description | escape -}}</p>
-      </div>
-
-      <div class="social-links">
-        {%- include social.html -%}
-      </div>
-    </div>
-
-  </div>
-
-</footer>
- -->
+{%- include core/javascripts.liquid -%}

@@ -3,8 +3,8 @@ $(document).ready(function() {
     /* ===== Stickyfill ===== */
     /* Ref: https://github.com/wilddeer/stickyfill */
     // Add browser support to position: sticky
-    var elements = $('.sticky');
-    Stickyfill.add(elements);
+//    var elements = $('.sticky');
+//    Stickyfill.add(elements);
 
 
     /* Activate scrollspy menu */
@@ -12,11 +12,9 @@ $(document).ready(function() {
     
     /* Smooth scrolling */
 	$('a.scrollto').on('click', function(e){
-        //store hash
-        var target = this.hash;    
-        e.preventDefault();
-		$('body').scrollTo(target, 800, {offset: 0, 'axis':'y'});
-		
+        var page = $(this).attr('href');    // Page cible
+        var speed = 800;                    // Durée de l'animation (en ms)
+        $('html, body').animate( { scrollTop: $(page).offset().top }, speed ); // Go
 	});
      
     /* Bootstrap lightbox */

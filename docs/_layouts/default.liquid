@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {%- include head.liquid -%}
+
+  <body class="body-orange">
+    <div class="page-wrapper">
+
+      {%- include header.liquid -%}
+
+      <div class="doc-wrapper">
+        <div class="container">
+          {{ content }}
+        </div>
+      </div>
+
+    </div>
+
+    {%- include footer.html -%}
+
+  </body>
+  
+</html>

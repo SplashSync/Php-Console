@@ -1,0 +1,29 @@
+---
+layout: default
+title: Faq
+permalink: faq
+---
+
+<div id="doc-header" class="doc-header text-center">
+    <h1 class="doc-title"><i class="icon icon_lifesaver"></i>&nbsp;{{ site.data.core.faq.title }}</h1>
+    <div class="meta">{{ site.data.core.faq.subtitle }}</div>
+</div>
+<div class="doc-body row">
+
+	<!-- Doc Content -->    
+    <div class="doc-content col-md-9 col-12 order-1">
+        <div class="content-inner faq-content">
+            {%- include faq/contents.liquid -%}
+        </div>
+    </div>
+	<!-- End Doc Content -->    
+
+	<!-- Doc Sidebar -->    
+    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+        <div id="doc-nav" class="doc-nav">
+			{%- include faq/menu.liquid -%}
+        </div>
+    </div>
+    <!-- End Doc Sidebar -->    
+
+</div>

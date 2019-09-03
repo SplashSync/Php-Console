@@ -1,0 +1,25 @@
+{% for node in site.pages %}
+    {% if node.title != null %}
+        {% if node.permalink contains "faq/" %}
+
+
+            <div class="item item-purple col-lg-4 col-6">
+                <div class="item-inner">
+                    <div class="icon-holder">
+                        <i class="icon icon_lifesaver"></i>
+                    </div>
+
+                    <h3 class="title">{{ site.data.core.faq.title }}</h3>
+                    <p class="intro">{{ site.data.core.faq.subtitle }}</p>
+
+                    <a class="link" href="faq.html"><span></span></a>
+                </div>
+            </div>
+
+            {% break %}
+
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+
