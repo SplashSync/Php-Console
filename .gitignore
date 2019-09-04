@@ -1,3 +1,8 @@
 /vendor/
 /composer.lock
 /.php_cs.cache
+/src/Resources/Jekyll/assets/vendor/
+/docs/nbproject/private/
+/build/
+/docs/yarn.lock
+/.gh-pages/
