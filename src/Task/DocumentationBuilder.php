@@ -26,6 +26,7 @@ use Splash\Core\SplashCore as Splash;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * GrumPhp Task: Jekyll Documentation Builder
@@ -66,20 +67,16 @@ class DocumentationBuilder extends AbstractExternalTask
                 'generic_folder' => "/Resources/contents",
                 // Genric Contents To Add
                 'generic_contents' => array("module", "splash"),
-
-                //                'build_folder' => '',
-                //                'build_file' => 'my-module.x.y.z',
-                //                'composer_file' => "composer.json",
-                //                'composer_options' => array("--no-dev" => true),
+                // Temp Folder for Buildingh the Site
+                'build_folder' => '/.gh-pages',
             )
         );
 
         $resolver->addAllowedTypes('enabled', array('bool'));
         $resolver->addAllowedTypes('source_folder', array('string'));
         $resolver->addAllowedTypes('target_folder', array('string'));
-//        $resolver->addAllowedTypes('build_folder', array('string'));
-//        $resolver->addAllowedTypes('build_file', array('string'));
-//        $resolver->addAllowedTypes('composer_file', array('string'));
+        $resolver->addAllowedTypes('build_folder', array('string'));
+        $resolver->addAllowedTypes('generic_folder', array('string'));
         $resolver->addAllowedTypes('generic_contents', array('array'));
 
         return $resolver;
@@ -131,12 +128,24 @@ class DocumentationBuilder extends AbstractExternalTask
         if (!$this->runYarn()) {
             return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
-//
-//        //====================================================================//
-//        // Build Module Archive
-//        if (!$this->buildModule()) {
-//            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
-//        }
+        
+        //====================================================================//
+        // Build Jekyll Configuration File
+        if (!$this->buildConfig()) {
+            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
+        }
+        
+        //====================================================================//
+        // Execute Jekyll Bundler
+        if (!$this->runBundler()) {
+            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
+        }
+        
+        //====================================================================//
+        // Build Final Documentation Site
+        if (!$this->buildSite()) {
+            return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
+        }
 
         return TaskResult::createPassed($this, $context);
     }
@@ -152,8 +161,8 @@ class DocumentationBuilder extends AbstractExternalTask
         //====================================================================//
         // Init Module Build Directory
         try {
-            $filesystem->remove($this->getDocsDirectory());
-            $filesystem->mkdir($this->getDocsDirectory());
+            $filesystem->remove($this->getTempDirectory());
+            $filesystem->mkdir($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
             return Splash::log()->errTrace(
                 "An error occurred while creating your directory at ".$exception->getPath()
@@ -175,7 +184,7 @@ class DocumentationBuilder extends AbstractExternalTask
         //====================================================================//
         // Copy Jekyll Base Contents
         try {
-            $filesystem->mirror($this->getJekyllSrcDirectory(), $this->getDocsDirectory());
+            $filesystem->mirror($this->getJekyllSrcDirectory(), $this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
             return Splash::log()->errTrace(
                 "An error occurred while Jekyll Base copy at ".$exception->getPath()
@@ -193,7 +202,7 @@ class DocumentationBuilder extends AbstractExternalTask
             }
 
             try {
-                $filesystem->mirror($contentDir, $this->getDocsDirectory());
+                $filesystem->mirror($contentDir, $this->getTempDirectory());
             } catch (IOExceptionInterface $exception) {
                 return Splash::log()->errTrace(
                     "An error occurred while Generic Contents copy at ".$exception->getPath()
@@ -204,7 +213,7 @@ class DocumentationBuilder extends AbstractExternalTask
         //====================================================================//
         // Copy Local Contents
         try {
-            $filesystem->mirror($this->getLocalContentsDirectory(), $this->getDocsDirectory());
+            $filesystem->mirror($this->getLocalContentsDirectory(), $this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
             return Splash::log()->errTrace(
                 "An error occurred while Local Contents copy at ".$exception->getPath()
@@ -228,10 +237,10 @@ class DocumentationBuilder extends AbstractExternalTask
         }
         //====================================================================//
         // Execute Yarn install
-        $comamnd = "yarn --cwd ".$this->getDocsDirectory();
+        $comamnd = "yarn --cwd ".$this->getTempDirectory();
         $comamnd .= " install";
         $comamnd .= " --silent --non-interactive";
-        $comamnd .= ' --modules-folder="'.$this->getDocsDirectory().'/assets/vendor" ';
+        $comamnd .= ' --modules-folder="'.$this->getTempDirectory().'/assets/vendor" ';
 
         if (!ShellRunner::run($comamnd)) {
             return Splash::log()->errTrace("Yarn install failled!");
@@ -239,7 +248,85 @@ class DocumentationBuilder extends AbstractExternalTask
 
         return true;
     }
+    
+    /**
+     * Execute Jekyll Bundler Install
+     *
+     * @return bool
+     */
+    private function runBundler(): bool
+    {
+        //====================================================================//
+        // Check if Gem Bundler is Installed
+        if (!ShellRunner::run("bundle --version")) {
+            return Splash::log()->errTrace("Gem Bundler is Not Installed!! But sorry it's required...");
+        }
+        //====================================================================//
+        // Execute Gem Bundler install
+        $comamnd = "cd ".$this->getTempDirectory();
+        $comamnd.= " && bundle install ";
+        $comamnd.= " && bundle exec jekyll build ";
+        if (!ShellRunner::run($comamnd)) {
+            return Splash::log()->errTrace("Bundler Jekyyl Build Failled!");
+        }
 
+        return true;
+    }    
+
+    /**
+     * Build Site Configuration
+     *
+     * @return bool
+     */
+    private function buildConfig(): bool
+    {
+        //====================================================================//
+        // Load Generic Configuration
+        $coreConfig = Yaml::parseFile($this->getJekyllSrcDirectory().'/_config.yml');
+        //====================================================================//
+        // Load Local Configuration
+        $localConfig = Yaml::parseFile($this->getLocalContentsDirectory().'/_config.yml');
+        //====================================================================//
+        // Build Final Configuration
+        $finalConfig = array_replace_recursive($coreConfig, $localConfig);
+        file_put_contents($this->getTempDirectory().'/_config.yml', Yaml::dump($finalConfig));
+
+        return true;
+    }
+    
+    /**
+     * Copy Compiled Site to Docs Directory
+     *
+     * @return bool
+     */
+    private function buildSite(): bool
+    {
+        $filesystem = new Filesystem();
+
+        //====================================================================//
+        // Verify Final Contents are Here
+        $siteDir = $this->getTempDirectory()."/_site";
+        if (!is_dir($siteDir)) {
+            return Splash::log()->errTrace(
+                "Unable to find Final Site at ".$siteDir
+            );
+        }
+        //====================================================================//
+        // Copy Jekyll Base Contents
+        try {
+            $filesystem->remove($this->getDocsDirectory());
+            $filesystem->mkdir($this->getDocsDirectory());
+            $filesystem->mirror($siteDir, $this->getDocsDirectory());
+//            $filesystem->remove($this->getTempDirectory());
+        } catch (IOExceptionInterface $exception) {
+            return Splash::log()->errTrace(
+                "An error occurred while Jekyll Base copy at ".$exception->getPath()
+            );
+        }
+
+        return true;
+    }
+    
     /**
      * Get Documentations Sources Directory Path
      *
@@ -281,4 +368,14 @@ class DocumentationBuilder extends AbstractExternalTask
     {
         return $this->grumPHP->getGitDir().$this->config["local_folder"];
     }
+    
+    /**
+     * Get Temp Build Directory Path
+     *
+     * @return string
+     */
+    private function getTempDirectory(): string
+    {
+        return $this->grumPHP->getGitDir().$this->config["build_folder"];
+    }    
 }
