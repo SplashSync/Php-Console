@@ -1,0 +1,32 @@
+################################################################################
+#
+# * This file is part of SplashSync Project.
+# *
+# * Copyright (C) Splash Sync <www.splashsync.com>
+# *
+# * This program is distributed in the hope that it will be useful,
+# * but WITHOUT ANY WARRANTY; without even the implied warranty of
+# * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# *
+# * For the full copyright and license information, please view the LICENSE
+# * file that was distributed with this source code.
+# *
+# * @author Bernard Paquier <contact@splashsync.com>
+#
+################################################################################
+
+################################################################################
+# LOCAL DOC CONFIGURATION
+################################################################################
+
+# Title of the Bundle / Module
+title: Splash Php Console
+# Subtitle of the Site (Generaly DOC)
+subtitle: DOC
+# the subpath of your site, e.g. /blog
+baseurl: "/Php-Console" 
+# Description of the Bundle/Module
+description:    "Php Console for All Splash Modules, Bundles & Connectors.
+                Brings all usefull tools for developper & advanced Splash Sync Users.
+                A simple and efficient CLI Console for Executing Test & Mass Actions."
+
