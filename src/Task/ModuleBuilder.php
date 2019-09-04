@@ -93,13 +93,13 @@ class ModuleBuilder extends AbstractExternalTask
         //====================================================================//
         // Load Task Configuration
         $this->config = $this->getConfiguration();
-        
+
         //====================================================================//
         // Build Disabled => Skip this Task
         if (!$this->config["enabled"]) {
             return TaskResult::createPassed($this, $context);
         }
-        
+
         //====================================================================//
         // Load Splash as Empty Local Class (To Work without System Config)
         Splash::setLocalClass(new \Splash\Templates\Local\Local());

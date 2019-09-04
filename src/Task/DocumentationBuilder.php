@@ -100,16 +100,16 @@ class DocumentationBuilder extends AbstractExternalTask
         $this->config = $this->getConfiguration();
 
         //====================================================================//
-        // Build Disabled => Skip this Task
-        if (!$this->config["enabled"]) {
-            return TaskResult::createPassed($this, $context);
-        }
-
-        //====================================================================//
         // Load Splash as Empty Local Class (To Work without System Config)
         Splash::setLocalClass(new \Splash\Templates\Local\Local());
         Splash::translator()->load('local');
         Splash::log()->cleanLog();
+
+        //====================================================================//
+        // Build Disabled => Skip this Task
+        if (!$this->config["enabled"]) {
+            return TaskResult::createPassed($this, $context);
+        }
 
         //====================================================================//
         // Init Module Build Directory
@@ -128,19 +128,19 @@ class DocumentationBuilder extends AbstractExternalTask
         if (!$this->runYarn()) {
             return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
-        
+
         //====================================================================//
         // Build Jekyll Configuration File
         if (!$this->buildConfig()) {
             return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
-        
+
         //====================================================================//
         // Execute Jekyll Bundler
         if (!$this->runBundler()) {
             return TaskResult::createFailed($this, $context, Splash::log()->getConsoleLog());
         }
-        
+
         //====================================================================//
         // Build Final Documentation Site
         if (!$this->buildSite()) {
@@ -248,7 +248,7 @@ class DocumentationBuilder extends AbstractExternalTask
 
         return true;
     }
-    
+
     /**
      * Execute Jekyll Bundler Install
      *
@@ -264,14 +264,14 @@ class DocumentationBuilder extends AbstractExternalTask
         //====================================================================//
         // Execute Gem Bundler install
         $comamnd = "cd ".$this->getTempDirectory();
-        $comamnd.= " && bundle install ";
-        $comamnd.= " && bundle exec jekyll build ";
+        $comamnd .= " && bundle install ";
+        $comamnd .= " && bundle exec jekyll build ";
         if (!ShellRunner::run($comamnd)) {
             return Splash::log()->errTrace("Bundler Jekyyl Build Failled!");
         }
 
         return true;
-    }    
+    }
 
     /**
      * Build Site Configuration
@@ -293,7 +293,7 @@ class DocumentationBuilder extends AbstractExternalTask
 
         return true;
     }
-    
+
     /**
      * Copy Compiled Site to Docs Directory
      *
@@ -317,7 +317,7 @@ class DocumentationBuilder extends AbstractExternalTask
             $filesystem->remove($this->getDocsDirectory());
             $filesystem->mkdir($this->getDocsDirectory());
             $filesystem->mirror($siteDir, $this->getDocsDirectory());
-            $filesystem->remove($this->getTempDirectory());
+//            $filesystem->remove($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
             return Splash::log()->errTrace(
                 "An error occurred while Jekyll Base copy at ".$exception->getPath()
@@ -326,7 +326,7 @@ class DocumentationBuilder extends AbstractExternalTask
 
         return true;
     }
-    
+
     /**
      * Get Documentations Sources Directory Path
      *
@@ -368,7 +368,7 @@ class DocumentationBuilder extends AbstractExternalTask
     {
         return $this->grumPHP->getGitDir().$this->config["local_folder"];
     }
-    
+
     /**
      * Get Temp Build Directory Path
      *
@@ -377,5 +377,5 @@ class DocumentationBuilder extends AbstractExternalTask
     private function getTempDirectory(): string
     {
         return $this->grumPHP->getGitDir().$this->config["build_folder"];
-    }    
+    }
 }

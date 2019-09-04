@@ -24,9 +24,9 @@ class ShellRunner
 {
     /**
      * Execute a Shell Action
-     * 
+     *
      * @param string $command
-     * 
+     *
      * @return bool
      */
     public static function run(string $command): bool
@@ -40,11 +40,12 @@ class ShellRunner
         exec($command, $outputs, $return);
         //====================================================================//
         // Failed => Push Outputs toi Splash Log
-        if($return) {
+        if ($return) {
             foreach ($outputs as $output) {
                 Splash::log()->err(sprintf(__CLASS__.": %s", $output));
             }
         }
-        return ($return == 0);
+
+        return (0 == $return);
     }
 }
