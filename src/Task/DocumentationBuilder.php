@@ -317,7 +317,7 @@ class DocumentationBuilder extends AbstractExternalTask
             $filesystem->remove($this->getDocsDirectory());
             $filesystem->mkdir($this->getDocsDirectory());
             $filesystem->mirror($siteDir, $this->getDocsDirectory());
-//            $filesystem->remove($this->getTempDirectory());
+            $filesystem->remove($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
             return Splash::log()->errTrace(
                 "An error occurred while Jekyll Base copy at ".$exception->getPath()
