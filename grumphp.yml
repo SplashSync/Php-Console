@@ -21,7 +21,10 @@
 parameters:
     core_dir:               "./vendor/splash/phpcore/Resources/grumphp"    
     mode:                   "module"
-            
+    # For Building Splash Documentation
+    doc-src:        '/src/Resources/docs'
+    doc-contents:   ["php-composer", "splash"]
+   
 #############################################        
 # Import Config. from Php Core Module
 imports:
