@@ -10,8 +10,12 @@ A Console for all Splash PHP Modules & Applications.
 
 ## Requirements
 
-* PHP CLI 7.2+
+* PHP CLI 7.1+
 * An active Splash Sync User Account for axecuting remote actions
+
+## Documentation
+
+For the configuration guide and reference, see: [Php Console Documentation](https://splashsync.github.io/Php-Console/)
 
 ## Contributing
 
