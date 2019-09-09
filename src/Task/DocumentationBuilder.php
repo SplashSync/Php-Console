@@ -314,8 +314,8 @@ class DocumentationBuilder extends AbstractExternalTask
         //====================================================================//
         // Copy Jekyll Base Contents
         try {
-            $filesystem->remove($this->getDocsDirectory());
-            $filesystem->mkdir($this->getDocsDirectory());
+//            $filesystem->remove($this->getDocsDirectory());
+//            $filesystem->mkdir($this->getDocsDirectory());
             $filesystem->mirror($siteDir, $this->getDocsDirectory());
 //            $filesystem->remove($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
