@@ -1,7 +1,7 @@
 ---
 lang: fr
 permalink: docs/introduction
-title: Qu'est-ce que Splash Php Console?
+title: Qu'est-ce que Splash Php Console
 ---
 
 ## Une console de commande pour les modules Splash
