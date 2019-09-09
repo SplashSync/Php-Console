@@ -6,3 +6,4 @@
 /build/
 /docs/yarn.lock
 /.gh-pages/
+/reboot.sh
