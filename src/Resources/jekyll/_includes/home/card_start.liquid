@@ -1,0 +1,25 @@
+{% for node in site.pages %}
+    {% if node.title != null %}
+        {% if node.permalink contains "start/" %}
+
+
+            <div class="item item-green col-lg-4 col-6">
+                <div class="item-inner">
+                    <div class="icon-holder">
+                        <i class="icon fa fa-paper-plane"></i>
+                    </div>
+
+                    <h3 class="title">{{ site.data.core.start.title }}</h3>
+                    <p class="intro">{{ site.data.core.start.subtitle }}</p>
+
+                    <a class="link" href="start.html"><span></span></a>
+                </div>
+            </div>
+
+            {% break %}
+
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+

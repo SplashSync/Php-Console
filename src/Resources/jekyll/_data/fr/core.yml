@@ -7,7 +7,11 @@ lang:
 github:
     view: Voir sur Github
     fork: Cloner sur Github
-    
+
+start: 
+    title:  "Quick Start"
+    subtitle:  "Installation du module"
+
 docs: 
   title:  "Documentations"
   subtitle:  "Tout ce que vous devez savoir pour utiliser ce module"

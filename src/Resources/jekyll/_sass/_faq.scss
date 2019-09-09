@@ -10,16 +10,10 @@ and open the template in the editor.
 
 .faq-content h3 {
     color: $color-purple;
-/*    &::before { 
-        font-family: "Font Awesome 5 Free"; 
-        font-weight: 400; 
-        content: "\f059";
-    }*/
 }
 
 .faq-content h3::before { 
     font-family: "Font Awesome 5 Free"; 
-    /*font-weight: 400;*/ 
     content: "\f059";
-    /*content: "test";*/
+    margin-right: 5px;
 }

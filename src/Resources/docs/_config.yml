@@ -29,4 +29,6 @@ baseurl: "/Php-Console"
 description:    "Php Console for All Splash Modules, Bundles & Connectors.
                 Brings all usefull tools for developper & advanced Splash Sync Users.
                 A simple and efficient CLI Console for Executing Test & Mass Actions."
+# Package Code on Packagist
+package:    "splash/console"
 

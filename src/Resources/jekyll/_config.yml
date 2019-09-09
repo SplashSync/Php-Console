@@ -22,7 +22,9 @@ subtitle: Template
 email: contact@splashsync.com
 github_username:  splashsync
 url: "splashsync.github.io"
-
+home-logo:
+    splash:     true
+    
 ################################################################################
 # Build settings
 markdown: kramdown

@@ -1,8 +1,9 @@
 
+
 <!-- Documentations Menu -->
 <nav id="doc-menu" class="nav doc-menu flex-column sticky">
 
-<div class="h5 block-title mt-5 text-purple">{{ site.data.core.faq.title }}</div>
+<div class="h5 block-title mt-5 text-green">{{ site.data.core.start.title }}</div>
 
       {% assign pages_list = site.pages %}
       {% assign written = "" | split: '' %}
@@ -12,7 +13,7 @@
         {% endif %}
         {% if node.title != null %}
 
-          {% if node.permalink contains "faq/" %}
+          {% if node.permalink contains "start/" %}
             <a class="nav-link scrollto{% if page.url == node.url %} active{% endif %}" 
               href="#{{ node.title | slugify}}">
               {{ node.title }}

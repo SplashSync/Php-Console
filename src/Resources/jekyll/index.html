@@ -2,25 +2,27 @@
 layout: default
 ---
 
-
-
 <section class="cards-section text-center">
 
     <div class="container">
 
-        <h2 class="title">Getting started is easy!</h2>
+        {% include home/logo.liquid %}             
+
+        <h2 class="title">
+            {{ site.github.project_title }}
+        </h2>
         
         <div class="intro">
-            <p>Welcome to prettyDocs. This landing page is an example of how you can use a card view to present segments of your documentation. You can customise the icon fonts based on your needs.</p>
-            <div class="cta-container">
-                <a class="btn btn-primary btn-cta" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/prettydocs-free-bootstrap-theme-for-developers-and-startups/" target="_blank"><i class="fas fa-cloud-download-alt"></i> Download Now</a>
-            </div><!--//cta-container-->
-        </div><!--//intro-->
+            <p>{{ site.description }}</p>
+            {% include home/links.liquid %}
+        </div>
 
         <div id="cards-wrapper" class="cards-wrapper row justify-content-center">
 
+            {%- include home/card_start.liquid -%}
             {%- include home/card_docs.liquid -%}
             {%- include home/card_faq.liquid -%}
+            {%- include home/card_credits.liquid -%}
 
         </div><!--//cards-->
         

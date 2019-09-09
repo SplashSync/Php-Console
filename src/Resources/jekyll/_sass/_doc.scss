@@ -82,6 +82,10 @@
         font-size: 14px;
         font-weight: bold;
     }
+    
+    img {
+        width: 100%;
+    }
 }
 
 .section-block {
@@ -252,6 +256,18 @@
             margin-top: -21px;
 
         }
+        
+        .icon.fa {
+            color: #fff;
+            font-size: 42px;
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -21px;
+            margin-top: -21px;
+
+        }        
     }
     &:hover {
         .mask {
