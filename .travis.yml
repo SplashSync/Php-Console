@@ -47,14 +47,13 @@ script:
     - if [[ ${TRAVIS_PHP_VERSION:0:3} > "7.0" ]]; then php ./vendor/bin/grumphp run --testsuite=csfixer; fi    
     # With PHP > 7.0 => Execute Phpstan 
     - if [[ ${TRAVIS_PHP_VERSION:0:3} > "7.0" ]]; then php ./vendor/bin/grumphp run --testsuite=phpstan; fi   
-    # Install Symfony
-    - echo "Install Symfony"
-    - php bin/console doctrine:schema:update --force  --no-interaction --no-debug    
+#    # Install Symfony
+#    - echo "Install Symfony"
+#    - php bin/console doctrine:schema:update --force  --no-interaction --no-debug    
     # Show Basic Command Results   
     - php bin/splash
     - php bin/console splash:server:config
     - php bin/console splash:objects:types
-    - php bin/console splash:objects:list short
     # Show Outdated Packages   
     - composer outdated
     
