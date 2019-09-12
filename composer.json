@@ -35,6 +35,7 @@
     },
     
     "require-dev": {
+        "symfony/symfony":                              "~3.4|~4.0.0|~4.2.0",
         "splash/phpcore":                   "dev-master", 
         "splash/php-bundle":                "dev-master", 
         "phpunit/phpunit":                  "~6.0|~7.0|~8.0",
