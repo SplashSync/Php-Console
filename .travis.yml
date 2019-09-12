@@ -19,7 +19,6 @@ before_install:
     - echo "Configuring The Bundles"
     - cp tests/config/parameters.yml.dist tests/config/parameters.yml
     - echo "Configuring Folders"
-    - mkdir bin
     - cp tests/console bin/console
     - mkdir public
     - cp tests/public/* public
