@@ -28,6 +28,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ObjectsCommitCommand extends AbstractListingCommand
 {
     /**
+     * @var string
+     */
+    protected $title = "Commit Objects Changes";
+
+    /**
      * @var Table
      */
     private $table;
@@ -80,8 +85,8 @@ class ObjectsCommitCommand extends AbstractListingCommand
     protected function configure()
     {
         $this
-            ->setName('objects:commit')
-            ->setDescription('Splash: Commit Objects Changes for a Given Object Type')
+            ->setName('splash:objects:commit')
+            ->setDescription('[Splash] Commit Objects Changes for a Given Object Type')
             ->addOption('delay', "d", InputOption::VALUE_OPTIONAL, 'Pause in Seconds between two Commits', 1)
             ->addOption('all', "a", InputOption::VALUE_NONE, 'Commit Changes for All Objects', null)
             ->addOption('force', null, InputOption::VALUE_NONE, 'Do Object Changes Commit (Else >> dry run)', null)
@@ -102,7 +107,7 @@ class ObjectsCommitCommand extends AbstractListingCommand
         // Init & Splash Screen
         $this->init($input, $output);
         $this->loadInputs($input);
-        $this->renderTitle("Commit Objects Changes");
+        $this->renderTitle();
         //====================================================================//
         // Count Total Number of Objects
         if ($this->total <= 0) {

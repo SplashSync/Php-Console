@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Test Ping of Splash Server
  */
-class PingCommand extends AbstractCommand
+class ServerPingCommand extends AbstractCommand
 {
     /**
      * @var string
@@ -38,8 +38,9 @@ class PingCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('ping')
-            ->setDescription('Splash: Perform Ping Test to Splash Server')
+            ->setName('splash:server:ping')
+            ->setDescription('[Splash] Perform Ping Test to Splash Server')
+            ->configureManagerOptions()
         ;
     }
 
@@ -59,13 +60,22 @@ class PingCommand extends AbstractCommand
         $this->renderTitle();
         //====================================================================//
         // Notice internal routines we are in server request mode
-        define("SPLASH_SERVER_MODE", true);
+        if (!defined("SPLASH_SERVER_MODE")) {
+            define("SPLASH_SERVER_MODE", true);
+        }
         //====================================================================//
         // Execute Splash Self-Tests
-        $selfTests = Splash::selfTest();
+        $selfTests = $this->isManagerMode()
+                ? $this->getConnector()->selfTest()
+                : Splash::selfTest();
         //====================================================================//
         // Execute Splash Server Ping
-        $ping = $selfTests ? Splash::ping() : false;
+        $ping = false;
+        if ($selfTests) {
+            $ping = $this->isManagerMode()
+                ? $this->getConnector()->ping()
+                : Splash::ping();
+        }
         //====================================================================//
         // Render Splash Logs
         $this->renderLogs();

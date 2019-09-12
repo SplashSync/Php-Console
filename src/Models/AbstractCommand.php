@@ -17,6 +17,7 @@ namespace Splash\Console\Models;
 
 use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
+use Splash\Models\Fields\FieldsManagerTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,7 +27,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractCommand extends Command
 {
-    use \Splash\Models\Fields\FieldsManagerTrait;
+    use FieldsManagerTrait;
+    use ManagerAwareTrait;
 
     /**
      * @var InputInterface
@@ -50,8 +52,13 @@ abstract class AbstractCommand extends Command
      */
     protected function init(InputInterface $input, OutputInterface $output)
     {
+        //====================================================================//
+        // Store I/O Objects
         $this->input = $input;
         $this->output = $output;
+        //====================================================================//
+        // Detect Server if we are in Connector Manager Mode
+        $this->identifyServer($input);
     }
 
     /**

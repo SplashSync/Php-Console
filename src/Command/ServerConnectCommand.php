@@ -17,6 +17,7 @@ namespace Splash\Console\Command;
 
 use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
+use Splash\Console\Models\AbstractCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,16 +25,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Test Connect to Splash Server
  */
-class ConnectCommand extends Command
+class ServerConnectCommand extends AbstractCommand
 {
+    /**
+     * @var string
+     */
+    protected $title = "Test Connect of Splash Server";
+
     /**
      * Configure Symfony Command
      */
     protected function configure()
     {
         $this
-            ->setName('connect')
-            ->setDescription('Splash: Perform Connect Test to Splash Server')
+            ->setName('splash:server:connect')
+            ->setDescription('[Splash] Perform Connect Test to Splash Server')
+            ->configureManagerOptions()
         ;
     }
 
@@ -48,24 +55,33 @@ class ConnectCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //====================================================================//
-        // Splash Screen
-        Graphics::renderSplashScreen($output);
-        Graphics::renderTitle($output, "Test Ping of Splash Server");
+        // Init & Splash Screen
+        $this->init($input, $output);
+        $this->renderTitle();
         //====================================================================//
         // Notice internal routines we are in server request mode
-        define("SPLASH_SERVER_MODE", true);
+        if (!defined("SPLASH_SERVER_MODE")) {
+            define("SPLASH_SERVER_MODE", true);
+        }
         //====================================================================//
         // Execute Splash Self-Tests
-        $selfTests = Splash::selfTest();
+        $selfTests = $this->isManagerMode()
+                ? $this->getConnector()->selfTest()
+                : Splash::selfTest();
         //====================================================================//
-        // Execute Splash Server Connect
-        $ping = $selfTests ? Splash::connect() : false;
+        // Execute Splash Server Ping
+        $connect = false;
+        if ($selfTests) {
+            $connect = $this->isManagerMode()
+                ? $this->getConnector()->connect()
+                : Splash::connect();
+        }
         //====================================================================//
         // Render Splash Logs
         $output->writeln(Splash::log()->getConsoleLog());
         Splash::log()->getConsoleLog();
         //====================================================================//
         // Render Result Icon
-        Graphics::renderResult($output, $ping, "Connect to Splash Server");
+        Graphics::renderResult($output, $connect, "Connect to Splash Server");
     }
 }

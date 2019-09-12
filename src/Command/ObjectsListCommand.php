@@ -26,13 +26,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ObjectsListCommand extends AbstractListingCommand
 {
     /**
+     * @var string
+     */
+    protected $title = "Read Objects List";
+
+    /**
      * Configure Symfony Command
      */
     protected function configure()
     {
         $this
-            ->setName('objects:list')
-            ->setDescription('Splash: List Data for a Given Object Type')
+            ->setName('splash:objects:list')
+            ->setDescription('[Splash] List Data for a Given Object Type')
+            ->configureManagerOptions()
         ;
 
         parent::configure();
@@ -49,7 +55,7 @@ class ObjectsListCommand extends AbstractListingCommand
         //====================================================================//
         // Init & Splash Screen
         $this->init($input, $output);
-        $this->renderTitle("Read Objects List");
+        $this->renderTitle();
 
         //====================================================================//
         // Read Objects Listed & Readable Fields

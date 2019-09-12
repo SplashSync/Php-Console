@@ -18,6 +18,7 @@ namespace Splash\Console\Extension;
 use GrumPHP\Extension\ExtensionInterface;
 use Splash\Console\Task\DocumentationBuilder;
 use Splash\Console\Task\ModuleBuilder;
+use Splash\Console\Task\ManifestBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -30,6 +31,7 @@ class Loader implements ExtensionInterface
     {
         $this->addTask($container, ModuleBuilder::class, 'build-module');
         $this->addTask($container, DocumentationBuilder::class, 'build-docs');
+        $this->addTask($container, ManifestBuilder::class, 'build-manifest');
     }
 
     /**

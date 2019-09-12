@@ -82,13 +82,13 @@ abstract class AbstractListingCommand extends AbstractCommand
         $objectType = $input->getArgument("objectType");
         $this->objectType = (string) (is_scalar($objectType) ? $objectType : "");
 
-        $offset = $input->getArgument("offset");
+        $offset = $input->getOption("offset");
         $this->offset = (int) (is_scalar($offset) ? $offset : 0);
 
-        $limit = $input->getArgument("limit");
+        $limit = $input->getOption("limit");
         $this->limit = (int) (is_scalar($limit) ? $limit : 10);
 
-        $filter = $input->getArgument("filter");
+        $filter = $input->getOption("filter");
         $this->filter = (string) (is_scalar($filter) ? $filter : null);
     }
 

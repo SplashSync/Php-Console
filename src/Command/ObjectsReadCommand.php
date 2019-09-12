@@ -55,11 +55,12 @@ class ObjectsReadCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('objects:read')
-            ->setDescription('Splash: Read Data for a Given Object with ID')
+            ->setName('splash:objects:read')
+            ->setDescription('[Splash] Read Data for a Given Object with ID')
             ->addArgument('objectType', InputArgument::REQUIRED, 'Object Type for Reading')
             ->addArgument('objectId', InputArgument::REQUIRED, 'Object Id to Read')
             ->addOption('fields', "f", InputOption::VALUE_OPTIONAL, 'Comma separated List of fields to Display', null)
+            ->configureManagerOptions()
         ;
     }
 
@@ -73,6 +74,8 @@ class ObjectsReadCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        //====================================================================//
+        // Init & Splash Screen
         $this->init($input, $output);
         $this->loadInputs($input);
 

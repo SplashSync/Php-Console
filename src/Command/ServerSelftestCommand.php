@@ -17,6 +17,7 @@ namespace Splash\Console\Command;
 
 use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
+use Splash\Console\Models\AbstractCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,16 +25,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Execute SelfTest of Splash Client
  */
-class SelftestCommand extends Command
+class ServerSelftestCommand extends AbstractCommand
 {
+    /**
+     * @var string
+     */
+    protected $title = "Results of Local Module Self-Tests";
+
     /**
      * Configure Symfony Command
      */
     protected function configure()
     {
         $this
-            ->setName('selftest')
-            ->setDescription('Splash: Execute Module Self-Test')
+            ->setName('splash:server:selftest')
+            ->setDescription('[Splash] Execute Module Self-Test')
+            ->configureManagerOptions()
         ;
     }
 
@@ -48,12 +55,14 @@ class SelftestCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //====================================================================//
-        // Splash Screen
-        Graphics::renderSplashScreen($output);
-        Graphics::renderTitle($output, "Results of Local Module Self-Tests");
+        // Init & Splash Screen
+        $this->init($input, $output);
+        $this->renderTitle();
         //====================================================================//
         // Notice internal routines we are in server request mode
-        define("SPLASH_SERVER_MODE", true);
+        if (!defined("SPLASH_SERVER_MODE")) {
+            define("SPLASH_SERVER_MODE", true);
+        }
         //====================================================================//
         // Verify PHP Version
         Splash::validate()->isValidPHPVersion();
@@ -65,7 +74,9 @@ class SelftestCommand extends Command
         Splash::validate()->isValidSOAPMethod();
         //====================================================================//
         // Execute Splash Self-Tests
-        $result = Splash::selfTest();
+        $result = $this->isManagerMode()
+                ? $this->getConnector()->selfTest()
+                : Splash::selfTest();
         //====================================================================//
         // Render Splash Logs
         $output->writeln(Splash::log()->getConsoleLog());

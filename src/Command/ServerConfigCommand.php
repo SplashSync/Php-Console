@@ -17,6 +17,7 @@ namespace Splash\Console\Command;
 
 use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
+use Splash\Console\Models\AbstractCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,16 +25,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Show Module's Configuration
  */
-class ConfigCommand extends Command
+class ServerConfigCommand extends AbstractCommand
 {
+    /**
+     * @var string
+     */
+    protected $title = "Show Your Splash Module Configuration";
+
     /**
      * Configure Symfony Command
      */
     protected function configure()
     {
         $this
-            ->setName('config')
-            ->setDescription('Splash: Show Your Splash Module Configuration')
+            ->setName('splash:server:config')
+            ->setDescription('[Splash] Show Your Splash Module Configuration')
+            ->configureManagerOptions()
         ;
     }
 
@@ -48,12 +55,14 @@ class ConfigCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //====================================================================//
-        // Splash Screen
-        Graphics::renderSplashScreen($output);
-        Graphics::renderTitle($output, "Your Splash Module Configuration");
+        // Init & Splash Screen
+        $this->init($input, $output);
+        $this->renderTitle();
         //====================================================================//
         // Notice internal routines we are in server request mode
-        define("SPLASH_SERVER_MODE", true);
+        if (!defined("SPLASH_SERVER_MODE")) {
+            define("SPLASH_SERVER_MODE", true);
+        }
         //====================================================================//
         // Show Module Configuration
         $config = Splash::configuration()->getArrayCopy();

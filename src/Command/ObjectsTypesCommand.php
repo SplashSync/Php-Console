@@ -16,8 +16,8 @@
 namespace Splash\Console\Command;
 
 use Splash\Client\Splash;
-use Splash\Console\Helper\Graphics;
 use Splash\Console\Helper\Table;
+use Splash\Console\Models\AbstractCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,16 +25,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * List Available Objects on Splash Client
  */
-class ObjectsTypesCommand extends Command
+class ObjectsTypesCommand extends AbstractCommand
 {
+    /**
+     * @var string
+     */
+    protected $title = "Listed of Available Objects";
+
     /**
      * Configure Symfony Command
      */
     protected function configure()
     {
         $this
-            ->setName('objects:types')
-            ->setDescription('Splash: List Available Objects Types')
+            ->setName('splash:objects:types')
+            ->setDescription('[Splash] List Available Objects Types')
+            ->configureManagerOptions()
         ;
     }
 
@@ -49,16 +55,15 @@ class ObjectsTypesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //====================================================================//
-        // Splash Screen
-        Graphics::renderSplashScreen($output);
-        Graphics::renderTitle($output, "Listed of Available Objects");
-
+        // Init & Splash Screen
+        $this->init($input, $output);
+        $this->renderTitle();
+        //====================================================================//
+        // Init a New Table
         $table = new Table($output);
-
         //====================================================================//
         // Prepare Table Header
         $table->setHeaders(array("Type", "Name", "Import", "Export", "Description"));
-
         //====================================================================//
         // Walk on Objects Types
         foreach (Splash::objects() as $objectType) {
@@ -75,11 +80,9 @@ class ObjectsTypesCommand extends Command
                 $desc["description"],
             ));
         }
-
         //====================================================================//
         // Render Data Table
         $table->render();
-
         //====================================================================//
         // Render Splash Logs
         $output->writeln(Splash::log()->getConsoleLog());
