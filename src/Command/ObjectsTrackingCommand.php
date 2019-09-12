@@ -17,6 +17,7 @@ namespace Splash\Console\Command;
 
 use Splash\Bundle\Interfaces\Connectors\TrackingInterface;
 use Splash\Client\Splash;
+use Splash\Console\Helper\Graphics;
 use Splash\Console\Models\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -57,15 +58,11 @@ class ObjectsTrackingCommand extends AbstractCommand
         // Init & Splash Screen
         $this->init($input, $output);
         $this->renderTitle();
-        //==============================================================================
-        // Render Connector Basic Infos
-        if ($output->isVerbose()) {
-            $this->showConfiguration($output);
-        }
         //====================================================================//
         // Safety Check => Verify Selftest Pass
         if (!$this->connector->selfTest()) {
-            $this->showLogs($output, false);
+            $this->renderLogs();
+            Graphics::renderResult($output, false, $this->title);        
 
             return;
         }
@@ -86,7 +83,9 @@ class ObjectsTrackingCommand extends AbstractCommand
             $output->writeln('  '.$objectType.': '.$commited.' Change(s) Commited.');
         }
         $output->writeln('<info>------------------------------------------------------</info>');
-
-        $this->showLogs($output, true);
+        //====================================================================//
+        // Render Splash Logs
+        $this->renderLogs();
+        Graphics::renderResult($output, true, $this->title);        
     }
 }

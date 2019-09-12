@@ -92,7 +92,7 @@ trait ManagerAwareTrait
     /**
      * Add Splash Connector Manager Options.
      *
-     * @return \self
+     * @return $this
      */
     protected function configureManagerOptions(): self
     {
@@ -138,12 +138,16 @@ trait ManagerAwareTrait
         //==============================================================================
         // Ensure Identify Server was Ok
         if (!$event->isIdentified()) {
-            throw new LogicException(sprintf('Unable to Identify connector server %s. Is this the right Server?', $webserviceId));
+            throw new LogicException(
+                sprintf('Unable to Identify connector server %s. Is this the right Server?', $webserviceId)
+            );
         }
         //==============================================================================
         // If Connection Was Rejected
         if ($event->isRejected()) {
-            throw new LogicException(sprintf('Connection to connector server %s was Rejected. Is this Server Active?', $webserviceId));
+            throw new LogicException(
+                sprintf('Connection to connector server %s was Rejected. Is this Server Active?', $webserviceId)
+            );
         }
         //====================================================================//
         // Server Found => Use Identified Connector Service
