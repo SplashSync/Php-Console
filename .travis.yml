@@ -34,10 +34,9 @@ install:
     - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/build_symfony.sh  | bash
     # Configure For Phpstan vs PHP Versions
     - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/build_grumphp.sh  | bash
-    # Composer Build
-    - echo "Build Dependencies"
-    - composer update  --prefer-dist --no-interaction  
-
+    # Install Symfony
+    - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/install.sh  | bash
+    
 ################################################################################
 # Run script
 script:
