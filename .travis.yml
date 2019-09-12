@@ -74,7 +74,7 @@ services:
 # Cache composer packages so "composer install" is faster
 cache:
     directories:
-        - $HOME/.composer/cache/files
+        - $HOME/.composer/cache
 ################################################################################
 # Define an environment variable
 env:
