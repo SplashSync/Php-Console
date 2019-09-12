@@ -35,7 +35,8 @@
     },
     
     "require-dev": {
-        "splash/phpcore":                   "dev-master",        
+        "splash/phpcore":                   "dev-master", 
+        "splash/php-bundle":                "dev-master", 
         "phpunit/phpunit":                  "~6.0|~7.0|~8.0",
         "composer/composer":                "^1.5",
         "j13k/yaml-lint":                   "^1.1",
