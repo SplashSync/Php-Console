@@ -62,7 +62,7 @@ class ObjectsTrackingCommand extends AbstractCommand
         // Safety Check => Verify Selftest Pass
         if (!$this->connector->selfTest()) {
             $this->renderLogs();
-            Graphics::renderResult($output, false, $this->title);        
+            Graphics::renderResult($output, false, $this->title);
 
             return;
         }
@@ -86,6 +86,6 @@ class ObjectsTrackingCommand extends AbstractCommand
         //====================================================================//
         // Render Splash Logs
         $this->renderLogs();
-        Graphics::renderResult($output, true, $this->title);        
+        Graphics::renderResult($output, true, $this->title);
     }
 }
