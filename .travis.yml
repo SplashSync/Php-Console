@@ -19,6 +19,8 @@ matrix:
 install:   
     # Setup Travis
     - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/configure.sh  | bash
+    # Setup Symfony Version if Required
+    - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/build_symfony.sh  | bash
     # Configure For Phpstan vs PHP Versions
     - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/build_grumphp.sh  | bash
     # Composer Build

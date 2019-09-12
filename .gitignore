@@ -7,3 +7,5 @@
 /docs/yarn.lock
 /.gh-pages/
 /reboot.sh
+/tests/config/parameters.yml
+/var/
