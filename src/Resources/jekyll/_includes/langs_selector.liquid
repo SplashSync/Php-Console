@@ -12,10 +12,10 @@
 		{{ site.langs[site.active_lang] }}
 	</button>
 
-	<div class="dropdown-menu" aria-labelledby="dropdownLangSelect">
+	<div class="dropdown-menu " aria-labelledby="dropdownLangSelect">
 		{% for tongue in site.languages %}
 			<a 
-				 class="dropdown-item"
+				 class="dropdown-item text-primary"
 				{% if tongue == site.active_lang %}style="font-weight: bold;"{% endif %} 
 				href="{% if tongue == site.default_lang %} {{site.baseurl}}{{page.url}} {% else %} {{site.baseurl}}/{{ tongue }}{{page.url}} {% endif %}"
 				>

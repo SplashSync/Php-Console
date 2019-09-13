@@ -66,7 +66,7 @@ class ModuleBuilder extends AbstractExternalTask
             )
         );
 
-        $resolver->addAllowedTypes('enabled', array('bool'));
+        $resolver->addAllowedTypes('enabled', array('boolean'));
         $resolver->addAllowedTypes('source_folder', array('string'));
         $resolver->addAllowedTypes('target_folder', array('string'));
         $resolver->addAllowedTypes('build_folder', array('string'));

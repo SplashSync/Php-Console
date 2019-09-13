@@ -44,5 +44,23 @@ $(document).ready(function() {
         $(this).ekkoLightbox();
     });    
 
-
+    /* Datatables */
+    $(document).ready( function () {
+        var table = $('.datatable').DataTable({
+            "autoWidth": false
+        });
+        
+        table.on( 'draw', function () {
+            $('[data-toggle="popover"]').popover();
+            $('[data-toggle="tooltip"]').tooltip();
+        } );
+        
+    } );
+    
+    /* BS4 Popover */
+    $(document).ready( function () {
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    
 });

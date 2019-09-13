@@ -287,9 +287,15 @@ class DocumentationBuilder extends AbstractExternalTask
         // Load Local Configuration
         $localConfig = Yaml::parseFile($this->getLocalContentsDirectory().'/_config.yml');
         //====================================================================//
+        // Load Module Splash Manifest
+        $manifest = array("manifest" => null);
+        if (is_file($this->getManifestPath())) {
+            $manifest = array("manifest" => Yaml::parseFile($this->getManifestPath()));
+        }
+        //====================================================================//
         // Build Final Configuration
-        $finalConfig = array_replace_recursive($coreConfig, $localConfig);
-        file_put_contents($this->getTempDirectory().'/_config.yml', Yaml::dump($finalConfig));
+        $finalConfig = array_replace_recursive($coreConfig, $localConfig, $manifest);
+        file_put_contents($this->getTempDirectory().'/_config.yml', Yaml::dump($finalConfig, 5));
 
         return true;
     }
@@ -314,8 +320,8 @@ class DocumentationBuilder extends AbstractExternalTask
         //====================================================================//
         // Copy Jekyll Base Contents
         try {
-//            $filesystem->remove($this->getDocsDirectory());
-//            $filesystem->mkdir($this->getDocsDirectory());
+            $filesystem->remove($this->getDocsDirectory());
+            $filesystem->mkdir($this->getDocsDirectory());
             $filesystem->mirror($siteDir, $this->getDocsDirectory());
 //            $filesystem->remove($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
@@ -377,5 +383,15 @@ class DocumentationBuilder extends AbstractExternalTask
     private function getTempDirectory(): string
     {
         return $this->grumPHP->getGitDir().$this->config["build_folder"];
+    }
+
+    /**
+     * Get Splash Manifest Path
+     *
+     * @return string
+     */
+    private function getManifestPath(): string
+    {
+        return $this->grumPHP->getGitDir()."/splash.yml";
     }
 }

@@ -12,6 +12,20 @@ start:
     title:  "Quick Start"
     subtitle:  "Installation du module"
 
+objects: 
+    title:      "Objets"
+    subtitle:   "Détails de tous les Objets Disponibles"
+    table:
+        name:   Name
+        id:     Identifier
+        tags:   Tags
+        format: Format
+        desc:   Description
+        
+widets: 
+    title:      "Widgets"
+    subtitle:   "Détails de tous les Widgets Disponibles"
+
 docs: 
   title:  "Documentations"
   subtitle:  "Tout ce que vous devez savoir pour utiliser ce module"

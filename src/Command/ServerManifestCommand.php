@@ -107,6 +107,11 @@ class ServerManifestCommand extends AbstractCommand
         $this->data = array();
 
         //====================================================================//
+        // Read Server Informations
+        if (!$this->collectServerData()) {
+            return false;
+        }
+        //====================================================================//
         // Read Objects Informations
         if (!$this->collectObjectsData()) {
             return false;
@@ -116,6 +121,27 @@ class ServerManifestCommand extends AbstractCommand
         if (!$this->collectWidgetsData()) {
             return false;
         }
+
+        return true;
+    }
+
+    /**
+     * Collect Server Main Data
+     *
+     * @return bool
+     */
+    private function collectServerData(): bool
+    {
+        //====================================================================//
+        // Init Data Object
+        $this->data["server"] = array();
+        //====================================================================//
+        // Read Server Informations
+        $informations = Splash::informations();
+        if (empty($informations)) {
+            return Splash::log()->errTrace("No Server Informations Found!!");
+        }
+        $this->data["server"] = (array) $informations;
 
         return true;
     }

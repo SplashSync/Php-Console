@@ -116,8 +116,6 @@ class ManifestBuilder extends AbstractExternalTask
         $command .= " ".$this->config["command"];
         $command .= " ".$this->config["options"];
 
-        var_dump($command);
-
         //====================================================================//
         // Execute Shell Command
         if (!ShellRunner::run($command)) {
