@@ -7,17 +7,17 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" href="/Php-Console/fr/assets/img/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Configure the Module | Splash Php Console</title>
+<title>Objects | Splash Php Console</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Configure the Module" />
-<meta property="og:locale" content="en" />
+<meta property="og:title" content="Objects" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions." />
 <meta property="og:description" content="Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions." />
-<link rel="canonical" href="splashsync.github.io/Php-Console/fr/docs/configure" />
-<meta property="og:url" content="splashsync.github.io/Php-Console/docs/configure" />
+<link rel="canonical" href="splashsync.github.io/Php-Console/fr/objects" />
+<meta property="og:url" content="splashsync.github.io/Php-Console/objects" />
 <meta property="og:site_name" content="Splash Php Console" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"splashsync.github.io/Php-Console/docs/configure","description":"Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions.","headline":"Configure the Module","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"splashsync.github.io/Php-Console/objects","description":"Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions.","headline":"Objects","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- MAIN STYLESHEETS -->
 
@@ -33,12 +33,17 @@
 <link rel="stylesheet" href="/Php-Console/fr/assets/vendor/@fortawesome/fontawesome-free/css/all.css" /> 
 <!-- Ekko LightBox -->    
 <link rel="stylesheet" href="/Php-Console/fr/assets/vendor/ekko-lightbox/dist/ekko-lightbox.css" />  
+<!-- Datatables -->    
+<link rel="stylesheet" href="/Php-Console/fr/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" />  
 <!-- Theme CSS -->
 <link id="theme-style" rel="stylesheet" href="/Php-Console/fr/assets/css/main.css" />
 
 <!-- END MAIN STYLESHEETS -->
 <link type="application/atom+xml" rel="alternate" href="splashsync.github.io/Php-Console/fr/feed.xml" title="Splash Php Console" /><!-- Google Analytics --></head>
-<body class="body-orange">
+
+
+
+<body class="body-primary">
     <div class="page-wrapper"><!-- Page Header -->
 <header id="header" class="header">
 	<div class="container">
@@ -61,14 +66,7 @@
 	
 		&nbsp;/&nbsp;
 		
-			<li class="breadcrumb-item">
-				<a href="/docs/">Docs</a>
-			</li>
-		
-	
-		&nbsp;/&nbsp;
-		
-			Configure
+			Objects
 		
 	
 
@@ -78,6 +76,7 @@
 
 			<a class="btn btn-md btn-link text-white github-button" href="https://github.com/SplashSync/Php-Console" 
 				data-size="large" aria-label="Voir sur Github"
+                                target="_blank"
 				title="Voir sur Github"
 				>
 		        <i class="fab fa-github"></i>
@@ -94,12 +93,12 @@
 		Français
 	</button>
 
-	<div class="dropdown-menu" aria-labelledby="dropdownLangSelect">
+	<div class="dropdown-menu " aria-labelledby="dropdownLangSelect">
 		
 			<a 
-				 class="dropdown-item"
+				 class="dropdown-item text-primary"
 				 
-				href=" /Php-Console/docs/configure "
+				href=" /Php-Console/objects "
 				>
 				
 					<span class="flag-icon flag-icon-us flag-icon-squared"></span>
@@ -110,9 +109,9 @@
 			</a>
 		
 			<a 
-				 class="dropdown-item"
+				 class="dropdown-item text-primary"
 				style="font-weight: bold;" 
-				href=" /Php-Console/fr/docs/configure "
+				href=" /Php-Console/fr/objects "
 				>
 				
 					<span class="flag-icon flag-icon-fr"></span>
@@ -149,219 +148,41 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/Php-Console/fr/start/requirements">Systême Requis</a><a class="page-link" href="/Php-Console/fr/start/composer">Installation</a><a class="page-link" href="/Php-Console/fr/docs/configure">Configure the Module</a><a class="page-link" href="/Php-Console/fr/docs/features">Module features</a><a class="page-link" href="/Php-Console/fr/docs/payments">Configure Payment Methods</a><a class="page-link" href="/Php-Console/fr/faq/splash">Questions à propos de Splash Sync</a><a class="page-link" href="/Php-Console/fr/docs/introduction">What is Splash Php Console</a><a class="page-link" href="/Php-Console/fr/about.html">About</a><a class="page-link" href="/Php-Console/fr/documentation">Documentation</a><a class="page-link" href="/Php-Console/fr/faq">Faq</a><a class="page-link" href="/Php-Console/fr/start">Quick Start</a><a class="page-link" href="/Php-Console/fr/test">FR Test PAge</a></div>
+        <div class="trigger"><a class="page-link" href="/Php-Console/fr/start/requirements">Systême Requis</a><a class="page-link" href="/Php-Console/fr/start/composer">Installation</a><a class="page-link" href="/Php-Console/fr/docs/introduction">Qu&#39;est-ce que Splash Php Console</a><a class="page-link" href="/Php-Console/fr/faq/splash">Questions à propos de Splash Sync</a><a class="page-link" href="/Php-Console/fr/about.html">About</a><a class="page-link" href="/Php-Console/fr/documentation">Documentation</a><a class="page-link" href="/Php-Console/fr/faq">Faq</a><a class="page-link" href="/Php-Console/fr/objects">Objects</a><a class="page-link" href="/Php-Console/fr/start">Quick Start</a></div>
       </nav></div>
 </header>
  --><div class="doc-wrapper">
         <div class="container">
-          <div class="doc-body row">
+          <div id="doc-header" class="doc-header text-center">
+    <h1 class="doc-title"><i class="icon fa fa-book"></i>&nbsp;Objets</h1>
+    <div class="meta">Détails de tous les Objets Disponibles</div>
+</div>
+
+
+<div class="doc-body row">
 
 	<!-- Doc Content -->    
-    <div class="doc-content col-md-9 col-12 order-1">
+    <div class="doc-content col-12">
         <div class="content-inner">
-            <h2 id="configuration">Configuration</h2>
 
-<h3 id="enable-the-module">Enable the Module</h3>
-<p>Configuration of you module is available in <strong>Settings » Modules » Interfaces » Splash</strong></p>
 
-<p><img src="https://splashsync.github.io/Dolibarr/img/screenshot_1.png" alt="" /></p>
 
-<h3 id="connect-to-your-splash-account">Connect to your Splash Account</h3>
+<ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
 
-<p>First, you need to create access keys for you module in our website. To do so, on Splash workspace, go to <strong>Servers</strong> » <strong>Add a Server</strong> and note your id &amp; encryption keys.</p>
+	
 
-<p><img src="https://splashsync.github.io/Dolibarr/img/screenshot_2.png" alt="" /></p>
+</ul>
 
-<p>Then, enter the keys on Module’s configuration (take care not to forget any character).</p>
+<div class="tab-content" id="pills-tabObjects">
 
-<p><img src="https://splashsync.github.io/Dolibarr/img/screenshot_3.png" alt="" /></p>
+	
 
-<h3 id="setup-default-parameters">Setup default Parameters</h3>
+</div>
 
-<p>To work correctly, this module need few parameters to be selected. These defaults values will be used upon objects creation/modification.</p>
-
-<p><img src="https://splashsync.github.io/Dolibarr/img/screenshot_4.png" alt="" /></p>
-
-<h5 id="default-language">Default Language</h5>
-
-<p>Select which language package module should use for communication with Splash Server.</p>
-
-<h5 id="default-user">Default User</h5>
-
-<p>Select which user will be used for all actions executed by Splash Module.</p>
-
-<p>We highly recommend creation of a dedicated user for Splash.</p>
-
-<p>Be aware Splash Module will take care of Users rights policy, this user must have appropriated right on Dolibarr.</p>
-
-<h5 id="default-warehouse--bank-account--payment-method">Default Warehouse / Bank Account / Payment Method</h5>
-<p>Define these values to be used if no value is specified.</p>
-
-<h3 id="check-results-of-self-tests">Check results of Self-Tests</h3>
-
-<p>Each time you update your configuration, module will verify your parameters and ensure communication with Splash is working fine. 
-Ensure all tests are passed… this is critical!</p>
-
-<p><img src="https://splashsync.github.io/Dolibarr/img/screenshot_5.png" alt="" /></p>
-
-        </div>
-    </div>
-	<!-- End Doc Content -->    
-
-	<!-- Doc Sidebar -->    
-    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
-        <div id="doc-nav" class="doc-nav">
-
-<!-- Documentations Menu -->
-<nav id="doc-menu" class="nav doc-menu flex-column sticky">
-
-<div class="h5 block-title mt-5 text-orange">Documentations</div>
-
-      
-      
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-
-          
-            <a class="nav-link scrollto active" 
-              href="#configure-the-module">
-              Configure the Module
-            </a>
-          
-
-          
-        
-      
-        
-        
-
-          
-            <a class="nav-link scrollto" 
-              href="#module-features">
-              Module features
-            </a>
-          
-
-          
-        
-      
-        
-        
-      
-        
-        
-
-          
-            <a class="nav-link scrollto" 
-              href="#configure-payment-methods">
-              Configure Payment Methods
-            </a>
-          
-
-          
-        
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-
-          
-            <a class="nav-link scrollto" 
-              href="#what-is-splash-php-console">
-              What is Splash Php Console
-            </a>
-          
-
-          
-        
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-      
-        
-        
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-
-          
-
-          
-        
-      
-        
-        
-      
-        
-        
-      
-      
-
-</nav>
-<!--End Documentations Menu -->
 
 </div>
     </div>
-    <!-- End Doc Sidebar -->    
+	<!-- End Doc Content -->    
 
 </div>
         </div>
@@ -400,9 +221,13 @@ Ensure all tests are passed… this is critical!</p>
 <script type="text/javascript" src="/Php-Console/assets/vendor/jquery-scrollTo/dist/jquery-scrollTo.min.js"></script>      
 <!-- Ekko LightBox -->    
 <script type="text/javascript" src="/Php-Console/assets/vendor/ekko-lightbox/dist/ekko-lightbox.min.js"></script>      
+<!-- Datatables -->    
+<script type="text/javascript" src="/Php-Console/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>      
+<script type="text/javascript" src="/Php-Console/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>      
 <!-- Theme JS -->
 <script type="text/javascript" src="/Php-Console/assets/js/main.js"></script>
 
-<!-- End MAIN JAVASCRIPTS --> </body>
+<!-- End MAIN JAVASCRIPTS --> 
+</body>
   
 </html>

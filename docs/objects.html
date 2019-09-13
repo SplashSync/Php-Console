@@ -7,17 +7,17 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" href="/Php-Console/assets/img/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>EN Test PAge | Splash Php Console</title>
+<title>Objects | Splash Php Console</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="EN Test PAge" />
-<meta property="og:locale" content="en" />
+<meta property="og:title" content="Objects" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions." />
 <meta property="og:description" content="Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions." />
-<link rel="canonical" href="splashsync.github.io/Php-Console/test" />
-<meta property="og:url" content="splashsync.github.io/Php-Console/test" />
+<link rel="canonical" href="splashsync.github.io/Php-Console/objects" />
+<meta property="og:url" content="splashsync.github.io/Php-Console/objects" />
 <meta property="og:site_name" content="Splash Php Console" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"splashsync.github.io/Php-Console/test","description":"Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions.","headline":"EN Test PAge","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"splashsync.github.io/Php-Console/objects","description":"Php Console for All Splash Modules, Bundles &amp; Connectors. Brings all usefull tools for developper &amp; advanced Splash Sync Users. A simple and efficient CLI Console for Executing Test &amp; Mass Actions.","headline":"Objects","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- MAIN STYLESHEETS -->
 
@@ -33,12 +33,17 @@
 <link rel="stylesheet" href="/Php-Console/assets/vendor/@fortawesome/fontawesome-free/css/all.css" /> 
 <!-- Ekko LightBox -->    
 <link rel="stylesheet" href="/Php-Console/assets/vendor/ekko-lightbox/dist/ekko-lightbox.css" />  
+<!-- Datatables -->    
+<link rel="stylesheet" href="/Php-Console/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css" />  
 <!-- Theme CSS -->
 <link id="theme-style" rel="stylesheet" href="/Php-Console/assets/css/main.css" />
 
 <!-- END MAIN STYLESHEETS -->
 <link type="application/atom+xml" rel="alternate" href="splashsync.github.io/Php-Console/feed.xml" title="Splash Php Console" /><!-- Google Analytics --></head>
-<body class="body-orange">
+
+
+
+<body class="body-primary">
     <div class="page-wrapper"><!-- Page Header -->
 <header id="header" class="header">
 	<div class="container">
@@ -61,7 +66,7 @@
 	
 		&nbsp;/&nbsp;
 		
-			Test
+			Objects
 		
 	
 
@@ -71,6 +76,7 @@
 
 			<a class="btn btn-md btn-link text-white github-button" href="https://github.com/SplashSync/Php-Console" 
 				data-size="large" aria-label="View on Github"
+                                target="_blank"
 				title="View on Github"
 				>
 		        <i class="fab fa-github"></i>
@@ -87,12 +93,12 @@
 		English
 	</button>
 
-	<div class="dropdown-menu" aria-labelledby="dropdownLangSelect">
+	<div class="dropdown-menu " aria-labelledby="dropdownLangSelect">
 		
 			<a 
-				 class="dropdown-item"
+				 class="dropdown-item text-primary"
 				style="font-weight: bold;" 
-				href=" /Php-Console/test "
+				href=" /Php-Console/objects "
 				>
 				
 					<span class="flag-icon flag-icon-us flag-icon-squared"></span>
@@ -103,9 +109,9 @@
 			</a>
 		
 			<a 
-				 class="dropdown-item"
+				 class="dropdown-item text-primary"
 				 
-				href=" /Php-Console/fr/test "
+				href=" /Php-Console/fr/objects "
 				>
 				
 					<span class="flag-icon flag-icon-fr"></span>
@@ -142,17 +148,43 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/Php-Console/start/requirements">System Requirements</a><a class="page-link" href="/Php-Console/start/composer">Install</a><a class="page-link" href="/Php-Console/docs/configure">Configure the Module</a><a class="page-link" href="/Php-Console/docs/features">Module features</a><a class="page-link" href="/Php-Console/docs/payments">Configure Payment Methods</a><a class="page-link" href="/Php-Console/faq/splash">Questions about Splash Sync</a><a class="page-link" href="/Php-Console/docs/introduction">What is Splash Php Console</a><a class="page-link" href="/Php-Console/about.html">About</a><a class="page-link" href="/Php-Console/documentation">Documentation</a><a class="page-link" href="/Php-Console/faq">Faq</a><a class="page-link" href="/Php-Console/start">Quick Start</a><a class="page-link" href="/Php-Console/test">EN Test PAge</a></div>
+        <div class="trigger"><a class="page-link" href="/Php-Console/start/requirements">System Requirements</a><a class="page-link" href="/Php-Console/start/composer">Install</a><a class="page-link" href="/Php-Console/docs/introduction">What is Splash Php Console</a><a class="page-link" href="/Php-Console/faq/splash">Questions about Splash Sync</a><a class="page-link" href="/Php-Console/about.html">About</a><a class="page-link" href="/Php-Console/documentation">Documentation</a><a class="page-link" href="/Php-Console/faq">Faq</a><a class="page-link" href="/Php-Console/objects">Objects</a><a class="page-link" href="/Php-Console/start">Quick Start</a></div>
       </nav></div>
 </header>
  --><div class="doc-wrapper">
         <div class="container">
-          <h1 id="this-is-page-for-tests">This is Page for Tests</h1>
+          <div id="doc-header" class="doc-header text-center">
+    <h1 class="doc-title"><i class="icon fa fa-book"></i>&nbsp;Objects</h1>
+    <div class="meta">Details of All Available Objects</div>
+</div>
 
-<h2 id="page-de-tests">Page de Tests</h2>
 
-<h3 id="page-de-tests-1">Page de Tests</h3>
+<div class="doc-body row">
 
+	<!-- Doc Content -->    
+    <div class="doc-content col-12">
+        <div class="content-inner">
+
+
+
+<ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+
+	
+
+</ul>
+
+<div class="tab-content" id="pills-tabObjects">
+
+	
+
+</div>
+
+
+</div>
+    </div>
+	<!-- End Doc Content -->    
+
+</div>
         </div>
       </div>
 
@@ -189,9 +221,13 @@
 <script type="text/javascript" src="/Php-Console/assets/vendor/jquery-scrollTo/dist/jquery-scrollTo.min.js"></script>      
 <!-- Ekko LightBox -->    
 <script type="text/javascript" src="/Php-Console/assets/vendor/ekko-lightbox/dist/ekko-lightbox.min.js"></script>      
+<!-- Datatables -->    
+<script type="text/javascript" src="/Php-Console/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>      
+<script type="text/javascript" src="/Php-Console/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>      
 <!-- Theme JS -->
 <script type="text/javascript" src="/Php-Console/assets/js/main.js"></script>
 
-<!-- End MAIN JAVASCRIPTS --> </body>
+<!-- End MAIN JAVASCRIPTS --> 
+</body>
   
 </html>
