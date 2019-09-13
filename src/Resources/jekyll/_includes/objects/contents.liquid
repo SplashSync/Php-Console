@@ -1,5 +1,5 @@
 
-{% unless site.manifest.objectTypes == empty %}
+{% if site.manifest.objectTypes | size > 0 %}
 
 
 <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
@@ -42,4 +42,4 @@
 
 </div>
 
-{% endunless %}
+{% endif %}

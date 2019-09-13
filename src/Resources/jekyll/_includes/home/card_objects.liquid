@@ -1,4 +1,4 @@
-{% unless site.manifest.objectTypes == empty %}
+{% if site.manifest.objectTypes | size > 0 %}
 
     <div class="item item-primary col-lg-4 col-6">
         <div class="item-inner">
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-{% endunless %}
+{% endif %}
 
 
 
