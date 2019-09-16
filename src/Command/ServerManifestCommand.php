@@ -31,10 +31,10 @@ class ServerManifestCommand extends AbstractCommand
      * @var array
      */
     const SERVER_PRIVATE = array(
-        'company', 'address', 'zip', 'town', 'country', 
+        'company', 'address', 'zip', 'town', 'country',
         'www', 'email', 'phone'
     );
-    
+
     /**
      * @var string
      */
@@ -152,7 +152,7 @@ class ServerManifestCommand extends AbstractCommand
         //====================================================================//
         // Remove Private Informations
         foreach (self::SERVER_PRIVATE as $key) {
-            if(isset($informations[$key])) {
+            if (isset($informations[$key])) {
                 unset($informations[$key]);
             }
         }
