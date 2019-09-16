@@ -202,7 +202,7 @@ settings:
         name:           Push Created        
         label:          "Exporter sur ce serveur les objets créés sur les autres
                         <br />
-                        Lorsqu'un objet est créé ou mis à jour à partir d'un <b> autre serveur </ b>.
+                        Lorsqu'un objet est créé ou mis à jour à partir d'un <b> autre serveur </b>.
                         Si cet objet n'existe pas sur ce serveur, doit-on le créer?"
     enable_push_updated:            
         name:           Push Updated        
