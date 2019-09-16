@@ -1,0 +1,36 @@
+
+
+<h2 class="section-title">{{ site.data.core.objects.config.title }}</h2>
+<p>{{ site.data.core.objects.config.desc }}</p>
+
+
+<table class="table table-bordered table-compact" style="width:100%">
+
+	<tr>
+		<td width="25%"><strong>{{ site.data.fields.settings.import }}</strong></td>
+		
+		{% assign syncModes = "enable_pull_created, enable_pull_updated, enable_pull_deleted" | split: ", " %}
+
+	    {% for syncMode in syncModes %}
+			<td width="25%">
+				{% include objects/syncMode.liquid %}
+			</td>
+	    {% endfor %}
+
+	</tr>
+
+	<tr>
+		<td width="25%"><strong>{{ site.data.fields.settings.export }}</strong></td>
+		
+		{% assign syncModes = "enable_push_created, enable_push_updated, enable_push_deleted" | split: ", " %}
+
+	    {% for syncMode in syncModes %}
+			<td width="25%">
+				{% include objects/syncMode.liquid %}
+			</td>
+	    {% endfor %}
+
+	</tr>
+
+</table>
+

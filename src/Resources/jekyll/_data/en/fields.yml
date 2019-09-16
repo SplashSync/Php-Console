@@ -170,3 +170,50 @@ fields:
         ico:    fa-money
         tooltip: <h5>Price Definition </h5> Define a product / service price. This is a structural information.    
  
+# ==============================================================================
+# Settings Display Translations 
+# ==============================================================================
+settings:
+    import:             Imports
+    export:             Exports
+    allow_push_created:            
+        name:           Allow Push Created        
+        label:          Splash can create this type of Objects on remote Server. 
+    allow_push_updated:            
+        name:           Allow Push Updated        
+        label:          Splash can update this type of Objects on remote Server. 
+    allow_push_deleted:            
+        name:           Allow Push Deleted        
+        label:          Splash can delete this type of Objects on remote Server. 
+    enable_pull_created:            
+        name:           Pull Created
+        label:          "Import all objects created on this Server. 
+                        <br />
+                        i.e. if you create a new Product on this server, shall we import it on you Splash Account."
+    enable_pull_updated:            
+        name:           Pull Update
+        label:          "Import updates done on this Server. 
+                        <br />
+                        Shall Splash import modifications done on this server."
+    enable_pull_deleted:            
+        name:           Pull Deleted
+        label:          "Delete Cloud objects when deleted from this Server. 
+                        <br />
+                        When you delete an Object on remote server, shall Splash also delete existing objects on other servers."
+    enable_push_created:            
+        name:           Push Created        
+        label:          "Export objects to this Server when created on Cloud. 
+                        <br />
+                        When an object is created or updated from <b>another</b> server.
+                        If this object doesn't exist on this server, shall we create it ?"
+    enable_push_updated:            
+        name:           Push Updated        
+        label:          "Export updates when updated on Cloud. 
+                        <br />
+                        Shall Splash update data on this server when changes are done on other servers."
+    enable_push_deleted:            
+        name:           Push Deleted        
+        label:          "Delete objects on this Server when deleted on Cloud.
+                        <br />
+                        When an Object is deleted on Splash, shall we also delete it from this server."
+        

@@ -45,22 +45,24 @@ $(document).ready(function() {
     });    
 
     /* Datatables */
-    $(document).ready( function () {
-        var table = $('.datatable').DataTable({
-            "autoWidth": false
-        });
-        
-        table.on( 'draw', function () {
-            $('[data-toggle="popover"]').popover();
-            $('[data-toggle="tooltip"]').tooltip();
-        } );
-        
-    } );
-    
-    /* BS4 Popover */
-    $(document).ready( function () {
+    var table = $('.datatable').DataTable({
+        "autoWidth": false
+    });
+
+    table.on( 'draw', function () {
         $('[data-toggle="popover"]').popover();
         $('[data-toggle="tooltip"]').tooltip();
-    });
+    } );
+        
+    /* BS4 Popover */
+        $('[data-toggle="popover"]').popover();
+        $('[data-toggle="tooltip"]').tooltip();
     
+    /* Pretty Print for Json Contents */
+    $( ".pretty-json" ).each(function( index ) {
+        console.log($( this ).html());
+        
+        $( this ).html(JSON.stringify(JSON.parse($( this ).html())));
+    });
+        
 });

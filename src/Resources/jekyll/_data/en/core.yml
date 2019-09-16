@@ -19,12 +19,20 @@ docs:
 objects: 
     title:      "Objects"
     subtitle:   "Details of All Available Objects"
-    table:
-        name:   Name
-        id:     Identifier
-        tags:   Tags
-        format: Format
+    infos:
+        title:  Definition
+        type:   Canonical Type
+        name:   Objects Name
         desc:   Description
+        modes:  Capabilities
+        
+    config:
+        title:  Default Configuration
+        desc:   Default Sync options when you first connect this server.
+        
+    fields:
+        title:  Available Fields
+        desc:   Detailled definition of this Object Fields
         
 
 widets: 

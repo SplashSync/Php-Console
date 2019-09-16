@@ -28,6 +28,14 @@ use Symfony\Component\Yaml\Yaml;
 class ServerManifestCommand extends AbstractCommand
 {
     /**
+     * @var array
+     */
+    const SERVER_PRIVATE = array(
+        'company', 'address', 'zip', 'town', 'country', 
+        'www', 'email', 'phone'
+    );
+    
+    /**
      * @var string
      */
     protected $title = "Build Splash Server Data Manifest";
@@ -140,6 +148,13 @@ class ServerManifestCommand extends AbstractCommand
         $informations = Splash::informations();
         if (empty($informations)) {
             return Splash::log()->errTrace("No Server Informations Found!!");
+        }
+        //====================================================================//
+        // Remove Private Informations
+        foreach (self::SERVER_PRIVATE as $key) {
+            if(isset($informations[$key])) {
+                unset($informations[$key]);
+            }
         }
         $this->data["server"] = (array) $informations;
 
