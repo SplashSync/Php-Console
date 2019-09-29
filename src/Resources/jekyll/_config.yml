@@ -49,6 +49,10 @@ langs:
   fr: Français
 
 ################################################################################
+# Blog Permalinks
+permalink: /:categories/:year/:title:output_ext
+
+################################################################################
 # Assets
 sass:
     style: compressed

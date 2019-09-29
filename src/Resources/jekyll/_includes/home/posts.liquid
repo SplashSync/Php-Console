@@ -1,0 +1,26 @@
+
+{% if site.posts.size > 0 %}
+
+	<div id="doc-header" class="doc-header text-center">
+	    <h1 class="doc-title text-info">
+	    	<i class="fas fa-blog"></i>
+	    	News
+	    </h1>
+	</div>
+
+
+	{% for post in site.posts %}
+
+		<h2 id="post-{{ post.url }}" class="section-title">
+			<a href="{{ post.url | relative_url }}">
+				{{ post.date | date_to_string }}
+				&nbsp;-&nbsp;
+				{{ post.title | escape }}
+			</a>
+		</h2>
+
+      	{{ post.excerpt }}
+
+	{% endfor %}
+
+{% endif %}
