@@ -24,7 +24,7 @@ Avec Splash, c'est natif. Selon les applications, nous synchronisons même les a
 Partager vos données client, vos commandes et factures entres tous vos services?
 Splash vous permets de rapatrier vos données comptables sur vos outils de gestion, c'est simple, fiable, et rapide.
 
-### En quoi le sŷstème Splash est-il different ?
+### En quoi le système Splash est-il different ?
 
 #### Synchronisation Participative
 En connectant vos applications à Splash, vous ne créez pas de connections directe entre serveurs, 
