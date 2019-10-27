@@ -15,12 +15,16 @@
 
 namespace Splash\Console\Task;
 
+use GrumPHP\Configuration\GrumPHP;
+use GrumPHP\Formatter\ProcessFormatterInterface as Formater;
+use GrumPHP\Process\ProcessBuilder;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
+use GrumPHP\Util\Paths;
 use Splash\Console\Helper\ShellRunner;
 use Splash\Core\SplashCore as Splash;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -32,6 +36,8 @@ use Symfony\Component\Yaml\Yaml;
  * GrumPhp Task: Jekyll Documentation Builder
  *
  * Generate Static Documentation Website for Github Pages
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class DocumentationBuilder extends AbstractExternalTask
 {
@@ -39,6 +45,24 @@ class DocumentationBuilder extends AbstractExternalTask
      * @var array
      */
     private $config;
+
+    /**
+     * @var Paths
+     */
+    private $paths;
+
+    /**
+     * @param GrumPHP        $grumPHP
+     * @param ProcessBuilder $processBuilder
+     * @param Formater       $formatter
+     * @param Paths          $path
+     */
+    public function __construct(GrumPHP $grumPHP, ProcessBuilder $processBuilder, Formater $formatter, Paths $path)
+    {
+        parent::__construct($grumPHP, $processBuilder, $formatter);
+
+        $this->paths = $path;
+    }
 
     /**
      * @return string
@@ -340,7 +364,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getDocsDirectory(): string
     {
-        return $this->grumPHP->getGitDir().$this->config["target_folder"];
+        return $this->paths->getProjectDir().$this->config["target_folder"];
     }
 
     /**
@@ -372,7 +396,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getLocalContentsDirectory(): string
     {
-        return $this->grumPHP->getGitDir().$this->config["local_folder"];
+        return $this->paths->getProjectDir().$this->config["local_folder"];
     }
 
     /**
@@ -382,7 +406,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getTempDirectory(): string
     {
-        return $this->grumPHP->getGitDir().$this->config["build_folder"];
+        return $this->paths->getProjectDir().$this->config["build_folder"];
     }
 
     /**
@@ -392,6 +416,6 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getManifestPath(): string
     {
-        return $this->grumPHP->getGitDir()."/splash.yml";
+        return $this->paths->getProjectDir()."/splash.yml";
     }
 }

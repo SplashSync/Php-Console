@@ -45,6 +45,7 @@ class Loader implements ExtensionInterface
             ->addArgument(new Reference('config'))
             ->addArgument(new Reference('process_builder'))
             ->addArgument(new Reference('formatter.raw_process'))
+            ->addArgument(new Reference('GrumPHP\Util\Paths'))
             ->addTag('grumphp.task', array('config' => $taskName));
     }
 }
