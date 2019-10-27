@@ -63,6 +63,6 @@
     },
     
     "conflict": {
-        "phpro/grumphp":                            "<0.16"
+        "phpro/grumphp":                            "<=0.15"
     }     
 }
