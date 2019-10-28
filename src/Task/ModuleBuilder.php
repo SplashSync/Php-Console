@@ -15,12 +15,16 @@
 
 namespace Splash\Console\Task;
 
+use GrumPHP\Configuration\GrumPHP;
+use GrumPHP\Formatter\ProcessFormatterInterface as Formater;
+use GrumPHP\Process\ProcessBuilder;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
+use GrumPHP\Util\Paths;
 use Splash\Console\Helper\Composer;
 use Splash\Console\Helper\ZipBuilder;
 use Splash\Core\SplashCore as Splash;
@@ -32,6 +36,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * GrumPhp Task: Splash Module Builder
  *
  * Generate Installable Zip file for Splash Module
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ModuleBuilder extends AbstractExternalTask
 {
@@ -39,6 +45,24 @@ class ModuleBuilder extends AbstractExternalTask
      * @var array
      */
     private $config;
+
+    /**
+     * @var Paths
+     */
+    private $paths;
+
+    /**
+     * @param GrumPHP        $grumPHP
+     * @param ProcessBuilder $processBuilder
+     * @param Formater       $formatter
+     * @param Paths          $path
+     */
+    public function __construct(GrumPHP $grumPHP, ProcessBuilder $processBuilder, Formater $formatter, Paths $path)
+    {
+        parent::__construct($grumPHP, $processBuilder, $formatter);
+
+        $this->paths = $path;
+    }
 
     /**
      * @return string
@@ -177,7 +201,7 @@ class ModuleBuilder extends AbstractExternalTask
         //====================================================================//
         // Copy Module Composer JSON to Build Directory
         if (!empty($this->config["composer_file"])) {
-            $composerPath = $this->grumPHP->getGitDir()."/".$this->config["composer_file"];
+            $composerPath = $this->paths->getProjectDir()."/".$this->config["composer_file"];
             if (!$filesystem->exists($composerPath)) {
                 return Splash::log()->errTrace(
                     "Unable to find composer.json at ".$composerPath
@@ -244,7 +268,7 @@ class ModuleBuilder extends AbstractExternalTask
      */
     private function getModuleDirectory(): string
     {
-        return $this->grumPHP->getGitDir().$this->config["source_folder"];
+        return $this->paths->getProjectDir().$this->config["source_folder"];
     }
 
     /**
@@ -264,6 +288,6 @@ class ModuleBuilder extends AbstractExternalTask
      */
     private function getBuildPath(): string
     {
-        return $this->grumPHP->getGitDir()."/build/".$this->config["build_file"].".zip";
+        return $this->paths->getProjectDir()."/build/".$this->config["build_file"].".zip";
     }
 }
