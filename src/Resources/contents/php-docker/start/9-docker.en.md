@@ -32,7 +32,7 @@ $ composer install --no-dev
 Then, just build the docker environment.
 
 ```bash
-$ docker compose up
+$ docker-compose up
 ```
 
 This may take a while but in the end, you should have all your environment working!
@@ -78,4 +78,23 @@ Just browse the url, and log with user "admin" and password "admin"!
 
 ![]({{ "/assets/img/splash-toolkit.png" | relative_url }})
 
+### Clear cache? 
+
+If your configuration changed, you may have a pretty error... you need to clear the cache!
+
+How? Just run this docker command:
+
+```bash
+$ docker-compose exec toolkit rm -Rf var/cache/*
+```
+
+### Test your connector locally?? 
+
+Yes, you can! All you need to run our complete core test sequence is already provided by Splash Toolkit.
+
+How? Just run phpunit using this docker command:
+
+```bash
+$ docker-compose exec toolkit vendor/bin/phpunit
+```
 
