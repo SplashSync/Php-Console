@@ -26,6 +26,8 @@ class Loader implements ExtensionInterface
 {
     /**
      * @param ContainerBuilder $container
+     *
+     * @return void
      */
     public function load(ContainerBuilder $container)
     {
@@ -38,6 +40,8 @@ class Loader implements ExtensionInterface
      * @param ContainerBuilder $container
      * @param string           $className
      * @param string           $taskName
+     *
+     * @return void
      */
     private function addTask(ContainerBuilder $container, $className, $taskName)
     {

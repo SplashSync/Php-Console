@@ -35,7 +35,7 @@ class ServerPingCommand extends AbstractCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:server:ping')
@@ -50,9 +50,11 @@ class ServerPingCommand extends AbstractCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
+     * @return null|int
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $this->init($input, $output);
         //====================================================================//
@@ -82,5 +84,7 @@ class ServerPingCommand extends AbstractCommand
         //====================================================================//
         // Render Result Icon
         Graphics::renderResult($output, $ping, "Ping of Splash Server");
+
+        return 0;
     }
 }

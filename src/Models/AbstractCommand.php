@@ -50,7 +50,7 @@ abstract class AbstractCommand extends Command
      *
      * @param InputInterface $input
      */
-    protected function init(InputInterface $input, OutputInterface $output)
+    protected function init(InputInterface $input, OutputInterface $output): void
     {
         //====================================================================//
         // Store I/O Objects

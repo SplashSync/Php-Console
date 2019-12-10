@@ -33,7 +33,7 @@ class ObjectsListCommand extends AbstractListingCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:objects:list')
@@ -49,8 +49,10 @@ class ObjectsListCommand extends AbstractListingCommand
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @return null|int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -69,5 +71,7 @@ class ObjectsListCommand extends AbstractListingCommand
         //====================================================================//
         // Render Splash Logs
         $this->renderLogs();
+
+        return 0;
     }
 }

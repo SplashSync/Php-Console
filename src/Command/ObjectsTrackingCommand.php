@@ -35,7 +35,7 @@ class ObjectsTrackingCommand extends AbstractCommand
     /**
      * Configure repair Command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -51,8 +51,10 @@ class ObjectsTrackingCommand extends AbstractCommand
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @return null|int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -64,14 +66,14 @@ class ObjectsTrackingCommand extends AbstractCommand
             $this->renderLogs();
             Graphics::renderResult($output, false, $this->title);
 
-            return;
+            return 1;
         }
         //====================================================================//
         // Safety Check => Verify This is a Tracking Connector
         if (!$this->connector->isTrackingConnector() || !is_subclass_of($this->connector, TrackingInterface::class)) {
             $output->writeln("This Connector is Not Tracking Object Changes");
 
-            return;
+            return 1;
         }
         //==============================================================================
         // Walk on Connector Objects
@@ -87,5 +89,7 @@ class ObjectsTrackingCommand extends AbstractCommand
         // Render Splash Logs
         $this->renderLogs();
         Graphics::renderResult($output, true, $this->title);
+
+        return 0;
     }
 }

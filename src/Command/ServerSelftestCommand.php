@@ -35,7 +35,7 @@ class ServerSelftestCommand extends AbstractCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:server:selftest')
@@ -51,8 +51,10 @@ class ServerSelftestCommand extends AbstractCommand
      * @param OutputInterface $output
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
+     * @return null|int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -84,5 +86,7 @@ class ServerSelftestCommand extends AbstractCommand
         //====================================================================//
         // Render Result Icon
         Graphics::renderResult($output, $result, "Module Self-Tests");
+
+        return 0;
     }
 }

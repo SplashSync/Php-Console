@@ -35,7 +35,7 @@ class ObjectsTypesCommand extends AbstractCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:objects:types')
@@ -50,9 +50,11 @@ class ObjectsTypesCommand extends AbstractCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
+     * @return null|int
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -87,6 +89,8 @@ class ObjectsTypesCommand extends AbstractCommand
         // Render Splash Logs
         $output->writeln(Splash::log()->getConsoleLog());
         Splash::log()->getConsoleLog();
+
+        return 0;
     }
 
     /**

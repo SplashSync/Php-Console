@@ -37,6 +37,7 @@ trait ManagerAwareTrait
      * @var AbstractConnector
      */
     protected $connector;
+
     /**
      * @var bool
      */
@@ -176,7 +177,7 @@ trait ManagerAwareTrait
             return $this->connector;
         }
 
-        throw new LogicException('Current connector is NOT an AbstractConnector...');
+//        throw new LogicException('Current connector is NOT an AbstractConnector...');
     }
 
     /**

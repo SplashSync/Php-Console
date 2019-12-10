@@ -52,7 +52,7 @@ class ObjectsReadCommand extends AbstractCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:objects:read')
@@ -70,9 +70,11 @@ class ObjectsReadCommand extends AbstractCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
+     * @return null|int
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -84,7 +86,7 @@ class ObjectsReadCommand extends AbstractCommand
         if (!in_array($this->objectType, Splash::objects(), true)) {
             Splash::log()->err("Object of Type ".$this->objectType." not Found");
 
-            return;
+            return 1;
         }
 
         //====================================================================//
@@ -111,6 +113,8 @@ class ObjectsReadCommand extends AbstractCommand
         // Render Splash Logs
         $output->writeln(Splash::log()->getConsoleLog());
         Splash::log()->getConsoleLog();
+
+        return 0;
     }
 
     /**

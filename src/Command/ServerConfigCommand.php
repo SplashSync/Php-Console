@@ -35,7 +35,7 @@ class ServerConfigCommand extends AbstractCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:server:config')
@@ -50,9 +50,11 @@ class ServerConfigCommand extends AbstractCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
+     * @return null|int
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -76,5 +78,7 @@ class ServerConfigCommand extends AbstractCommand
         //====================================================================//
         // Render Result Icon
         Graphics::renderResult($output, $validate, "Splash Module Configuration Validation");
+
+        return 0;
     }
 }

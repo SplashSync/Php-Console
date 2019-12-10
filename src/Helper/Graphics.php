@@ -30,7 +30,7 @@ class Graphics
     /**
      * Display SPLASH SCREEN
      */
-    public static function renderSplashScreen(OutputInterface $output)
+    public static function renderSplashScreen(OutputInterface $output): void
     {
         $logo = array(
             "    ______     ______   __         ______     ______     __  __    ",
@@ -55,7 +55,7 @@ class Graphics
      * @param OutputInterface $output
      * @param string          $text
      */
-    public static function renderTitle(OutputInterface $output, string $text)
+    public static function renderTitle(OutputInterface $output, string $text): void
     {
         $output->write(Logger::getConsoleLine("", self::SPLIT, Logger::CMD_COLOR_MSG));
         $output->write(Logger::getConsoleLine("", "   ".$text, Logger::CMD_COLOR_DEB));
@@ -70,7 +70,7 @@ class Graphics
      * @param bool            $result
      * @param string          $text
      */
-    public static function renderResult(OutputInterface $output, bool $result, string $text)
+    public static function renderResult(OutputInterface $output, bool $result, string $text): void
     {
         $result
             ? self::renderOkResult($output, $text)
@@ -83,7 +83,7 @@ class Graphics
      * @param OutputInterface $output
      * @param string          $text
      */
-    private static function renderOkResult(OutputInterface $output, string $text)
+    private static function renderOkResult(OutputInterface $output, string $text): void
     {
         $logo = array(
             "       \\ \\ / / ",
@@ -105,7 +105,7 @@ class Graphics
      * @param OutputInterface $output
      * @param string          $text
      */
-    private static function renderKoResult(OutputInterface $output, string $text)
+    private static function renderKoResult(OutputInterface $output, string $text): void
     {
         $logo = array(
             "       \\ \\/ / ",

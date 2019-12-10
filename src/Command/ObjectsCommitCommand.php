@@ -82,7 +82,7 @@ class ObjectsCommitCommand extends AbstractListingCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:objects:commit')
@@ -100,8 +100,10 @@ class ObjectsCommitCommand extends AbstractListingCommand
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @return null|int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -114,7 +116,7 @@ class ObjectsCommitCommand extends AbstractListingCommand
             Splash::log()->war("No Objects found for Commit");
             $this->renderLogs();
 
-            return;
+            return 0;
         }
         //====================================================================//
         // Init Results Table
@@ -145,6 +147,8 @@ class ObjectsCommitCommand extends AbstractListingCommand
         //====================================================================//
         // Render Splash Logs
         $this->renderLogs();
+
+        return 0;
     }
 
     /**

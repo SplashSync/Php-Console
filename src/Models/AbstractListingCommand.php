@@ -59,7 +59,7 @@ abstract class AbstractListingCommand extends AbstractCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->addArgument('objectType', InputArgument::REQUIRED, 'Specific Object Type to List')
@@ -75,7 +75,7 @@ abstract class AbstractListingCommand extends AbstractCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      */
-    protected function init(InputInterface $input, OutputInterface $output)
+    protected function init(InputInterface $input, OutputInterface $output): void
     {
         parent::init($input, $output);
 

@@ -35,7 +35,7 @@ class ServerConnectCommand extends AbstractCommand
     /**
      * Configure Symfony Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('splash:server:connect')
@@ -50,9 +50,11 @@ class ServerConnectCommand extends AbstractCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
+     * @return null|int
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -83,5 +85,7 @@ class ServerConnectCommand extends AbstractCommand
         //====================================================================//
         // Render Result Icon
         Graphics::renderResult($output, $connect, "Connect to Splash Server");
+
+        return 0;
     }
 }
