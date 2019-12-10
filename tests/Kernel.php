@@ -98,6 +98,8 @@ class Kernel extends BaseKernel
      * Register Requiered Bundles
      *
      * @param LoaderInterface $loader
+     *
+     * @return void
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
