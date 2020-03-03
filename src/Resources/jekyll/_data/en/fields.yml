@@ -78,7 +78,7 @@ fields:
     text:
         label:  TEXT
         desc:   Long text (Above 255 characters)
-        ico:    fa-file-text
+        ico:    fa-file-alt
         tooltip: <h5>Text</h5>Long text (Above 255 characters)
     mvarchar:
         label:  MVARCHAR
@@ -136,7 +136,7 @@ fields:
     image:
         label:  IMG
         desc:   Image description structure.
-        ico:    fa-picture-o
+        ico:    fa-image
         tooltip: <h5>Image</h5> Image description structure. Share all information for image synchronisation. Image is not attached, but address, dimensions & checksum infomations are used for versionning.
         name:   Image Name
         file:   Filename

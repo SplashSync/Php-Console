@@ -78,7 +78,7 @@ fields:
     text:
         label:  TEXT
         desc:   Bloc de texte (Supérieur à 255 caractères)
-        ico:    fa-file-text
+        ico:    fa-file-alt
         tooltip: <h5>Text</h5> Bloc de texte (Supérieur à 255 caractères)
     mvarchar:
         label:  MVARCHAR
@@ -136,7 +136,7 @@ fields:
     image:
         label:  IMG
         desc:   Structure de définition d'image.
-        ico:    fa-picture-o
+        ico:    fa-image
         tooltip: <h5>Image</h5> Structure de définition d'image. Partage toutes les informations pour la synchronisation des fichiers. L'image n'est pas joint, mais les informations d'adresse et de checksum sont utilisées pour le contrôle de version.
         name:   Nom de l'Image
         file:   Nom du Fichier
