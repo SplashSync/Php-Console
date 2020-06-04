@@ -130,6 +130,7 @@ class ZipBuilder
         //====================================================================//
         // List Files to Add on Zip
         $finder = new Finder();
+        $finder->ignoreDotFiles(false);
         $finder->files()->in($srcDirectory);
         // check if there are any search results
         if (!$finder->hasResults()) {
