@@ -41,12 +41,24 @@ class Composer
             self::buildUpdateOptions($workingDir, $options)
         );
 
-        //====================================================================//
-        // Execute Composer Build
         try {
+            //====================================================================//
+            // Execute Composer Build
             $composer = new ComposerApp();
             $composer->setAutoExit(false);
             $composer->run($input);
+            //====================================================================//
+            // Add .htaccess to Build directory
+            $htaccessContent = file_get_contents(dirname(__DIR__)."/Resources/build/.htaccess");
+            $vendorPath = $composer->getComposer()->getConfig()->get("vendor-dir");
+            $htaccessPath = $vendorPath.DIRECTORY_SEPARATOR.'.htaccess';
+            if (!file_exists($htaccessPath)) {
+                if (!is_writable($vendorPath)) {
+                    throw new Exception('Could not write into module vendor folder');
+                }
+
+                file_put_contents($htaccessPath, $htaccessContent);
+            }
         } catch (Exception $exception) {
             return Splash::log()->errTrace("Composer Update Failled ".$exception->getMessage());
         }

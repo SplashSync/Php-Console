@@ -1,0 +1,4 @@
+############################################
+## By default deny all access
+Order allow,deny
+Deny from all
