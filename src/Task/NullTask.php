@@ -39,7 +39,7 @@ class NullTask extends AbstractExternalTask
     /**
      * @return OptionsResolver
      */
-    public function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): OptionsResolver
     {
         return new OptionsResolver();
     }

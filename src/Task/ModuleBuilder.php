@@ -44,7 +44,7 @@ class ModuleBuilder extends AbstractExternalTask
     /**
      * @var array
      */
-    private $config;
+    private $options;
 
     /**
      * @var Paths
@@ -52,14 +52,13 @@ class ModuleBuilder extends AbstractExternalTask
     private $paths;
 
     /**
-     * @param GrumPHP        $grumPHP
      * @param ProcessBuilder $processBuilder
      * @param Formater       $formatter
      * @param Paths          $path
      */
-    public function __construct(GrumPHP $grumPHP, ProcessBuilder $processBuilder, Formater $formatter, Paths $path)
+    public function __construct(ProcessBuilder $processBuilder, Formater $formatter, Paths $path)
     {
-        parent::__construct($grumPHP, $processBuilder, $formatter);
+        parent::__construct($processBuilder, $formatter);
 
         $this->paths = $path;
     }
@@ -75,7 +74,7 @@ class ModuleBuilder extends AbstractExternalTask
     /**
      * @return OptionsResolver
      */
-    public function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): OptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
@@ -116,11 +115,11 @@ class ModuleBuilder extends AbstractExternalTask
     {
         //====================================================================//
         // Load Task Configuration
-        $this->config = $this->getConfiguration();
+        $this->options = $this->getConfig()->getOptions();
 
         //====================================================================//
         // Build Disabled => Skip this Task
-        if (!$this->config["enabled"]) {
+        if (!$this->options["enabled"]) {
             return TaskResult::createPassed($this, $context);
         }
 
@@ -200,8 +199,8 @@ class ModuleBuilder extends AbstractExternalTask
 
         //====================================================================//
         // Copy Module Composer JSON to Build Directory
-        if (!empty($this->config["composer_file"])) {
-            $composerPath = $this->paths->getProjectDir()."/".$this->config["composer_file"];
+        if (!empty($this->options["composer_file"])) {
+            $composerPath = $this->paths->getProjectDir()."/".$this->options["composer_file"];
             if (!$filesystem->exists($composerPath)) {
                 return Splash::log()->errTrace(
                     "Unable to find composer.json at ".$composerPath
@@ -230,13 +229,13 @@ class ModuleBuilder extends AbstractExternalTask
     {
         //====================================================================//
         // Check if Composer JSON is Required
-        if (empty($this->config["composer_file"])) {
+        if (empty($this->options["composer_file"])) {
             return true;
         }
 
         //====================================================================//
         // Execute Composer Update
-        return Composer::update($this->getTempDirectory(), $this->config["composer_options"]);
+        return Composer::update($this->getTempDirectory(), $this->options["composer_options"]);
     }
 
     /**
@@ -247,7 +246,7 @@ class ModuleBuilder extends AbstractExternalTask
     private function buildModule(): bool
     {
         return ZipBuilder::build($this->getBuildPath(), array(
-            $this->config["build_folder"] => $this->getModuleTempDirectory()
+            $this->options["build_folder"] => $this->getModuleTempDirectory()
         ));
     }
 
@@ -258,7 +257,7 @@ class ModuleBuilder extends AbstractExternalTask
      */
     private function getTempDirectory(): string
     {
-        return sys_get_temp_dir().$this->config["target_folder"];
+        return sys_get_temp_dir().$this->options["target_folder"];
     }
 
     /**
@@ -268,7 +267,7 @@ class ModuleBuilder extends AbstractExternalTask
      */
     private function getModuleDirectory(): string
     {
-        return $this->paths->getProjectDir().$this->config["source_folder"];
+        return $this->paths->getProjectDir().$this->options["source_folder"];
     }
 
     /**
@@ -278,7 +277,7 @@ class ModuleBuilder extends AbstractExternalTask
      */
     private function getModuleTempDirectory(): string
     {
-        return sys_get_temp_dir().$this->config["target_folder"].$this->config["source_folder"];
+        return sys_get_temp_dir().$this->options["target_folder"].$this->options["source_folder"];
     }
 
     /**
@@ -288,6 +287,6 @@ class ModuleBuilder extends AbstractExternalTask
      */
     private function getBuildPath(): string
     {
-        return $this->paths->getProjectDir()."/build/".$this->config["build_file"].".zip";
+        return $this->paths->getProjectDir()."/build/".$this->options["build_file"].".zip";
     }
 }

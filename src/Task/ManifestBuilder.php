@@ -35,7 +35,7 @@ class ManifestBuilder extends AbstractExternalTask
     /**
      * @var array
      */
-    private $config;
+    private $options;
 
     /**
      * @return string
@@ -48,7 +48,7 @@ class ManifestBuilder extends AbstractExternalTask
     /**
      * @return OptionsResolver
      */
-    public function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): OptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
@@ -58,6 +58,7 @@ class ManifestBuilder extends AbstractExternalTask
                 'console' => "tests/console",
                 'command' => "splash:server:manifest",
                 'options' => "",
+                'config' => array(),
             )
         );
 
@@ -66,6 +67,7 @@ class ManifestBuilder extends AbstractExternalTask
         $resolver->addAllowedTypes('console', array('string'));
         $resolver->addAllowedTypes('command', array('string'));
         $resolver->addAllowedTypes('options', array('string'));
+        $resolver->addAllowedTypes('config', array('array'));
 
         return $resolver;
     }
@@ -85,11 +87,11 @@ class ManifestBuilder extends AbstractExternalTask
     {
         //====================================================================//
         // Load Task Configuration
-        $this->config = $this->getConfiguration();
+        $this->options = $this->getConfig()->getOptions();
 
         //====================================================================//
         // Build Disabled => Skip this Task
-        if (!$this->config["enabled"]) {
+        if (!$this->options["enabled"]) {
             return TaskResult::createPassed($this, $context);
         }
 
@@ -111,10 +113,10 @@ class ManifestBuilder extends AbstractExternalTask
     {
         //====================================================================//
         // Build the Shell Command
-        $command = $this->config["php"];
-        $command .= " ".$this->config["console"];
-        $command .= " ".$this->config["command"];
-        $command .= " ".$this->config["options"];
+        $command = $this->options["php"];
+        $command .= " ".$this->options["console"];
+        $command .= " ".$this->options["command"];
+        $command .= " ".$this->options["options"];
 
         //====================================================================//
         // Execute Shell Command

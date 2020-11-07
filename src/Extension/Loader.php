@@ -29,7 +29,7 @@ class Loader implements ExtensionInterface
      *
      * @return void
      */
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $this->addTask($container, ManifestBuilder::class, 'build-manifest');
         $this->addTask($container, ModuleBuilder::class, 'build-module');
@@ -45,11 +45,11 @@ class Loader implements ExtensionInterface
      */
     private function addTask(ContainerBuilder $container, $className, $taskName)
     {
-        $container->register($taskName, $className)
-            ->addArgument(new Reference('config'))
+        $container->register($className, $className)
             ->addArgument(new Reference('process_builder'))
             ->addArgument(new Reference('formatter.raw_process'))
             ->addArgument(new Reference('GrumPHP\Util\Paths'))
-            ->addTag('grumphp.task', array('config' => $taskName));
+            ->addTag('grumphp.task', array('task' => $taskName))
+        ;
     }
 }

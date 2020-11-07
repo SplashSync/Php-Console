@@ -44,7 +44,7 @@ class DocumentationBuilder extends AbstractExternalTask
     /**
      * @var array
      */
-    private $config;
+    private $options;
 
     /**
      * @var Paths
@@ -52,14 +52,13 @@ class DocumentationBuilder extends AbstractExternalTask
     private $paths;
 
     /**
-     * @param GrumPHP        $grumPHP
      * @param ProcessBuilder $processBuilder
      * @param Formater       $formatter
      * @param Paths          $path
      */
-    public function __construct(GrumPHP $grumPHP, ProcessBuilder $processBuilder, Formater $formatter, Paths $path)
+    public function __construct(ProcessBuilder $processBuilder, Formater $formatter, Paths $path)
     {
-        parent::__construct($grumPHP, $processBuilder, $formatter);
+        parent::__construct($processBuilder, $formatter);
 
         $this->paths = $path;
     }
@@ -75,7 +74,7 @@ class DocumentationBuilder extends AbstractExternalTask
     /**
      * @return OptionsResolver
      */
-    public function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): OptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
@@ -91,7 +90,7 @@ class DocumentationBuilder extends AbstractExternalTask
                 'generic_folder' => "/Resources/contents",
                 // Genric Contents To Add
                 'generic_contents' => array("module", "splash"),
-                // Temp Folder for Buildingh the Site
+                // Temp Folder for Building the Site
                 'build_folder' => '/.gh-pages',
             )
         );
@@ -121,7 +120,7 @@ class DocumentationBuilder extends AbstractExternalTask
     {
         //====================================================================//
         // Load Task Configuration
-        $this->config = $this->getConfiguration();
+        $this->options = $this->getConfig()->getOptions();
 
         //====================================================================//
         // Load Splash as Empty Local Class (To Work without System Config)
@@ -131,7 +130,7 @@ class DocumentationBuilder extends AbstractExternalTask
 
         //====================================================================//
         // Build Disabled => Skip this Task
-        if (!$this->config["enabled"]) {
+        if (!$this->options["enabled"]) {
             return TaskResult::createPassed($this, $context);
         }
 
@@ -217,7 +216,7 @@ class DocumentationBuilder extends AbstractExternalTask
 
         //====================================================================//
         // Copy Generic Contents
-        foreach ($this->config["generic_contents"] as $code) {
+        foreach ($this->options["generic_contents"] as $code) {
             $contentDir = $this->getGenericContentDirectory($code);
             if (!is_dir($contentDir)) {
                 return Splash::log()->errTrace(
@@ -364,7 +363,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getDocsDirectory(): string
     {
-        return $this->paths->getProjectDir().$this->config["target_folder"];
+        return $this->paths->getProjectDir().$this->options["target_folder"];
     }
 
     /**
@@ -374,7 +373,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getJekyllSrcDirectory(): string
     {
-        return dirname(__DIR__).$this->config["source_folder"];
+        return dirname(__DIR__).$this->options["source_folder"];
     }
 
     /**
@@ -386,7 +385,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getGenericContentDirectory(string $contentsDir): string
     {
-        return dirname(__DIR__).$this->config["generic_folder"]."/".$contentsDir;
+        return dirname(__DIR__).$this->options["generic_folder"]."/".$contentsDir;
     }
 
     /**
@@ -396,7 +395,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getLocalContentsDirectory(): string
     {
-        return $this->paths->getProjectDir().$this->config["local_folder"];
+        return $this->paths->getProjectDir().$this->options["local_folder"];
     }
 
     /**
@@ -406,7 +405,7 @@ class DocumentationBuilder extends AbstractExternalTask
      */
     private function getTempDirectory(): string
     {
-        return $this->paths->getProjectDir().$this->config["build_folder"];
+        return $this->paths->getProjectDir().$this->options["build_folder"];
     }
 
     /**

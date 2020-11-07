@@ -31,12 +31,12 @@
     },
 
     "require": {
-        "php":                                      "~7.1",
+        "php":                                      "~7.2",
         "symfony/console":                          "~3.4|~4.0"
     },
     
     "require-dev": {
-        "symfony/symfony":                          "~3.4",
+        "symfony/symfony":                          "~3.4|~4.0",
         "symfony/monolog-bundle":                   "*",
         "monolog/monolog":                          "^1.0",
         
@@ -48,11 +48,11 @@
         "splash/php-bundle":                        "dev-master",
         
         "phpunit/phpunit":                          "~7.0|~8.0",
-        "composer/composer":                        "^1.5",
+        "composer/composer":                        "^2.0",
         "j13k/yaml-lint":                           "^1.1",
         "jakub-onderka/php-parallel-lint":          "^1.0",
         "phpmd/phpmd":                              "^2.6",
-        "phpro/grumphp":                            "^0.16",
+        "phpro/grumphp":                            "^0.19|^1.0",
         "sclable/xml-lint":                         "^0.2.4",
         "sebastian/phpcpd":                         ">3.0",
         "seld/jsonlint":                            "^1.7",
