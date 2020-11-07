@@ -27,7 +27,9 @@ before_install:
 ################################################################################
 # Install composer dependencies,
 # Create database, schema and fixtures
-install:   
+install:
+    # With PHP < 7.3 => Rollback to Composer 1
+    - if [[ ${TRAVIS_PHP_VERSION:0:3} < "7.3" ]]; then composer self-update --rollback; fi
     # Setup Travis
     - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/configure.sh  | bash
     # Setup Symfony Version if Required
