@@ -52,7 +52,7 @@ script:
     - php bin/console splash:server:config
     - php bin/console splash:objects:types
     # Show Outdated Packages   
-    - composer outdated
+    - composer outdated -D
     
 
 ################################################################################

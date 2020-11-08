@@ -39,7 +39,8 @@
         "symfony/symfony":                          "~3.4|~4.0",
         "symfony/monolog-bundle":                   "*",
         "monolog/monolog":                          "^1.0",
-        
+        "psr/simple-cache":                         "*",
+
         "doctrine/doctrine-bundle":                 "^1.6",
         "doctrine/orm":                             "^2.5",        
         

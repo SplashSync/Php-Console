@@ -110,7 +110,7 @@ trait ManagerAwareTrait
      * @param InputInterface $input
      *
      * @throws LogicException           if no HelperSet is defined
-     * @throws InvalidArgumentException When the Webserviec Id is invalid
+     * @throws InvalidArgumentException When the Webservice Id is invalid
      */
     protected function identifyServer(InputInterface $input): void
     {
@@ -132,7 +132,9 @@ trait ManagerAwareTrait
         //==============================================================================
         // Use Sf Event to Identify Server
         /** @var IdentifyServerEvent $event */
+        /** @phpstan-ignore-next-line */
         $event = $this->getEventDispatcher()->dispatch(
+            IdentifyServerEvent::NAME,
             new IdentifyServerEvent($this->connector, $webserviceId)
         );
         //==============================================================================
@@ -200,6 +202,7 @@ trait ManagerAwareTrait
 
         return $this;
     }
+
     /**
      * Set Event Dispatcher
      *
