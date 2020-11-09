@@ -3,57 +3,50 @@
 # Define Test Matrix
 matrix:
     include:      
-        - php: 7.2
-        - php: 7.3
+#        - php: 7.2
+#        - php: 7.3
         - php: 7.4
 
     fast_finish: true
 
 ################################################################################
-# GENERIC CONFIGURATION
+# TEST SCRIPTS
 ################################################################################
 
 ################################################################################
-# Prepare Test Environement
+# Prepare Test Environnement
 before_install:
-    - echo "Configuring The Bundles"
-    - cp tests/config/parameters.yml.dist tests/config/parameters.yml
-    - echo "Configuring Folders"
-    - cp tests/console bin/console
-    - mkdir public
-    - cp tests/public/* public
-    - cp tests/public/.htaccess public/.htaccess
-    
+
 ################################################################################
-# Install composer dependencies,
-# Create database, schema and fixtures
+# Install & Configure Environnement
 install:
     # Setup Travis
-    - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/configure.sh  | bash
-    # Setup Symfony Version if Required
-    - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/build_symfony.sh  | bash
-    # Configure For Phpstan vs PHP Versions
-    - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/build_grumphp.sh  | bash
-    # Composer Build
-    - echo "Build Dependencies"
-    - composer update  --prefer-dist --no-interaction  
-    
+    - cat  vendor/badpixxel/php-sdk/src/travis/configure.sh  | bash
+    # Deploy Symfony Files
+    - cat  vendor/badpixxel/php-sdk/src/symfony/deploy.sh | bash
+    # Setup Symfony Version & Create Database
+    - cat  vendor/badpixxel/php-sdk/src/symfony/configure.sh | bash
+    # Install Symfony
+    - cat  vendor/badpixxel/php-sdk/src/symfony/install.sh | bash
+
 ################################################################################
-# Run script
+# Run Test Script
 script:
-    # Execute Grump Travis Testsuite 
-    - php vendor/bin/grumphp run --testsuite=travis
-    # With PHP > 7.0 => Execute CsFixer
-    - if [[ ${TRAVIS_PHP_VERSION:0:3} > "7.0" ]]; then php ./vendor/bin/grumphp run --testsuite=csfixer; fi    
-    # With PHP > 7.0 => Execute Phpstan 
-    - if [[ ${TRAVIS_PHP_VERSION:0:3} > "7.0" ]]; then php ./vendor/bin/grumphp run --testsuite=phpstan; fi   
+    # Execute Grumphp Testsuite
+    - cat  vendor/badpixxel/php-sdk/src/travis/configure.sh  | bash
     # Show Basic Command Results
     - php bin/splash
     - php bin/console splash:server:config
     - php bin/console splash:objects:types
-    # Show Outdated Packages   
-    - composer outdated -D
-    
+
+################################################################################
+# Run After Script
+after_script:
+  - cat  vendor/badpixxel/php-sdk/src/travis/after.sh | bash
+
+################################################################################
+# GENERIC CONFIGURATION
+################################################################################
 
 ################################################################################
 # Project language

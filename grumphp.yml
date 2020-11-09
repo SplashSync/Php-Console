@@ -19,8 +19,9 @@
 #############################################        
 # Override Config. for Php Core Module
 parameters:
-    core_dir:               "./vendor/splash/phpcore/Resources/grumphp"    
-    mode:                   "module"
+    mode:                   "splashsync"
+    # Php Stan
+    stan-config:            "%core_dir%/phpstan/sfp.%mode%.neon"
     # For Building Splash Module
     mod-enable:             false
     # For Building Splash Documentation
@@ -29,7 +30,9 @@ parameters:
     # For Building Splash Manifest
     yml-enable:             false
    
-#############################################        
-# Import Config. from Php Core Module
+#############################################
+# Import Generic + Splash Console Configs
 imports:
-    - { resource: "./vendor/splash/phpcore/Resources/grumphp/grumphp.base.yml" }
+    - { resource: "./vendor/badpixxel/php-sdk/src/grumphp/generic.yml" }
+    - { resource: "./src/Resources/grumphp/tasks.yml" }
+    - { resource: "./src/Resources/grumphp/testsuites.yml" }
