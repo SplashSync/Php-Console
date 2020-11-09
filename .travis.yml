@@ -21,19 +21,19 @@ before_install:
 # Install & Configure Environnement
 install:
     # Setup Travis
-    - cat  vendor/badpixxel/php-sdk/src/travis/configure.sh  | bash
+    - curl -s https://raw.githubusercontent.com/Badpixxel/Php-Sdk/src/travis/configure.sh  | bash
     # Deploy Symfony Files
-    - cat  vendor/badpixxel/php-sdk/src/symfony/deploy.sh | bash
+    - curl -s https://raw.githubusercontent.com/Badpixxel/Php-Sdk/src/symfony/deploy.sh | bash
     # Setup Symfony Version & Create Database
-    - cat  vendor/badpixxel/php-sdk/src/symfony/configure.sh | bash
+    - curl -s https://raw.githubusercontent.com/Badpixxel/Php-Sdk/src/symfony/configure.sh | bash
     # Install Symfony
-    - cat  vendor/badpixxel/php-sdk/src/symfony/install.sh | bash
+    - curl -s https://raw.githubusercontent.com/Badpixxel/Php-Sdk/src/symfony/install.sh | bash
 
 ################################################################################
 # Run Test Script
 script:
     # Execute Grumphp Testsuite
-    - cat  vendor/badpixxel/php-sdk/src/travis/configure.sh  | bash
+    - curl -s https://raw.githubusercontent.com/Badpixxel/Php-Sdk/src/travis/configure.sh  | bash
     # Show Basic Command Results
     - php bin/splash
     - php bin/console splash:server:config
