@@ -31,7 +31,7 @@ install:
 # Run Test Script
 script:
     # Execute Grumphp Testsuite
-    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/configure.sh  | sh
+    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/grumphp.sh  | sh
     # Show Basic Command Results
     - php bin/splash
     - php bin/console splash:server:config
