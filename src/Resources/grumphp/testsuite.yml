@@ -1,0 +1,12 @@
+
+#############################################
+# Splash Console Test Suite
+# >>  Build Module, Docs & Manifest
+#############################################
+grumphp:
+    testsuites:
+        splash:
+            tasks:
+                - build-manifest
+                - build-module
+                - build-docs

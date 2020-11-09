@@ -1,0 +1,15 @@
+#############################################
+# Config for Building Splash Documentation
+#############################################
+parameters:
+    yml-enable:     true
+
+#############################################
+#   Grumphp Tasks
+#############################################
+grumphp:
+    tasks:
+        build-docs:
+            enabled:            "%doc-enable%"
+            local_folder:       "%doc-src%"
+            generic_contents:   "%doc-contents%"

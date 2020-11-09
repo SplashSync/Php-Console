@@ -1,0 +1,6 @@
+#############################################
+# Register Grumphp Extension
+#############################################
+grumphp:
+    extensions:
+        - Splash\Console\Extension\Loader

@@ -1,0 +1,13 @@
+#############################################
+# Config for For Building Splash Manifest
+#############################################
+parameters:
+    yml-enable:     true
+
+#############################################
+#   Grumphp Tasks
+#############################################
+grumphp:
+    tasks:
+        build-manifest:
+            enabled:            "%yml-enable%"

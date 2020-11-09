@@ -1,0 +1,20 @@
+#############################################
+# Config for Building Splash Module
+#############################################
+parameters:
+    mod-enable:     true
+    mod-src:        '/src/Resources/docs'
+    mod-file:       "module"
+
+#############################################
+#   Grumphp Tasks
+#############################################
+grumphp:
+    tasks:
+        # For Building Splash Module
+        build-module:
+            enabled:        "%mod-enable%"
+            source_folder:  "%mod-src%"
+            target_folder:  "/build"
+            build_folder:   ""
+            build_file:     "%mod-file%"

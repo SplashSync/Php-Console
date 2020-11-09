@@ -33,6 +33,5 @@ parameters:
 #############################################
 # Import Generic + Splash Console Configs
 imports:
-    - { resource: "./vendor/badpixxel/php-sdk/src/grumphp/generic.yml" }
-    - { resource: "./src/Resources/grumphp/tasks.yml" }
-    - { resource: "./src/Resources/grumphp/testsuites.yml" }
+    - { resource: "./vendor/badpixxel/php-sdk/grumphp/generic.yml" }
+    - { resource: "./src/Resources/grumphp/*.yml" }
