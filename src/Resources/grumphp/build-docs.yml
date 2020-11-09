@@ -2,7 +2,9 @@
 # Config for Building Splash Documentation
 #############################################
 parameters:
-    yml-enable:     true
+    doc-enable:     true
+    doc-src:        '/src/Resources/docs'
+    doc-contents:   ["module", "splash"]
 
 #############################################
 #   Grumphp Tasks
