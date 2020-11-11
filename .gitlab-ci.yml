@@ -16,6 +16,14 @@
 ################################################################################
 
 ################################################################
+# Set any variables we need
+variables:
+  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
+  MYSQL_DATABASE:         symfony
+  MYSQL_ROOT_PASSWORD:    Php-Console
+  COMPOSER_MEMORY_LIMIT:  -1
+
+################################################################
 # Defined Pipeline Stages
 stages:
   - tests
@@ -56,7 +64,7 @@ stages:
     ################################################################################
     # Run After Script
     after_script:
-      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/after.sh | sh
+      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/after.sh | sh
 
 tests:php-7.4:
   image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
