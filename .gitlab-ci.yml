@@ -1,0 +1,103 @@
+################################################################################
+#
+# Copyright (C) 2020 BadPixxel <www.badpixxel.com>
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+################################################################################
+
+################################################################
+# Defined Pipeline Stages
+stages:
+  - tests
+#  - deploy
+
+################################################################
+# Functional Tests
+################################################################
+
+.core_tests:    &core_tests
+    stage:      tests
+    tags:
+        - Dedicated
+    ################################################################################
+    # Install & Configure Environnement
+    before_script:
+        # Setup Travis
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/configure.sh  | sh
+        # Deploy Symfony Files
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/symfony/deploy.sh | sh
+        # Setup Symfony Version & Create Database
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/symfony/configure.sh | sh
+        # Install Symfony
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/symfony/install.sh | sh
+
+    ################################################################################
+    # Run Test Script
+    script:
+        # Execute Grumphp Testsuite
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/grumphp.sh  | sh
+        # Show Basic Command Results
+        - php bin/splash
+        - php bin/console splash:server:config
+        - php bin/console splash:objects:types
+
+    ################################################################################
+    # Run After Script
+    after_script:
+      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/after.sh | sh
+
+tests:php-7.4:
+  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+  <<: *core_tests
+
+#tests:php-7.3:
+#  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.3
+#  <<: *core_tests
+#
+#tests:php-7.2:
+#  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.2
+#  <<: *core_tests
+
+#################################################################
+## Build Docker Images for Testing
+#################################################################
+#.docker:      &docker
+#  stage:      docker
+#  image:      docker:stable
+#  tags:
+#    - docker
+#  services:
+#    - docker:dind
+#  before_script:
+#    - docker info
+#  script:
+#    - echo "[$CI_JOB_NAME] Build & Upload Docker Image"
+#    # Connect Docker to GitLab
+#    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+#    # Build & Upload Splash All Docker Images
+#    - docker build -t registry.gitlab.com/badpixxel-projects/php-sdk:$CI_JOB_NAME docker/$CI_JOB_NAME
+#    - docker push registry.gitlab.com/badpixxel-projects/php-sdk:$CI_JOB_NAME
+#  except:
+#    - schedules
+#  only:
+#    changes:
+#      - docker/*
+#      - .gitlab-ci.yml
+#
+#php-7.2:
+#  <<: *docker
+#
+#php-7.3:
+#    <<: *docker
+#
+#php-7.4:
+#    <<: *docker
+#
+#php-8.0:
+#    <<: *docker
