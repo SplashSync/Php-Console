@@ -85,7 +85,7 @@ pages:
     image:    registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
     stage:    deploy
     tags:
-      - Dedicated-Docker
+      - Dedicated
     services:
       - docker:dind
     ################################################################################
