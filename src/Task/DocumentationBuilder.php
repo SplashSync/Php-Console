@@ -86,9 +86,9 @@ class DocumentationBuilder extends AbstractExternalTask
                 'target_folder' => '/docs',
                 // Path of Modules Documentations Contents (Relative to Current Module)
                 'local_folder' => '/src/Resources/docs',
-                // Genric Contents Path (Relative to Splash Console)
+                // Generic Contents Path (Relative to Splash Console)
                 'generic_folder' => "/Resources/contents",
-                // Genric Contents To Add
+                // Generic Contents To Add
                 'generic_contents' => array("module", "splash"),
                 // Temp Folder for Building the Site
                 'build_folder' => '/.gh-pages',

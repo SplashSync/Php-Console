@@ -1,13 +1,17 @@
 ################################################################################
 #
-# Copyright (C) 2020 BadPixxel <www.badpixxel.com>
+#  This file is part of SplashSync Project.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#  Copyright (C) Splash Sync <www.splashsync.com>
 #
-# For the full copyright and license information, please view the LICENSE
-# file that was distributed with this source code.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+#  For the full copyright and license information, please view the LICENSE
+#  file that was distributed with this source code.
+#
+#  @author Bernard Paquier <contact@splashsync.com>
 #
 ################################################################################
 
@@ -25,11 +29,13 @@ stages:
     stage:      tests
     tags:
         - Dedicated
+    services:
+        - name: mysql
     ################################################################################
     # Install & Configure Environnement
     before_script:
         # Setup Travis
-        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/configure.sh  | sh
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/configure.sh  | sh
         # Deploy Symfony Files
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/symfony/deploy.sh | sh
         # Setup Symfony Version & Create Database
@@ -41,7 +47,7 @@ stages:
     # Run Test Script
     script:
         # Execute Grumphp Testsuite
-        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/travis/grumphp.sh  | sh
+        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/grumphp.sh  | sh
         # Show Basic Command Results
         - php bin/splash
         - php bin/console splash:server:config
@@ -65,15 +71,39 @@ tests:php-7.4:
 #  <<: *core_tests
 
 #################################################################
-## Build Docker Images for Testing
+## Build Documentation
 #################################################################
-#.docker:      &docker
-#  stage:      docker
+pages:
+    image:    registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+    stage:    deploy
+    tags:
+      - Dedicated-Docker
+    services:
+      - docker:dind
+    ################################################################################
+    # Install & Configure Environnement
+    before_script:
+      # Install Ruby & Gem
+      - bash ci/install-ruby.sh
+      # Install Yarn
+      - bash ci/install-yarn.sh
+      # Install Jekyll
+      - bash ci/install-jekyll.sh
+    ################################################################################
+    # Run Test Script
+    script:
+      # Run Composer to Build deps
+      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/composer.sh  | bash
+      # Build Documentation
+      - php bin/console splash:php vendor/bin/grumphp run --tasks=build-docs
+    artifacts:
+        paths:
+            - public
+
+
 #  image:      docker:stable
 #  tags:
 #    - docker
-#  services:
-#    - docker:dind
 #  before_script:
 #    - docker info
 #  script:
