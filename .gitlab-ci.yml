@@ -103,7 +103,7 @@ pages:
       # Run Composer to Build deps
       - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/composer.sh  | bash
       # Build Documentation
-      - php bin/console splash:php vendor/bin/grumphp run --tasks=build-docs
+      - php vendor/bin/grumphp run --tasks=build-docs
     artifacts:
         paths:
             - public
