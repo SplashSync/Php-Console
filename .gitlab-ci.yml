@@ -116,15 +116,15 @@ pages:
       - Dedicated
     services:
       - docker:dind
-    ################################################################################
-    # Install & Configure Environnement
-    before_script:
-      # Install Ruby & Gem
-      - bash ci/install-ruby.sh
-      # Install Yarn
-      - bash ci/install-yarn.sh
-      # Install Jekyll
-      - bash ci/install-jekyll.sh
+#    ################################################################################
+#    # Install & Configure Environnement
+#    before_script:
+#      # Install Ruby & Gem
+#      - bash ci/install-ruby.sh
+#      # Install Yarn
+#      - bash ci/install-yarn.sh
+#      # Install Jekyll
+#      - bash ci/install-jekyll.sh
     ################################################################################
     # Run Test Script
     script:
