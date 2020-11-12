@@ -19,6 +19,7 @@
 # Base Settings fro All Sites
 title: Splash Docs
 subtitle: Template
+repository: SplashSync/Php-Console
 email: contact@splashsync.com
 github_username:  splashsync
 url: "splashsync.github.io"
