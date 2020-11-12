@@ -1,0 +1,33 @@
+
+################################################################################
+#
+# Copyright (C) 2020 BadPixxel <www.badpixxel.com>
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+################################################################################
+
+################################################################################
+# Docker Compose File
+################################################################################
+
+version: "3.5"
+
+services:
+
+    ################################################################################
+    # SPlash Pages Container
+    pages:
+        image:  registry.gitlab.com/splashsync/php-console:pages
+        container_name: pages.console.splashsync.local
+        build:
+            context: ./docker/
+        ports:
+            - "8080:4000"
+        volumes:
+            - ./:/var/www/html

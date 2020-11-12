@@ -187,6 +187,8 @@ class DocumentationBuilder extends AbstractExternalTask
             $filesystem->remove($this->getTempDirectory());
             $filesystem->mkdir($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
+            Splash::log()->errTrace($exception->getMessage());
+
             return Splash::log()->errTrace(
                 "An error occurred while creating your directory at ".$exception->getPath()
             );
@@ -209,6 +211,8 @@ class DocumentationBuilder extends AbstractExternalTask
         try {
             $filesystem->mirror($this->getJekyllSrcDirectory(), $this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
+            Splash::log()->errTrace($exception->getMessage());
+
             return Splash::log()->errTrace(
                 "An error occurred while Jekyll Base copy at ".$exception->getPath()
             );
@@ -346,8 +350,9 @@ class DocumentationBuilder extends AbstractExternalTask
             $filesystem->remove($this->getDocsDirectory());
             $filesystem->mkdir($this->getDocsDirectory());
             $filesystem->mirror($siteDir, $this->getDocsDirectory());
-//            $filesystem->remove($this->getTempDirectory());
         } catch (IOExceptionInterface $exception) {
+            Splash::log()->errTrace($exception->getMessage());
+
             return Splash::log()->errTrace(
                 "An error occurred while Jekyll Base copy at ".$exception->getPath()
             );
