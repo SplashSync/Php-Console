@@ -47,7 +47,7 @@ docker:
     # Connect Docker to GitLab
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     # Build & Upload Splash All Docker Images
-    - docker build -t registry.gitlab.com/splashsync/php-console docker
+    - docker build -t registry.gitlab.com/splashsync/php-console:pages docker
     - docker push registry.gitlab.com/splashsync/php-console:pages
   except:
     - schedules
