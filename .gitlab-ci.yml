@@ -123,7 +123,7 @@ pages:
       # Install Yarn
       - bash ci/install-yarn.sh
       # Install Jekyll
-      - bash ci/install-jekyll.sh
+#      - bash ci/install-jekyll.sh
     ################################################################################
     # Run Test Script
     script:
