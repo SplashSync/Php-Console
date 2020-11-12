@@ -21,8 +21,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y zlib1g-dev libz
     && docker-php-source delete \
     && pecl clear-cache
 
-RUN php -m
-
 ################################################################
 # Configure Php
 ################################################################
