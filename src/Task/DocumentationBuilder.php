@@ -290,7 +290,7 @@ class DocumentationBuilder extends AbstractExternalTask
         $comamnd .= " && bundle install ";
         $comamnd .= " && bundle exec jekyll build ";
         if (!ShellRunner::run($comamnd)) {
-            return Splash::log()->errTrace("Bundler Jekyyl Build Failled!");
+            return Splash::log()->errTrace("Bundler Jekyll Build Failed!");
         }
 
         return true;

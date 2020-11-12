@@ -4,6 +4,7 @@
 parameters:
     doc-enable:     true
     doc-src:        '/src/Resources/docs'
+    doc-target:     '/docs'
     doc-contents:   ["module", "splash"]
 
 #############################################
@@ -14,4 +15,5 @@ grumphp:
         build-docs:
             enabled:            "%doc-enable%"
             local_folder:       "%doc-src%"
+            target_folder:      "%doc-target%"
             generic_contents:   "%doc-contents%"

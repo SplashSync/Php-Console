@@ -26,6 +26,7 @@ parameters:
     mod-enable:             false
     # For Building Splash Documentation
     doc-src:                '/src/Resources/docs'
+    doc-target:             '/public'
     doc-contents:           ["php-composer", "splash"]
     # For Building Splash Manifest
     yml-enable:             false
