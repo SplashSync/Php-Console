@@ -134,4 +134,4 @@ pages:
       - php vendor/bin/grumphp run --tasks=build-docs
     artifacts:
         paths:
-            - public
+            - docs
