@@ -15,7 +15,7 @@ A Console for all Splash PHP Modules & Applications.
 
 ## Documentation
 
-For the configuration guide and reference, see: [Php Console Documentation](https://splashsync.github.io/Php-Console/)
+For the configuration guide and reference, see: [Php Console Documentation](https://splashsync.gitlab.io/Php-Console)
 
 ## Contributing
 
