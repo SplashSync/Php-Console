@@ -26,6 +26,7 @@ variables:
 ################################################################
 # Defined Pipeline Stages
 stages:
+  - docker
   - tests
   - deploy
 
