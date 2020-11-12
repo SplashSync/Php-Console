@@ -109,7 +109,8 @@ tests:php-7.4:
 ## Build Documentation
 #################################################################
 pages:
-    image:    registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+#    image:    registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+    image:    registry.gitlab.com/splashsync/php-console:pages
     stage:    deploy
     tags:
       - Dedicated
