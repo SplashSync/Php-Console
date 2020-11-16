@@ -121,9 +121,9 @@ pages:
 #      # Install Ruby & Gem
 #      - bash ci/install-ruby.sh
       # Install Yarn
-      - bash ci/install-yarn.sh
+#      - bash ci/install-yarn.sh
       # Install Jekyll
-      - bash ci/install-jekyll.sh
+#      - bash ci/install-jekyll.sh
     ################################################################################
     # Run Test Script
     script:
