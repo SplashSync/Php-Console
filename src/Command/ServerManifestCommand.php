@@ -184,7 +184,7 @@ class ServerManifestCommand extends AbstractCommand
         }
         //====================================================================//
         // Read Objects Fields Data
-        $this->data["objectTypes"] = $objectsTypes;
+        $this->data["objectTypes"] = array_values($objectsTypes);
         foreach ($objectsTypes as $objectsType) {
             //====================================================================//
             // Init Data Object
@@ -208,7 +208,7 @@ class ServerManifestCommand extends AbstractCommand
             foreach ($fields as &$field) {
                 $field = (array) $field;
             }
-            $object["fields"] = (array) $fields;
+            $object["fields"] = array_values((array) $fields);
 
             $this->data["objects"][$objectsType] = $object;
         }

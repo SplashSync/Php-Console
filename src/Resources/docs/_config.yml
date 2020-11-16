@@ -21,7 +21,7 @@
 
 # Title of the Bundle / Module
 title: Splash Php Console
-# Subtitle of the Site (Generaly DOC)
+# Subtitle of the Site (Generally DOC)
 subtitle: DOC
 # the subpath of your site, e.g. /blog
 baseurl: "/Php-Console" 

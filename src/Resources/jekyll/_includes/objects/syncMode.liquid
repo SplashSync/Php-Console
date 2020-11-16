@@ -6,7 +6,7 @@
 		data-trigger="click | hover"
 		>
 
-	{% if site.manifest.objects[objectType].description[syncMode]%}
+	{% if site.manifest.objects[objectType].description[syncMode] and site.manifest.objects[objectType].description[syncMode] != "0"%}
 		<i class="fas fa-check-double text-success"></i>
 	{% else %}	
 		<i class="fas fa-times text-danger"></i>

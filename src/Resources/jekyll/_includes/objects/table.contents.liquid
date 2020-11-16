@@ -7,7 +7,7 @@
                 <td>{{ field.id }}</td>
                 <td>
 
-				    {% if field.required %}
+				    {% if field.required and field.required != "0"  %}
 				        <span 	data-toggle="tooltip" data-placement="top" data-html="true" 
 				        		title="{{ site.data.fields.fields.required.tooltip }}"
 				        		>
@@ -17,7 +17,7 @@
 				        </span>
 				    {% endif %}
 
-				    {% if field.inlist  %}
+				    {% if field.inlist and field.inlist != "0"   %}
 				        <span 	data-toggle="tooltip" data-placement="top" data-html="true" 
 				        		title="{{ site.data.fields.fields.inlist.tooltip }}">
 				            <span class="badge badge-success p-1">
@@ -26,7 +26,7 @@
 				        </span>
 				    {% endif %}
 
-				    {% if field.read == false %}
+				    {% if field.read == false or field.read == "0" %}
 				        <span 	data-toggle="tooltip" data-placement="top" data-html="true" 
 				        		title="{{ site.data.fields.fields.writeonly.tooltip }}">
 				            <span class="badge badge-primary p-1">
@@ -34,8 +34,8 @@
 				            </span>
 				        </span>
 				    {% endif %}
-				    
-				    {% if field.write == false  %}
+
+					{% if field.write == false or field.write == "0" %}
 				        <span 	data-toggle="tooltip" data-placement="top" data-html="true" 
 				        		title="{{ site.data.fields.fields.readonly.tooltip }}">
 				            <span class="badge badge-info p-1">
