@@ -27,7 +27,7 @@ parameters:
     # For Building Splash Documentation
     doc-src:                '/src/Resources/docs'
     doc-target:             '/public'
-    doc-contents:           ["php-composer", "splash"]
+    doc-contents:           ["splash-theme", "splash-faq", "php-composer"]
     # For Building Splash Manifest
     yml-enable:             false
    
@@ -35,4 +35,5 @@ parameters:
 # Import Generic + Splash Console Configs
 imports:
     - { resource: "./vendor/badpixxel/php-sdk/grumphp/generic.yml" }
+    - { resource: "./vendor/badpixxel/php-sdk/grumphp/extras.yml" }
     - { resource: "./src/Resources/grumphp/*.yml" }
