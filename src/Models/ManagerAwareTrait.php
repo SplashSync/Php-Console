@@ -132,9 +132,7 @@ trait ManagerAwareTrait
         //==============================================================================
         // Use Sf Event to Identify Server
         /** @var IdentifyServerEvent $event */
-        /** @phpstan-ignore-next-line */
         $event = $this->getEventDispatcher()->dispatch(
-            IdentifyServerEvent::NAME,
             new IdentifyServerEvent($this->connector, $webserviceId)
         );
         //==============================================================================

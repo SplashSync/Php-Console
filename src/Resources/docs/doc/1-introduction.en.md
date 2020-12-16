@@ -14,6 +14,4 @@ Executing console commands on Splash applications is usefull for developper and 
 
 Php Console may also be used to execute generic developper actions on generic Splash Modules & Connectors. 
 
-* Automated build of Module installable zip.
-* Generation of Module Documentation (Alike this website)
 * Build Splash Module manifest json file

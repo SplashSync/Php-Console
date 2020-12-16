@@ -24,10 +24,10 @@ title: Splash Php Console
 # Subtitle of the Site (Generally DOC)
 subtitle: DOC
 # the subpath of your site, e.g. /blog
-baseurl: "/Php-Console" 
+baseurl: "/Php-Console"
 # Description of the Bundle/Module
 description:    "Php Console for All Splash Modules, Bundles & Connectors.
-                Brings all usefull tools for developper & advanced Splash Sync Users.
+                Brings all useful tools for developer & advanced Splash Sync Users.
                 A simple and efficient CLI Console for Executing Test & Mass Actions."
 # Package Code on Packagist
 package:    "splash/console"

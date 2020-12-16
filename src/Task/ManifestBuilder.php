@@ -15,13 +15,13 @@
 
 namespace Splash\Console\Task;
 
+use BadPixxel\PhpSdk\Helper\ShellRunner;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
-use Splash\Console\Helper\ShellRunner;
 use Splash\Core\SplashCore as Splash;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

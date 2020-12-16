@@ -14,6 +14,4 @@ L'exécution des commandes de la console sur les applications Splash est utile p
 
 La console PHP peut également être utilisée pour exécuter des actions de génériques sur les modules et connecteurs Splash génériques.
 
-* Génération automatisée du module zip installable.
-* Génération de la documentation du module (comme ce site Web)
 * Construire le fichier manifeste Splash (json) du module 

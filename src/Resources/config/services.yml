@@ -3,10 +3,10 @@ services:
     ########################################################################
     #   SPLASH CONSOLE COMMANDS
     ########################################################################
-    
+
     Splash\Console\Command\:
         resource: '../../Command'
         calls:
             - [ setManager, [ "@event_dispatcher", "@logger", "%splash%" ]]
-        tags:       
-            - { name: "console.command"}        
+        tags:
+            - { name: "console.command"}

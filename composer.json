@@ -35,13 +35,13 @@
 
     "require": {
         "php":                                      "~7.2",
-        "symfony/console":                          "~3.4|~4.0"
+        "symfony/console":                          "^4.0"
     },
     
     "require-dev": {
         "badpixxel/php-sdk":                        "dev-main",
 
-        "symfony/symfony":                          "~3.4|~4.0",
+        "symfony/symfony":                          "^4.0",
         "symfony/monolog-bundle":                   "*",
         "monolog/monolog":                          "^1.0",
         "psr/simple-cache":                         "*",

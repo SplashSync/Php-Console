@@ -1,4 +1,4 @@
-![Splash](http://www.splashsync.com/bundles/theme/img/splash-logo.png)
+[![N|Solid](https://github.com/SplashSync/Php-Core/raw/master/img/github.jpg)](https://www.splashsync.com)
 
 # Splash Sync Php Console
 A Console for all Splash PHP Modules & Applications.
