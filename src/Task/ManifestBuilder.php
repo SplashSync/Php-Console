@@ -120,7 +120,7 @@ class ManifestBuilder extends AbstractExternalTask
 
         //====================================================================//
         // Execute Shell Command
-        if (!ShellRunner::run($command)) {
+        if (null !== ShellRunner::run($command)) {
             return Splash::log()->errTrace("Splash Manifest Build Failed!");
         }
 
