@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -87,7 +87,7 @@ class ObjectsCommitCommand extends AbstractListingCommand
         $this
             ->setName('splash:objects:commit')
             ->setDescription('[Splash] Commit Objects Changes for a Given Object Type')
-            ->addOption('delay', "d", InputOption::VALUE_OPTIONAL, 'Pause in Seconds between two Commits', 1)
+            ->addOption('delay', "d", InputOption::VALUE_OPTIONAL, 'Pause in Seconds between two Commits', "1")
             ->addOption('all', "a", InputOption::VALUE_NONE, 'Commit Changes for All Objects', null)
             ->addOption('force', null, InputOption::VALUE_NONE, 'Do Object Changes Commit (Else >> dry run)', null)
         ;
