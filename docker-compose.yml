@@ -25,7 +25,43 @@ version: "3.5"
 services:
 
     ################################################################################
-    # SPlash Pages Container
+    # PHP 8.0
+    php-8.0:
+        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+        container_name: php-console-8.0
+        volumes:
+            - ./:/var/www/html
+            - vendor-php80:/var/www/html/vendor
+
+    ################################################################################
+    # PHP 7.4
+    php-7.4:
+        image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+        container_name: php-console-7.4
+        volumes:
+            - ./:/var/www/html
+            - vendor-php74:/var/www/html/vendor
+
+    ################################################################################
+    # PHP 7.3
+    php-7.3:
+        image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-7.3
+        container_name: php-console-7.3
+        volumes:
+            - ./:/var/www/html
+            - vendor-php73:/var/www/html/vendor
+
+    ################################################################################
+    # PHP 7.2
+    php-7.2:
+        image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-7.2
+        container_name: php-console-7.2
+        volumes:
+            - ./:/var/www/html
+            - vendor-php72:/var/www/html/vendor
+
+    ################################################################################
+    # Splash Pages Container
     pages:
         image:  registry.gitlab.com/splashsync/php-console:pages
         container_name: pages.console.splashsync.local
@@ -35,3 +71,9 @@ services:
             - "8080:4000"
         volumes:
             - ./:/var/www/html
+
+volumes:
+    vendor-php80: ~
+    vendor-php74: ~
+    vendor-php73: ~
+    vendor-php72: ~

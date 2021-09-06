@@ -46,9 +46,9 @@
         "monolog/monolog":                          "^1.0",
         "psr/simple-cache":                         "*",
 
-        "doctrine/doctrine-bundle":                 "^1.6",
-        "doctrine/orm":                             "^2.5",        
-        
+        "doctrine/orm":                             "^2.5",
+        "doctrine/doctrine-bundle":                 "^1.6|^2.0",
+
         "splash/phpcore":                           "dev-master", 
         "splash/faker":                             "dev-master",
         "splash/php-bundle":                        "dev-master"

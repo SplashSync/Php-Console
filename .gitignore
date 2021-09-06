@@ -13,3 +13,4 @@
 /src/Resources/jekyll/yarn.lock
 /.idea/
 /public/
+/.php-cs-fixer.cache
