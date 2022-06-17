@@ -7,11 +7,8 @@ framework:
     translator:      { fallbacks: ["%locale%"] }
     router:
         resource:   "%kernel.project_dir%/tests/config/routing.yml"
-    templating:
-        engines: ['twig']
     form:           ~
-#    session:        ~
-    test: ~
+    test:           ~
     session:
         storage_id: session.storage.mock_file
     profiler: { only_exceptions: false }
