@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,7 +13,6 @@
  *  file that was distributed with this source code.
  */
 
-use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
@@ -32,7 +31,6 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 }
 
 require __DIR__.'/../vendor/autoload.php';
-Debug::enable();
 
 $kernel = new Kernel('dev', false);
 $request = Request::createFromGlobals();

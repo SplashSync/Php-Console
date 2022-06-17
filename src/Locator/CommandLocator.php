@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -30,7 +30,7 @@ class CommandLocator
     /**
      * Available Commands List
      *
-     * @var array
+     * @var null|array
      */
     private static $commands;
 
@@ -43,15 +43,14 @@ class CommandLocator
     {
         //====================================================================//
         // Check if List Already Generated
-        if (isset(static::$commands)) {
-            return static::$commands;
+        if (isset(self::$commands)) {
+            return self::$commands;
         }
         //====================================================================//
         // Init List
-        static::$commands = array();
+        self::$commands = array();
         //====================================================================//
         // Scan Local Objects Folder
-
         $scan = scandir(dirname(__DIR__)."/Command", 1);
         if (false !== $scan) {
             //====================================================================//
@@ -67,11 +66,11 @@ class CommandLocator
                 //====================================================================//
                 // Verify ClassName is a Valid
                 if (class_exists($className, true)) {
-                    static::$commands[$commandName] = $className;
+                    self::$commands[$commandName] = $className;
                 }
             }
         }
 
-        return static::$commands;
+        return self::$commands;
     }
 }
