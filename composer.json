@@ -49,8 +49,13 @@
         "doctrine/orm":                             "^2.5",
         "doctrine/doctrine-bundle":                 "^1.6|^2.0",
 
-        "splash/phpcore":                           "dev-master", 
         "splash/faker":                             "dev-master",
         "splash/php-bundle":                        "dev-master"
+    },
+
+    "config": {
+        "allow-plugins": {
+            "phpro/grumphp": true
+        }
     }
 }

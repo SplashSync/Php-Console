@@ -116,21 +116,20 @@ abstract class AbstractListingCommand extends AbstractCommand
         $fields = Splash::object($this->objectType)->fields();
         $result = array();
 
-        /** @var ArrayObject $field */
         foreach ($fields as $field) {
             //==============================================================================
             //      Filter Non-Listed Fields
-            if ($isListed && !$field->inlist) {
+            if ($isListed && !$field['inlist']) {
                 continue;
             }
             //==============================================================================
             //      Filter Non-Readable Fields
-            if ($isRead && !$field->read) {
+            if ($isRead && !$field['read']) {
                 continue;
             }
             //==============================================================================
             //      Filter Non-Writable Fields
-            if ($isWrite && !$field->write) {
+            if ($isWrite && !$field['write']) {
                 continue;
             }
             $result[] = $field;
