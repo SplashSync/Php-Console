@@ -64,7 +64,7 @@ docker:
     tags:
         - Dedicated
     services:
-        - name: mysql
+        - name: mariadb
     ################################################################################
     # Install & Configure Environnement
     before_script:

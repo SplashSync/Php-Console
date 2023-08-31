@@ -36,27 +36,27 @@ trait ManagerAwareTrait
      *
      * @var AbstractConnector
      */
-    protected $connector;
+    protected AbstractConnector $connector;
 
     /**
      * @var bool
      */
-    private $isManagerMode = false;
+    private bool $isManagerMode = false;
 
     /**
      * @var EventDispatcherInterface
      */
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     /**
      * @var LoggerInterface
      */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * @var null|string
      */
-    private $defaultServerId;
+    private ?string $defaultServerId;
 
     /**
      * Setup Sf Command for Using Splash Connector Manager
@@ -172,11 +172,7 @@ trait ManagerAwareTrait
      */
     protected function getConnector(): AbstractConnector
     {
-        if ($this->connector instanceof AbstractConnector) {
-            return $this->connector;
-        }
-
-        throw new LogicException('Current connector is NOT an AbstractConnector...');
+        return $this->connector;
     }
 
     /**

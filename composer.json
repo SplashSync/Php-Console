@@ -27,27 +27,31 @@
     },
     
     "autoload-dev": {
-        "classmap": [ "tests/Kernel.php" ],
-        "files": [
-            "vendor/splash/phpcore/inc/Splash.Inc.php"
-        ]
+        "psr-4": {
+            "Splash\\Console\\Test\\": "tests/"
+        }
     },
 
     "require": {
-        "php":                                      "^7.2|^8.0",
-        "symfony/console":                          "^4.0|^5.0"
+        "php":                                      "^7.4|^8.0",
+        "symfony/console":                          "^4.4|^5.4"
     },
     
     "require-dev": {
         "badpixxel/php-sdk":                        "dev-main",
 
-        "symfony/symfony":                          "^4.4|^5.4",
+        "symfony/http-kernel":                      "^5.4",
+        "symfony/security-bundle":                  "^5.4",
+        "symfony/http-foundation":                  "^5.4",
+        "symfony/twig-bundle":                      "^5.4",
+        "symfony/runtime":                          "^5.4",
+        "symfony/debug-pack":                       "^1.0",
         "symfony/monolog-bundle":                   "*",
         "monolog/monolog":                          "^1.0|^2.0",
-        "psr/simple-cache":                         "*",
 
-        "doctrine/orm":                             "^2.5",
-        "doctrine/doctrine-bundle":                 "^1.6|^2.0",
+        "doctrine/orm":                             "^2.0",
+        "doctrine/annotations":                     "^2.0",
+        "doctrine/doctrine-bundle":                 "^2.0",
 
         "splash/faker":                             "dev-master",
         "splash/php-bundle":                        "dev-master"
@@ -55,7 +59,14 @@
 
     "config": {
         "allow-plugins": {
-            "phpro/grumphp": true
+            "phpro/grumphp": true,
+            "symfony/runtime": true
+        }
+    },
+
+    "extra": {
+        "runtime": {
+            "dotenv_overload": true
         }
     }
 }
