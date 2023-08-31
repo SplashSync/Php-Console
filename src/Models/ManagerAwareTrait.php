@@ -176,7 +176,7 @@ trait ManagerAwareTrait
             return $this->connector;
         }
 
-//        throw new LogicException('Current connector is NOT an AbstractConnector...');
+        throw new LogicException('Current connector is NOT an AbstractConnector...');
     }
 
     /**

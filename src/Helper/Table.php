@@ -15,7 +15,6 @@
 
 namespace Splash\Console\Helper;
 
-use ArrayObject;
 use Splash\Components\FieldsManager;
 use Symfony\Component\Console\Helper\Table as baseTable;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,8 +40,8 @@ class Table extends baseTable
     /**
      * Render Table of Objects Data
      *
-     * @param array $fields
-     * @param array $data
+     * @param array[] $fields
+     * @param array   $data
      */
     public function renderObjectsList(array $fields, array $data): void
     {
@@ -50,7 +49,7 @@ class Table extends baseTable
         // Prepare Table Header
         $header = array("ID");
         foreach ($fields as $field) {
-            $header[] = $field->name;
+            $header[] = $field['name'];
         }
         $this->setHeaders($header);
         //====================================================================//
@@ -65,7 +64,7 @@ class Table extends baseTable
             $this->renderObjectsListRow($fields, $objectData);
         }
         //====================================================================//
-        // Detect Metadatas
+        // Detect Metadata
         if (isset($meta) && method_exists($this, "setFooterTitle")) {
             $this->setFooterTitle($meta["current"]." objects of ".$meta["total"]);
         }
@@ -77,8 +76,8 @@ class Table extends baseTable
     /**
      * Render Table with Data of A Given Object
      *
-     * @param array $fields
-     * @param array $object
+     * @param array[] $fields
+     * @param array   $object
      */
     public function renderObjectData(array $fields, array $object): void
     {
@@ -88,20 +87,19 @@ class Table extends baseTable
 
         //====================================================================//
         // Walk on List Objects
-        /** @var ArrayObject $field */
         foreach ($fields as $field) {
             $lineData = array();
             //====================================================================//
             // Field Id
-            $lineData[] = "<info>".$field->id."</info>";
+            $lineData[] = "<info>".$field['id']."</info>";
             //====================================================================//
             // Field Name
-            $lineData[] = $field->name;
+            $lineData[] = $field['name'];
             //====================================================================//
             // Field Data
             $lineData[] = $this->getObjectDataString(
                 $field,
-                FieldsManager::extractRawData($object, $field->id)
+                FieldsManager::extractRawData($object, $field['id'])
             );
             //====================================================================//
             // Add Object Row
@@ -116,25 +114,24 @@ class Table extends baseTable
     /**
      * Render Table of Objects Data
      *
-     * @param array $fields
-     * @param array $objectData
+     * @param array[] $fields
+     * @param array   $objectData
      */
     public function renderObjectsListRow(array $fields, array $objectData): void
     {
         $lineData = array();
         //====================================================================//
         // Read Object Id
-        $lineData[] = "<info>".(isset($objectData["id"]) ? $objectData["id"] : "-?-")."</info>";
+        $lineData[] = "<info>".($objectData["id"] ?? "-?-")."</info>";
         //====================================================================//
         // Read Object Fields
-        /** @var ArrayObject $field */
         foreach ($fields as $field) {
-            if (!isset($objectData[$field->id]) || !is_scalar($objectData[$field->id])) {
+            if (!isset($objectData[$field['id']]) || !is_scalar($objectData[$field['id']])) {
                 $lineData[] = "<comment>-null-</comment>";
 
                 continue;
             }
-            $lineData[] = $objectData[$field->id];
+            $lineData[] = $objectData[$field['id']];
         }
         //====================================================================//
         // Add Object Row
@@ -144,16 +141,16 @@ class Table extends baseTable
     /**
      * Render Table with Data of A Given Object
      *
-     * @param null|ArrayObject $field
-     * @param mixed            $fieldData
+     * @param null|array $field
+     * @param mixed      $fieldData
      *
      * @return string
      */
-    private function getObjectDataString(?ArrayObject $field, $fieldData): string
+    private function getObjectDataString(?array $field, $fieldData): string
     {
         //====================================================================//
         // Lists Field Data
-        if ($field && FieldsManager::isListField($field->id) && is_iterable($fieldData)) {
+        if ($field && FieldsManager::isListField($field['id']) && is_iterable($fieldData)) {
             $result = "";
             foreach ($fieldData as $itemData) {
                 $result .= " - ".$this->getObjectDataString(null, $itemData);

@@ -32,8 +32,8 @@ class Loader implements ExtensionInterface
     public function load(ContainerBuilder $container): void
     {
         $this->addTask($container, ManifestBuilder::class, 'build-manifest');
-//        $this->addTask($container, ModuleBuilder::class, 'build-module');
-//        $this->addTask($container, DocumentationBuilder::class, 'build-docs');
+        //        $this->addTask($container, ModuleBuilder::class, 'build-module');
+        //        $this->addTask($container, DocumentationBuilder::class, 'build-docs');
     }
 
     /**
