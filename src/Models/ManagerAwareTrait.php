@@ -56,7 +56,7 @@ trait ManagerAwareTrait
     /**
      * @var null|string
      */
-    private ?string $defaultServerId;
+    private ?string $defaultServerId = null;
 
     /**
      * Setup Sf Command for Using Splash Connector Manager
