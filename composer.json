@@ -33,20 +33,20 @@
     },
 
     "require": {
-        "php":                                      "^7.4|^8.0",
-        "splash/php-bundle":                        "2.0.x-dev",
-        "symfony/console":                          "^4.4|^5.4"
+        "php":                                      "^8.1",
+        "splash/php-bundle":                        "^3.0",
+        "symfony/console":                          "^5.4|^6.4|^7.0"
     },
     
     "require-dev": {
-        "badpixxel/php-sdk":                        "^2.0",
+        "badpixxel/php-sdk":                        "^3.0",
 
-        "symfony/http-kernel":                      "^5.4",
-        "symfony/security-bundle":                  "^5.4",
-        "symfony/http-foundation":                  "^5.4",
-        "symfony/property-info":                    "^5.4",
-        "symfony/twig-bundle":                      "^5.4",
-        "symfony/runtime":                          "^5.4",
+        "symfony/http-kernel":                      "^5.4|^6.4|^7.0",
+        "symfony/security-bundle":                  "^5.4|^6.4|^7.0",
+        "symfony/http-foundation":                  "^5.4|^6.4|^7.0",
+        "symfony/property-info":                    "^5.4|^6.4|^7.0",
+        "symfony/twig-bundle":                      "^5.4|^6.4|^7.0",
+        "symfony/runtime":                          "^5.4|^6.4|^7.0",
         "symfony/debug-pack":                       "^1.0",
         "symfony/monolog-bundle":                   "*",
         "monolog/monolog":                          "^1.0|^2.0",
@@ -55,7 +55,7 @@
         "doctrine/annotations":                     "^2.0",
         "doctrine/doctrine-bundle":                 "^2.10",
 
-        "splash/faker":                             "2.0.x-dev"
+        "splash/faker":                             "3.0.x-dev"
     },
 
     "scripts": {
