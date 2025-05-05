@@ -31,6 +31,7 @@ services:
         container_name: php8-2.splash-console.local
         volumes:
             - ./:/var/www/html
+            - var-php82:/var/www/html/var
             - vendor-php82:/var/www/html/vendor
 
     ################################################################################
@@ -40,6 +41,7 @@ services:
         container_name: php8-1.splash-console.local
         volumes:
             - ./:/var/www/html
+            - var-php81:/var/www/html/var
             - vendor-php81:/var/www/html/vendor
 
     ################################################################################
@@ -49,6 +51,7 @@ services:
         container_name: php8-0.splash-console.local
         volumes:
             - ./:/var/www/html
+            - var-php80:/var/www/html/var
             - vendor-php80:/var/www/html/vendor
 
     ################################################################################
@@ -58,10 +61,15 @@ services:
         container_name: php7-4.splash-console.local
         volumes:
             - ./:/var/www/html
+            - var-php74:/var/www/html/var
             - vendor-php74:/var/www/html/vendor
 
 volumes:
-    vendor-php82: ~
-    vendor-php81: ~
-    vendor-php80: ~
-    vendor-php74: ~
+    var-php82:      ~
+    vendor-php82:   ~
+    var-php81:      ~
+    vendor-php81:   ~
+    var-php80:      ~
+    vendor-php80:   ~
+    var-php74:      ~
+    vendor-php74:   ~
