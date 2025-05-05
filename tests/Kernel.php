@@ -24,4 +24,12 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+
+    /**
+     * Gets the path to the configuration directory.
+     */
+    protected function getConfigDir(): string
+    {
+        return $this->getProjectDir().'/tests/config';
+    }
 }

@@ -20,9 +20,18 @@
 # Docker Compose File
 ################################################################################
 
-version: "3.5"
+name: Splash Php Console
 
 services:
+
+    ################################################################################
+    # PHP 8.2
+    php-8.2:
+        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-8.2
+        container_name: php8-2.splash-console.local
+        volumes:
+            - ./:/var/www/html
+            - vendor-php82:/var/www/html/vendor
 
     ################################################################################
     # PHP 8.1
@@ -45,13 +54,14 @@ services:
     ################################################################################
     # PHP 7.4
     php-7.4:
-        image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
         container_name: php7-4.splash-console.local
         volumes:
             - ./:/var/www/html
             - vendor-php74:/var/www/html/vendor
 
 volumes:
+    vendor-php82: ~
     vendor-php81: ~
     vendor-php80: ~
     vendor-php74: ~

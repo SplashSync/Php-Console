@@ -34,39 +34,57 @@
 
     "require": {
         "php":                                      "^7.4|^8.0",
+        "splash/php-bundle":                        "dev-master",
         "symfony/console":                          "^4.4|^5.4"
     },
     
     "require-dev": {
-        "badpixxel/php-sdk":                        "dev-main",
+        "badpixxel/php-sdk":                        "^2.0",
 
         "symfony/http-kernel":                      "^5.4",
         "symfony/security-bundle":                  "^5.4",
         "symfony/http-foundation":                  "^5.4",
+        "symfony/property-info":                    "^5.4",
         "symfony/twig-bundle":                      "^5.4",
         "symfony/runtime":                          "^5.4",
         "symfony/debug-pack":                       "^1.0",
         "symfony/monolog-bundle":                   "*",
         "monolog/monolog":                          "^1.0|^2.0",
 
-        "doctrine/orm":                             "^2.0",
+        "doctrine/orm":                             "^2.6",
         "doctrine/annotations":                     "^2.0",
-        "doctrine/doctrine-bundle":                 "^2.0",
+        "doctrine/doctrine-bundle":                 "^2.10",
 
-        "splash/faker":                             "dev-master",
-        "splash/php-bundle":                        "dev-master"
+        "splash/faker":                             "2.0.x-dev"
+    },
+
+    "scripts": {
+        "auto-scripts": [
+            "php bin/console cache:clear",
+            "php bin/console cache:clear --env=test",
+            "php bin/console doctrine:schema:update --force --complete --no-interaction --no-debug",
+            "find var/cache/dev/*.xml | while read -r i; do cp \"$i\" var/cache/dev/testContainer.xml; done"
+        ],
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
     },
 
     "config": {
         "allow-plugins": {
-            "phpro/grumphp": true,
-            "symfony/runtime": true
+            "phpro/grumphp":        true,
+            "symfony/runtime":      true
         }
     },
 
+    "archive": {
+        "exclude": ["/docs", "/tests"]
+    },
+
     "extra": {
-        "runtime": {
-            "dotenv_overload": true
-        }
+        "public-dir": "tests/public"
     }
 }

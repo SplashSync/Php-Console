@@ -4,14 +4,14 @@
 A Console for all Splash PHP Modules & Applications.
 
 ## Features
-- Detect Module configuration and display Object & Widgets Proterties 
+- Detect Module configuration and display Object & Widgets Properties 
 - Provide console commands to Ping & Connect Splash Servers
 - Provide console commands to List & Commit Local Objects
 
 ## Requirements
 
-* PHP CLI 7.1+
-* An active Splash Sync User Account for axecuting remote actions
+* PHP CLI 7.4+
+* An active Splash Sync User Account for executing remote actions
 
 ## Documentation
 

@@ -1,3 +1,7 @@
+parameters:
+    # Adds a fallback DATABASE_URL if the env var is not set.
+    env(DATABASE_URL): 'sqlite:///%kernel.project_dir%/var/data.db'
+
 # Doctrine Configuration
 doctrine:
     dbal:
