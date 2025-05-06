@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
 use Splash\Bundle\Connectors\NullConnector;
 use Splash\Bundle\Events\IdentifyServerEvent;
 use Splash\Bundle\Models\AbstractConnector;
-use Splash\Client\Splash;
+use Splash\Core\Client\Splash;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -157,18 +157,14 @@ trait ManagerAwareTrait
 
     /**
      * Check if we are in Connector Manager Mode
-     *
-     * @return bool
      */
-    protected function isManagerMode()
+    protected function isManagerMode(): bool
     {
-        return $this->isManagerMode && ($this->connector instanceof AbstractConnector);
+        return $this->isManagerMode && isset($this->connector);
     }
 
     /**
      * Get Current Splash Connector
-     *
-     * @return AbstractConnector
      */
     protected function getConnector(): AbstractConnector
     {
@@ -177,20 +173,16 @@ trait ManagerAwareTrait
 
     /**
      * Get Event Dispatcher
-     *
-     * @return EventDispatcherInterface
      */
-    protected function getEventDispatcher()
+    protected function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->eventDispatcher;
     }
 
     /**
      * Setup for Connector Manager Mode
-     *
-     * @return $this
      */
-    private function setManagerMode()
+    private function setManagerMode(): self
     {
         $this->isManagerMode = true;
 
@@ -199,12 +191,8 @@ trait ManagerAwareTrait
 
     /**
      * Set Event Dispatcher
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @return $this
      */
-    private function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
+    private function setEventDispatcher(EventDispatcherInterface $eventDispatcher): self
     {
         $this->eventDispatcher = $eventDispatcher;
 
@@ -213,12 +201,8 @@ trait ManagerAwareTrait
 
     /**
      * Set Event Dispatcher
-     *
-     * @param LoggerInterface $logger
-     *
-     * @return $this
      */
-    private function setLogger(LoggerInterface $logger)
+    private function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
 
@@ -234,13 +218,13 @@ trait ManagerAwareTrait
     {
         //====================================================================//
         // Safety Check - Verify Configured Servers List is Not Empty
-        if (!isset($config["connections"]) || empty($config["connections"])) {
+        if (empty($config["connections"])) {
             return;
         }
         //====================================================================//
         // Detect First Configured Server
         $firstServer = array_shift($config["connections"]);
-        if (!isset($firstServer["id"]) || empty($firstServer["id"])) {
+        if (empty($firstServer["id"])) {
             return;
         }
 

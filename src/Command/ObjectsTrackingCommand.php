@@ -16,7 +16,6 @@
 namespace Splash\Console\Command;
 
 use Splash\Bundle\Interfaces\Connectors\TrackingInterface;
-use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
 use Splash\Console\Models\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,7 +29,7 @@ class ObjectsTrackingCommand extends AbstractCommand
     /**
      * @var string
      */
-    protected $title = "Track & Commit Objects Changes";
+    protected string $title = "Track & Commit Objects Changes";
 
     /**
      * Configure repair Command.
@@ -48,13 +47,8 @@ class ObjectsTrackingCommand extends AbstractCommand
 
     /**
      * Execute Console Command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null|int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //====================================================================//
         // Init & Splash Screen

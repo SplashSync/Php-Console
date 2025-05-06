@@ -15,7 +15,9 @@
 
 namespace Splash\Console\Helper;
 
-use Splash\Components\FieldsManager;
+use Splash\Core\Helpers\DataExtractor;
+use Splash\Core\Interfaces\Fields\FieldsCollectionInterface;
+use Splash\Core\Models\Fields\AbstractField;
 use Symfony\Component\Console\Helper\Table as baseTable;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -65,7 +67,7 @@ class Table extends baseTable
         }
         //====================================================================//
         // Detect Metadata
-        if (isset($meta) && method_exists($this, "setFooterTitle")) {
+        if (isset($meta)) {
             $this->setFooterTitle($meta["current"]." objects of ".$meta["total"]);
         }
         //====================================================================//
@@ -75,11 +77,8 @@ class Table extends baseTable
 
     /**
      * Render Table with Data of A Given Object
-     *
-     * @param array[] $fields
-     * @param array   $object
      */
-    public function renderObjectData(array $fields, array $object): void
+    public function renderObjectData(FieldsCollectionInterface $fields, array $object): void
     {
         //====================================================================//
         // Prepare Table Header
@@ -91,15 +90,15 @@ class Table extends baseTable
             $lineData = array();
             //====================================================================//
             // Field Id
-            $lineData[] = "<info>".$field['id']."</info>";
+            $lineData[] = "<info>".$field->getIdentifier()."</info>";
             //====================================================================//
             // Field Name
-            $lineData[] = $field['name'];
+            $lineData[] = $field->getName();
             //====================================================================//
             // Field Data
             $lineData[] = $this->getObjectDataString(
                 $field,
-                FieldsManager::extractRawData($object, $field['id'])
+                DataExtractor::extractField($object, $field->getIdentifier())
             );
             //====================================================================//
             // Add Object Row
@@ -141,16 +140,16 @@ class Table extends baseTable
     /**
      * Render Table with Data of A Given Object
      *
-     * @param null|array $field
-     * @param mixed      $fieldData
+     * @param null|AbstractField $field
+     * @param mixed              $fieldData
      *
      * @return string
      */
-    private function getObjectDataString(?array $field, $fieldData): string
+    private function getObjectDataString(?AbstractField $field, $fieldData): string
     {
         //====================================================================//
         // Lists Field Data
-        if ($field && FieldsManager::isListField($field['id']) && is_iterable($fieldData)) {
+        if ($field && $field->isInlist() && is_iterable($fieldData)) {
             $result = "";
             foreach ($fieldData as $itemData) {
                 $result .= " - ".$this->getObjectDataString(null, $itemData);

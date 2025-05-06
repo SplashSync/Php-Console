@@ -15,7 +15,7 @@
 
 namespace Splash\Console\Helper;
 
-use Splash\Components\Logger;
+use Splash\Core\Components\Logger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

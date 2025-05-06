@@ -15,7 +15,7 @@
 
 namespace Splash\Console\Models;
 
-use Splash\Client\Splash;
+use Splash\Core\Client\Splash;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -31,28 +31,22 @@ abstract class AbstractListingCommand extends AbstractCommand
      *
      * @var string
      */
-    private $objectType;
+    private string $objectType;
 
     /**
      * List Offset
-     *
-     * @var int
      */
-    private $offset;
+    private int $offset;
 
     /**
      * List Limit
-     *
-     * @var int
      */
-    private $limit;
+    private int $limit;
 
     /**
      * List Filter
-     *
-     * @var string
      */
-    private $filter;
+    private string $filter;
 
     /**
      * Configure Symfony Command

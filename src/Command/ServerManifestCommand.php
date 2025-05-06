@@ -15,9 +15,9 @@
 
 namespace Splash\Console\Command;
 
-use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
 use Splash\Console\Models\AbstractCommand;
+use Splash\Core\Client\Splash;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -38,7 +38,7 @@ class ServerManifestCommand extends AbstractCommand
     /**
      * @var string
      */
-    protected $title = "Build Splash Server Data Manifest";
+    protected string $title = "Build Splash Server Data Manifest";
 
     /**
      * @var array
@@ -59,15 +59,8 @@ class ServerManifestCommand extends AbstractCommand
 
     /**
      * Execute Symfony Command
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null|int
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = false;
         //====================================================================//
@@ -83,7 +76,8 @@ class ServerManifestCommand extends AbstractCommand
         // Execute Splash Self-Tests
         $selfTests = $this->isManagerMode()
                 ? $this->getConnector()->selfTest()
-                : Splash::selfTest();
+                : Splash::selfTest()
+        ;
         //====================================================================//
         // Collect Server Data
         if ($selfTests) {

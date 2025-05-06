@@ -15,10 +15,9 @@
 
 namespace Splash\Console\Command;
 
-use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
 use Splash\Console\Models\AbstractCommand;
-use Symfony\Component\Console\Command\Command;
+use Splash\Core\Client\Splash;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -30,7 +29,7 @@ class ServerConnectCommand extends AbstractCommand
     /**
      * @var string
      */
-    protected $title = "Test Connect of Splash Server";
+    protected string $title = "Test Connect of Splash Server";
 
     /**
      * Configure Symfony Command
@@ -46,15 +45,8 @@ class ServerConnectCommand extends AbstractCommand
 
     /**
      * Execute Symfony Command
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null|int
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -69,14 +61,16 @@ class ServerConnectCommand extends AbstractCommand
         // Execute Splash Self-Tests
         $selfTests = $this->isManagerMode()
                 ? $this->getConnector()->selfTest()
-                : Splash::selfTest();
+                : Splash::selfTest()
+        ;
         //====================================================================//
         // Execute Splash Server Ping
         $connect = false;
         if ($selfTests) {
             $connect = $this->isManagerMode()
                 ? $this->getConnector()->connect()
-                : Splash::connect();
+                : Splash::connect()
+            ;
         }
         //====================================================================//
         // Render Splash Logs

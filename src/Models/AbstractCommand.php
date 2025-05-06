@@ -15,9 +15,8 @@
 
 namespace Splash\Console\Models;
 
-use Splash\Client\Splash;
 use Splash\Console\Helper\Graphics;
-use Splash\Models\Fields\FieldsManagerTrait;
+use Splash\Core\Client\Splash;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,28 +26,25 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractCommand extends Command
 {
-    use FieldsManagerTrait;
     use ManagerAwareTrait;
 
     /**
      * @var InputInterface
      */
-    protected $input;
+    protected InputInterface $input;
 
     /**
      * @var OutputInterface
      */
-    protected $output;
+    protected OutputInterface $output;
 
     /**
      * @var string
      */
-    protected $title = __CLASS__;
+    protected string $title = __CLASS__;
 
     /**
      * Init Listing Command
-     *
-     * @param InputInterface $input
      */
     protected function init(InputInterface $input, OutputInterface $output): void
     {

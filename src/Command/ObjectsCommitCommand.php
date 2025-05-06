@@ -15,9 +15,12 @@
 
 namespace Splash\Console\Command;
 
-use Splash\Client\Splash;
+use DateTime;
 use Splash\Console\Helper\Table;
 use Splash\Console\Models\AbstractListingCommand;
+use Splash\Core\Client\Splash;
+use Splash\Core\Dictionary\SplOperations;
+use Splash\Core\Helpers\DatesHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,54 +33,54 @@ class ObjectsCommitCommand extends AbstractListingCommand
     /**
      * @var string
      */
-    protected $title = "Commit Objects Changes";
+    protected string $title = "Commit Objects Changes";
 
     /**
      * @var Table
      */
-    private $table;
+    private Table $table;
 
     /**
      * Number of Objects in A Batch
      *
      * @var int
      */
-    private $batchSize;
+    private int $batchSize;
 
     /**
      * Delay in Second between Two Batch
      *
      * @var int
      */
-    private $batchDelay;
+    private int $batchDelay;
 
     /**
      * Current Objects Counter
      *
      * @var int
      */
-    private $current = 0;
+    private int $current = 0;
 
     /**
      * Total Objects Counter
      *
      * @var int
      */
-    private $total;
+    private int $total;
 
     /**
      * Commit All Option
      *
      * @var bool
      */
-    private $all;
+    private bool $all;
 
     /**
      * Do Commit or Dry run
      *
      * @var bool
      */
-    private $force;
+    private bool $force;
 
     /**
      * Configure Symfony Command
@@ -97,13 +100,8 @@ class ObjectsCommitCommand extends AbstractListingCommand
 
     /**
      * Execute Symfony Command
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null|int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -166,7 +164,7 @@ class ObjectsCommitCommand extends AbstractListingCommand
         Splash::commit(
             $this->getObjectType(),
             $objectIds,
-            SPL_A_UPDATE,
+            SplOperations::UPDATE,
             "Splash Console",
             "Mass Commit from Splash Console"
         );
@@ -202,7 +200,7 @@ class ObjectsCommitCommand extends AbstractListingCommand
     }
 
     /**
-     * Extract Objecst IDs from List
+     * Extract Objects IDs from List
      */
     private function extractIds(array $objectsList): array
     {
@@ -228,14 +226,10 @@ class ObjectsCommitCommand extends AbstractListingCommand
     private function renderTableHead(): void
     {
         //====================================================================//
-        // SF >= 4.1 Append Row to Table
-        if (method_exists($this->table, "appendRow")) {
-            //====================================================================//
-            // Init Results Table
-            $this->table = new Table($this->output);
-            $this->table->setHeaders(array("Date", "Type", "Result", "IDs",));
-            $this->table->render();
-        }
+        // Init Results Table
+        $this->table = new Table($this->output);
+        $this->table->setHeaders(array("Date", "Type", "Result", "IDs",));
+        $this->table->render();
     }
 
     /**
@@ -243,19 +237,12 @@ class ObjectsCommitCommand extends AbstractListingCommand
      */
     private function renderTableRow(array $objectIds, string $status): void
     {
-        $date = (new \DateTime())->format(SPL_T_DATETIMECAST);
+        $date = DatesHelper::toDateTimeStr(new DateTime());
         $objectType = $this->getObjectType();
         $objectsStr = implode(', ', $objectIds);
 
         //====================================================================//
-        // SF >= 4.1 Append Row to Table
-        if (method_exists($this->table, "appendRow")) {
-            $this->table->appendRow(array($date,$objectType, $status, $objectsStr));
-
-            return;
-        }
-        //====================================================================//
-        // SF < 4.1 Append Raw Console Line
-        $this->output->writeln(implode(" | ", array($date,$objectType, $status, $objectsStr)));
+        // Append Row to Table
+        $this->table->appendRow(array($date,$objectType, $status, $objectsStr));
     }
 }

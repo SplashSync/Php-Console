@@ -15,10 +15,9 @@
 
 namespace Splash\Console\Command;
 
-use Splash\Client\Splash;
 use Splash\Console\Helper\Table;
 use Splash\Console\Models\AbstractCommand;
-use Symfony\Component\Console\Command\Command;
+use Splash\Core\Client\Splash;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -30,7 +29,7 @@ class ObjectsTypesCommand extends AbstractCommand
     /**
      * @var string
      */
-    protected $title = "Listed of Available Objects";
+    protected string $title = "Listed of Available Objects";
 
     /**
      * Configure Symfony Command
@@ -46,15 +45,8 @@ class ObjectsTypesCommand extends AbstractCommand
 
     /**
      * Execute Symfony Command
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null|int
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //====================================================================//
         // Init & Splash Screen

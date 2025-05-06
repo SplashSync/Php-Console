@@ -15,9 +15,10 @@
 
 namespace Splash\Console\Command;
 
-use Splash\Client\Splash;
 use Splash\Console\Helper\Table;
 use Splash\Console\Models\AbstractCommand;
+use Splash\Core\Client\Splash;
+use Splash\Core\Fields\FieldsCollection;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -33,21 +34,21 @@ class ObjectsReadCommand extends AbstractCommand
      *
      * @var string
      */
-    private $objectType;
+    private string $objectType;
 
     /**
      * Current Object Type to Read
      *
      * @var string
      */
-    private $objectId;
+    private string $objectId;
 
     /**
      * Object Fields to Read & Display
      *
-     * @var array
+     * @var string[]
      */
-    private $fields;
+    private array $fields = array();
 
     /**
      * Configure Symfony Command
@@ -66,15 +67,8 @@ class ObjectsReadCommand extends AbstractCommand
 
     /**
      * Execute Symfony Command
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null|int
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //====================================================================//
         // Init & Splash Screen
@@ -92,21 +86,20 @@ class ObjectsReadCommand extends AbstractCommand
         //====================================================================//
         // Read Objects Readable Fields
         $fields = Splash::object($this->objectType)->fields();
-        $reducedFields = self::reduceFieldList($fields, true);
-        $filteredFields = self::filterFieldList($fields, $reducedFields);
+        $fieldCollection = FieldsCollection::fromArray($fields)->filterRead();
         if ($this->fields) {
-            $filteredFields = self::filterFieldList($filteredFields, $this->fields);
+            $fieldCollection = $fieldCollection->filterIdentifiers($this->fields);
         }
-
         //====================================================================//
         // Read Object Data
-        $objectData = Splash::object($this->objectType)->get($this->objectId, $reducedFields);
-
+        $objectData = Splash::object($this->objectType)
+            ->get($this->objectId, $fieldCollection->reduce())
+        ;
         //====================================================================//
         // Render Object Data
         if (is_array($objectData)) {
             $table = new Table($output);
-            $table->renderObjectData($filteredFields, $objectData);
+            $table->renderObjectData($fieldCollection, $objectData);
         }
 
         //====================================================================//

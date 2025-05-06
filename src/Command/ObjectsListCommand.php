@@ -28,7 +28,7 @@ class ObjectsListCommand extends AbstractListingCommand
     /**
      * @var string
      */
-    protected $title = "Read Objects List";
+    protected string $title = "Read Objects List";
 
     /**
      * Configure Symfony Command
@@ -46,13 +46,8 @@ class ObjectsListCommand extends AbstractListingCommand
 
     /**
      * Execute Symfony Command
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return null|int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //====================================================================//
         // Init & Splash Screen
