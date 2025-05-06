@@ -41,15 +41,15 @@
     "require-dev": {
         "badpixxel/php-sdk":                        "^3.0",
 
+        "phpro/grumphp":                            "^2.0",
+
         "symfony/http-kernel":                      "^5.4|^6.4|^7.0",
-        "symfony/security-bundle":                  "^5.4|^6.4|^7.0",
         "symfony/http-foundation":                  "^5.4|^6.4|^7.0",
         "symfony/property-info":                    "^5.4|^6.4|^7.0",
         "symfony/twig-bundle":                      "^5.4|^6.4|^7.0",
         "symfony/runtime":                          "^5.4|^6.4|^7.0",
-        "symfony/debug-pack":                       "^1.0",
+        "symfony/flex":                             "^1.0|^2.0",
         "symfony/monolog-bundle":                   "*",
-        "monolog/monolog":                          "^1.0|^2.0",
 
         "doctrine/orm":                             "^2.6",
         "doctrine/annotations":                     "^2.0",
@@ -58,13 +58,17 @@
         "splash/faker":                             "3.0.x-dev"
     },
 
+    "provide": {
+        "phpro/grumphp-shim":                       "*"
+    },
+
     "scripts": {
-        "auto-scripts": [
-            "php bin/console cache:clear",
-            "php bin/console cache:clear --env=test",
-            "php bin/console doctrine:schema:update --force --complete --no-interaction --no-debug",
-            "find var/cache/dev/*.xml | while read -r i; do cp \"$i\" var/cache/dev/testContainer.xml; done"
-        ],
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "cache:clear --env=test": "symfony-cmd",
+            "doctrine:schema:update --force --complete --no-interaction --no-debug": "symfony-cmd",
+            "find var/cache/dev/*.xml | while read -r i; do cp \"$i\" var/cache/dev/testContainer.xml; done": "script"
+        },
         "post-install-cmd": [
             "@auto-scripts"
         ],
@@ -75,8 +79,10 @@
 
     "config": {
         "allow-plugins": {
-            "phpro/grumphp":        true,
-            "symfony/runtime":      true
+            "phpro/grumphp":            false,
+            "phpro/grumphp-shim":       true,
+            "symfony/runtime":          true,
+            "symfony/flex":             true
         }
     },
 
