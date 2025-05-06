@@ -24,6 +24,7 @@ verify:	# Verify Code in All Containers
 .PHONY: phpstan
 phpstan:	# Execute Php Stan in All Containers
 	$(MAKE) all COMMAND="php vendor/bin/grumphp run --testsuite=phpstan"
+	$(MAKE) all COMMAND="php vendor/bin/grumphp run --testsuite=phpstan"
 
 .PHONY: test
 test: 	## Execute Functional Test in All Containers
