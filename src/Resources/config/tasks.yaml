@@ -1,0 +1,14 @@
+services:
+
+    _defaults:
+        autowire:       true
+        autoconfigure:  true
+
+    Splash\Console\Task\ManifestBuilder:
+      class:    Splash\Console\Task\ManifestBuilder
+      arguments:
+        - '@process_builder'
+        - '@formatter.raw_process'
+        - '@GrumPHP\Util\Paths'
+      tags:
+        - { name: grumphp.task, task: build-manifest }
