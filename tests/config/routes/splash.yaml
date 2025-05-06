@@ -2,5 +2,5 @@
 ################################################################################
 # SPLASH Php Bundle Production Routes
 splash_bundle_routing:
-    resource: "@SplashBundle/Resources/config/routing.yml"
-    prefix: /ws
+    resource:   "@SplashBundle/Resources/config/routing.php"
+    prefix:     /ws

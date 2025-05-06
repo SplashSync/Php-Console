@@ -17,7 +17,6 @@ return array(
     //==============================================================================
     // SYMFONY CORE
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => array("all" => true),
-    Symfony\Bundle\SecurityBundle\SecurityBundle::class => array("all" => true),
     Symfony\Bundle\TwigBundle\TwigBundle::class => array("all" => true),
     Symfony\Bundle\MonologBundle\MonologBundle::class => array("all" => true),
     //==============================================================================
@@ -30,7 +29,4 @@ return array(
     //==============================================================================
     // SPLASH CONNECTORS BUNDLE
     Splash\Connectors\Faker\FakerBundle::class => array("all" => true),
-    //==============================================================================
-    // TEST & DEV BUNDLES
-    Symfony\Bundle\DebugBundle\DebugBundle::class => array("dev" => true, 'test' => true),
 );
