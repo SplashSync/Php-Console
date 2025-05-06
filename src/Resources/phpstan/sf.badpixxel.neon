@@ -1,0 +1,30 @@
+################################################################################
+#
+# Copyright (C) BadPixxel <www.badpixxel.com>
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+#
+################################################################################
+
+includes:
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-symfony/extension.neon
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-phpunit/extension.neon
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-doctrine/extension.neon
+parameters:
+    inferPrivatePropertyTypeFromConstructor: true
+    universalObjectCratesClasses:
+        - ArrayObject
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
+        - "#Casting to string something that's already string.#"
+    excludePaths:
+        - %currentWorkingDirectory%/src/Task/ManifestBuilder.php
+        - %currentWorkingDirectory%/src/Extension/Loader.php
+    symfony:
+        containerXmlPath: %currentWorkingDirectory%/var/cache/dev/testContainer.xml

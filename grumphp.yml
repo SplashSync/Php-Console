@@ -21,7 +21,7 @@
 parameters:
     mode:                   "splashsync"
     # Php Stan
-    stan-config:            "%core_dir%/phpstan/sf.badpixxel.neon"
+    stan-config:            "src/Resources/phpstan/sf.badpixxel.neon"
     # For Building Splash Module
     mod-enable:             false
     # For Building Splash Documentation

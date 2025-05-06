@@ -16,9 +16,6 @@
 namespace Splash\Console\Extension;
 
 use GrumPHP\Extension\ExtensionInterface;
-use Splash\Console\Task\ManifestBuilder;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class Loader implements ExtensionInterface
 {
