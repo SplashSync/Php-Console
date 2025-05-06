@@ -19,26 +19,27 @@ use BadPixxel\PhpSdk\Helper\ShellRunner;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
+use GrumPHP\Task\Config\ConfigOptionsResolver;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
-use Splash\Core\SplashCore as Splash;
+use Splash\Core\Client\Splash;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * GrumPhp Task: Splash Manifest Builder
  *
- * Generate Splash Dat Manifest
+ * Generate Splash Data Manifest
  */
 class ManifestBuilder extends AbstractExternalTask
 {
     /**
      * @var array
      */
-    private $options;
+    private array $options;
 
     /**
-     * @return string
+     * Get Task Name
      */
     public function getName(): string
     {
@@ -46,16 +47,16 @@ class ManifestBuilder extends AbstractExternalTask
     }
 
     /**
-     * @return OptionsResolver
+     * Get Default Task Configuration
      */
-    public static function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): ConfigOptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
             array(
                 'enabled' => true,
                 'php' => "php",
-                'console' => "tests/console",
+                'console' => "bin/console",
                 'command' => "splash:server:manifest",
                 'options' => "",
                 'config' => array(),
@@ -69,7 +70,9 @@ class ManifestBuilder extends AbstractExternalTask
         $resolver->addAllowedTypes('options', array('string'));
         $resolver->addAllowedTypes('config', array('array'));
 
-        return $resolver;
+        return ConfigOptionsResolver::fromClosure(
+            static fn (array $options): array => $resolver->resolve($options)
+        );
     }
 
     /**
