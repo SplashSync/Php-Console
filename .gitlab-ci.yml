@@ -31,15 +31,15 @@ variables:
 ################################################################
 # Defined Pipeline Stages
 stages:
-  - docker
-  - tests
-  - deploy
+  - Docker
+  - Tests
+  - Builds
 
 ################################################################
 # Build Docker Images for Testing
 ################################################################
 docker:
-  stage:      docker
+  stage:      Docker
   image:      docker:stable
   tags:
     - Dedicated-Docker
@@ -65,7 +65,7 @@ docker:
 ################################################################
 
 .core_tests:    &core_tests
-    stage:      tests
+    stage:      Tests
     tags:
         - Dedicated
     services:
