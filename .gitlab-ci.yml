@@ -16,6 +16,11 @@
 ################################################################################
 
 ################################################################
+# Include Pipeline Templates
+include:
+  - remote: 'https://raw.githubusercontent.com/BadPixxel/Php-Sdk/3.0/gitlab/pages.yaml'
+
+################################################################
 # Set any variables we need
 variables:
   # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
@@ -26,41 +31,15 @@ variables:
 ################################################################
 # Defined Pipeline Stages
 stages:
-  - docker
-  - tests
-  - deploy
-
-################################################################
-# Build Docker Images for Testing
-################################################################
-docker:
-  stage:      docker
-  image:      docker:stable
-  tags:
-    - Dedicated-Docker
-  services:
-    - docker:dind
-  before_script:
-    - docker info
-  script:
-    - echo "Build & Upload Pages Builder Docker Image"
-    # Connect Docker to GitLab
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    # Build & Upload Splash All Docker Images
-    - docker build -t registry.gitlab.com/splashsync/php-console:pages docker
-    - docker push registry.gitlab.com/splashsync/php-console:pages
-  except:
-    - schedules
-  only:
-    changes:
-      - docker/**/*
+  - Tests
+  - Builds
 
 ################################################################
 # Functional Tests
 ################################################################
 
 .core_tests:    &core_tests
-    stage:      tests
+    stage:      Tests
     tags:
         - Dedicated
     services:
@@ -103,25 +82,3 @@ tests:php-8.0:
 tests:php-7.4:
   image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
   <<: *core_tests
-
-#################################################################
-## Build Documentation
-#################################################################
-pages:
-#    image:    registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
-    image:    registry.gitlab.com/splashsync/php-console:pages
-    stage:    deploy
-    tags:
-      - Dedicated
-    services:
-      - docker:dind
-    ################################################################################
-    # Run Test Script
-    script:
-      # Run Composer to Build deps
-      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/composer.sh  | bash
-      # Build Documentation
-      - php vendor/bin/grumphp run --tasks=build-docs
-    artifacts:
-        paths:
-            - public
