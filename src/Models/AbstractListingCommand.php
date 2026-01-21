@@ -206,10 +206,8 @@ abstract class AbstractListingCommand extends AbstractCommand
 
     /**
      * Render Command Title
-     *
-     * @param string $prefix
      */
-    protected function renderTitle(string $prefix = null): void
+    protected function renderTitle(?string $prefix = null): void
     {
         //====================================================================//
         // Splash Screen
