@@ -15,6 +15,7 @@
 /public/
 /.php-cs-fixer.cache
 /splash.json
+/config/reference.php
 
 ###> symfony/framework-bundle ###
 /.env.local

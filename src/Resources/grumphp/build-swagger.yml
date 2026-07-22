@@ -1,0 +1,13 @@
+#############################################
+# Config for For Building Splash Swagger
+#############################################
+parameters:
+    swagger-enable:     true
+
+#############################################
+#   Grumphp Tasks
+#############################################
+grumphp:
+    tasks:
+        build-swagger:
+            enabled:            "%swagger-enable%"

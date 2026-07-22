@@ -24,7 +24,8 @@ parameters:
         - identifier: missingType.generics
         - "#Casting to string something that's already string.#"
     excludePaths:
-        - %currentWorkingDirectory%/src/Task/ManifestBuilder.php
+        # GrumPHP classes are not autoloadable (phar shim): skip tasks analysis
+        - %currentWorkingDirectory%/src/Task/
         - %currentWorkingDirectory%/src/Extension/Loader.php
     symfony:
         containerXmlPath: %currentWorkingDirectory%/var/cache/dev/testContainer.xml

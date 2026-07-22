@@ -16,27 +16,27 @@
 namespace Splash\Console\Task;
 
 /**
- * GrumPhp Task: Splash Manifest Builder
+ * GrumPhp Task: Splash Swagger Builder
  *
- * Generate Splash Data Manifest (splash.yml & splash.json)
+ * Generate Splash Server OpenAPI Definition (swagger.json)
  */
-class ManifestBuilder extends AbstractBuilderTask
+class SwaggerBuilder extends AbstractBuilderTask
 {
     /**
      * {@inheritdoc}
      */
-    protected const COMMAND = "splash:server:manifest";
+    protected const COMMAND = "splash:server:swagger";
 
     /**
      * {@inheritdoc}
      */
-    protected const FAILURE = "Splash Manifest Build Failed!";
+    protected const FAILURE = "Splash Swagger Build Failed!";
 
     /**
      * Get Task Name
      */
     public function getName(): string
     {
-        return 'build-manifest';
+        return 'build-swagger';
     }
 }

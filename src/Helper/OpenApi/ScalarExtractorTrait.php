@@ -13,30 +13,20 @@
  *  file that was distributed with this source code.
  */
 
-namespace Splash\Console\Task;
+namespace Splash\Console\Helper\OpenApi;
 
 /**
- * GrumPhp Task: Splash Manifest Builder
- *
- * Generate Splash Data Manifest (splash.yml & splash.json)
+ * Safe Scalar Extraction from Raw Splash Server Data
  */
-class ManifestBuilder extends AbstractBuilderTask
+trait ScalarExtractorTrait
 {
     /**
-     * {@inheritdoc}
+     * Safe String Extraction from Raw Server Data
      */
-    protected const COMMAND = "splash:server:manifest";
-
-    /**
-     * {@inheritdoc}
-     */
-    protected const FAILURE = "Splash Manifest Build Failed!";
-
-    /**
-     * Get Task Name
-     */
-    public function getName(): string
+    protected static function toString(array $data, string $key, string $default = ''): string
     {
-        return 'build-manifest';
+        $value = $data[$key] ?? null;
+
+        return is_scalar($value) ? (string) $value : $default;
     }
 }

@@ -161,7 +161,12 @@ class Table extends baseTable
         //====================================================================//
         // Simple Field Data
         if (is_array($fieldData)) {
-            return "[".implode(", ", $fieldData)."]";
+            $items = array_map(
+                fn ($item): string => is_scalar($item) ? (string) $item : (string) json_encode($item),
+                $fieldData
+            );
+
+            return "[".implode(", ", $items)."]";
         }
 
         return is_scalar($fieldData) ? (string) $fieldData : (string)  print_r($fieldData, true);

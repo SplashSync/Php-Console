@@ -12,3 +12,12 @@ services:
         - '@GrumPHP\Util\Paths'
       tags:
         - { name: grumphp.task, task: build-manifest }
+
+    Splash\Console\Task\SwaggerBuilder:
+      class:    Splash\Console\Task\SwaggerBuilder
+      arguments:
+        - '@process_builder'
+        - '@formatter.raw_process'
+        - '@GrumPHP\Util\Paths'
+      tags:
+        - { name: grumphp.task, task: build-swagger }

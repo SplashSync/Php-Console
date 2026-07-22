@@ -49,6 +49,7 @@
         "symfony/property-info":                    "^5.4|^6.4|^7.0",
         "symfony/twig-bundle":                      "^5.4|^6.4|^7.0",
         "symfony/runtime":                          "^5.4|^6.4|^7.0",
+        "symfony/yaml":                             "^5.4|^6.4|^7.0",
         "symfony/flex":                             "^1.0|^2.0",
         "symfony/monolog-bundle":                   "*",
 
