@@ -22,8 +22,8 @@ use Splash\Core\Dictionary\Objects\SplObjectProps;
  *
  * OpenAPI descriptions are CommonMark: rendered natively by Redoc at the top
  * of the object section. Composed of three blocks:
- * - the object description text
  * - a properties list (type, icon, disabled warning)
+ * - the object description text
  * - a configuration table (allow / push / pull per CRUD action)
  */
 class ObjectDescriptionBuilder
@@ -65,8 +65,8 @@ class ObjectDescriptionBuilder
     public static function build(array $description): string
     {
         return implode("\n\n", array_filter(array(
-            self::toString($description, SplObjectProps::DESC),
             self::buildProperties($description),
+            self::toString($description, SplObjectProps::DESC),
             self::buildConfiguration($description),
         )));
     }
